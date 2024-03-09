@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllExpense } from '../../slice/RecordSlice'
 import { Table, Empty, Card, Statistic } from 'antd';
-import { ArrowUpOutlined } from '@ant-design/icons';
 
 export const Expense = () => {
 
