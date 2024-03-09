@@ -2,7 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllExpense } from '../../slice/RecordSlice'
-import { Table, Empty } from 'antd';
+import { Table, Empty, Card, Statistic } from 'antd';
+import { ArrowUpOutlined } from '@ant-design/icons';
 
 export const Expense = () => {
 
@@ -79,9 +80,38 @@ export const Expense = () => {
         })
     })
 
+    const expSum = () => {
+        const sum = data.reduce((pre, curr) => pre + Number(curr.amount), 0)
+        return sum
+    }
+
+    const displayAllExpense = () => {
+        return (
+            <>
+                <Card bordered={false}>
+                    <Statistic
+                        title="Total Expense"
+                        value={
+                            expSum()
+                        }
+                        precision={2}
+                        valueStyle={{
+                            color: 'red',
+                        }}
+                        // prefix={<ArrowUpOutlined />}
+                        suffix="₹"
+                    />
+                </Card>
+            </>
+        )
+    }
+
     return (
         <>
-            <h5>Expenses</h5>
+            <div className='d-flex justify-content-between'>
+                <div><h5 style={{ marginTop: "50%" }}>Expenses</h5></div>
+                <div>{displayAllExpense()}</div>
+            </div>
             {
                 state.length === 0 ? <div style={{ marginTop: 50 }}>< Empty /></div> : <Table columns={columns} dataSource={data} onChange={onChange} />
             }
