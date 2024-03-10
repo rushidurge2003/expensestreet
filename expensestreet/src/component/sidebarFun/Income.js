@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllExpense } from '../../slice/RecordSlice'
+import { getAllIncome } from '../../slice/RecordSlice'
 import { Table,Empty, Card, Statistic } from 'antd';
 
 export const Income = () => {
@@ -12,11 +12,11 @@ export const Income = () => {
         displayData()
     }, [])
 
-    const state = useSelector((state) => state.RecordSliceReducer.expenseData)
+    const state = useSelector((state) => state.RecordSliceReducer.incomeData)
     const dispatch = useDispatch()
 
     const displayData = () => {
-        dispatch(getAllExpense(localStorage.getItem("username")))
+        dispatch(getAllIncome(localStorage.getItem("username")))
         setResult(state)
     }
 
@@ -42,24 +42,8 @@ export const Income = () => {
             dataIndex: 'date',
         },
         {
-            title: 'Type',
-            dataIndex: 'type',
-            sorter: {
-                compare: (a, b) => a.type - b.type,
-                multiple: 4,
-            },
-        },
-        {
             title: 'Description',
             dataIndex: 'description'
-        },
-        {
-            title: 'Category',
-            dataIndex: 'category',
-            sorter: {
-                compare: (a, b) => a.category - b.category,
-                multiple: 1,
-            },
         },
     ];
 
@@ -69,9 +53,7 @@ export const Income = () => {
             srno: index + 1,
             date: x.date,
             amount: x.amount,
-            type: x.type,
             description: x.description,
-            category: x.category,
         })
     })
 

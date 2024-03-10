@@ -32,7 +32,8 @@ export const AddRecord = () => {
     };
     const handleOkIncome = () => {
         setIsIncomeOpen(false);
-        dispatch(addIncome({ "username": localStorage.getItem("username"), "amount": incAmount, "date": incDate, "description": incDescription }))
+        dispatch(addIncome({ "username": localStorage.getItem("username"), "amount": incAmount, "date": incDate+` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": incDescription }))
+        dispatch(getAllIncome(localStorage.getItem("username")))
         setIncAmount(0)
         setIncDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
         setIncDescription("")
@@ -58,7 +59,7 @@ export const AddRecord = () => {
     };
     const handleOkExpense = () => {
         setIsExpenseOpen(false);
-        dispatch(addExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate, "description": expDescription, "type": expType, "category": expCategory }))
+        dispatch(addExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate+` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": expDescription, "type": expType, "category": expCategory }))
         dispatch(getAllExpense(localStorage.getItem("username")))
         setExpAmount(0)
         setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)

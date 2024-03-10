@@ -13,12 +13,21 @@ const RecordSlice = createSlice({
 
     },
     extraReducers: (builder) => {
+        // For Expense Data
         builder.addCase(getAllExpense.pending, (state, action) => {
         });
         builder.addCase(getAllExpense.fulfilled, (state, action) => {
             state.expenseData = action.payload.data
         });
         builder.addCase(getAllExpense.rejected, (state, action) => {
+        });
+        // For Income Data
+        builder.addCase(getAllIncome.pending, (state, action) => {
+        });
+        builder.addCase(getAllIncome.fulfilled, (state, action) => {
+            state.incomeData = action.payload.data
+        });
+        builder.addCase(getAllIncome.rejected, (state, action) => {
         });
     }
 })

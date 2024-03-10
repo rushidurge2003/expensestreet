@@ -40,10 +40,10 @@ export const Expense = () => {
         {
             title: 'Date',
             dataIndex: 'date',
-            sorter: {
-                compare: (a, b) => a.date - b.date,
-                multiple: 4,
-            },
+            // sorter: {
+            //     compare: (a, b) => a.date - b.date,
+            //     multiple: 4,
+            // },
         },
         {
             title: 'Type',
