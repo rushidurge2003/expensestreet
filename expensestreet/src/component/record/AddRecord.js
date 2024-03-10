@@ -131,7 +131,7 @@ export const AddRecord = () => {
                         </Select>
                     </Form.Item>
                     <Form.Item label="Image">
-
+                        <strong><small>Feature add in next update</small></strong>
                     </Form.Item>
                 </Form>
             </Modal>
