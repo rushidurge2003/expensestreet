@@ -186,8 +186,9 @@ app.post('/upload', upload.single('image'), (req, res) => {
 //
 //
 //       After Login
-//  add Expenses, get Expenses
-//  add Income, get Income
+//  get userProfile Details
+//  add Expenses, get Expenses, update Expenses, delete Expenses
+//  add Income, get Income, update Income, delete Income
 //
 //
 // =========================
@@ -243,6 +244,25 @@ app.get("/getAllExpense/:username", (req, res) => {
         })
     } catch (error) {
 
+    }
+})
+
+app.post("/updateExpense",(req,res)=>{
+    try {
+        
+        const sql = ``
+        conn.query(sql,(err,result)=>{
+            if(err)
+            {
+                res.send(err)
+            }
+            else
+            {
+                res.send(result)
+            }
+        })
+    } catch (error) {
+        
     }
 })
 
