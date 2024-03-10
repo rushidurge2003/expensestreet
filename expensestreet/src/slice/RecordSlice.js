@@ -41,14 +41,14 @@ export const getAllExpense = createAsyncThunk(
 export const addIncome = createAsyncThunk(
     "addIncome",
     async (data) => {
-        await axios.post("http://localhost:9000/addExpense", { ...data })
+        await axios.post("http://localhost:9000/addIncome", { ...data })
     }
 )
 
 export const getAllIncome = createAsyncThunk(
     "getAllIncome",
     async (username) => {
-        const result = await axios.get("http://localhost:9000/getAllExpense/" + username)
+        const result = await axios.get("http://localhost:9000/getAllIncome/" + username)
         return result
     }
 )
