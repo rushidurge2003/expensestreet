@@ -247,18 +247,47 @@ app.get("/getAllExpense/:username", (req, res) => {
     }
 })
 
-app.post("/updateExpense",(req,res)=>{
+app.post("/updateExpense", (req, res) => {
     try {
-        
-        const sql = ``
+        const { username, expId, amount, date, description, type, category } = req.body
+        const sql = `UPDATE ${username}.expense set amount=${amount},date="${date}",description="${description}",type="${type}",category="${category}" where expenseId=${expId}`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in Update Expense");
+                console.log("\t\t",username);
+                console.log("\t\t",expId);
+                console.log("\t\t",amount);
+                console.log("\t\t",date);
+                console.log("\t\t",description);
+                console.log("\t\t",type);
+                console.log("\t\t",category);
+            }
+            else {
+                res.send(result)
+                console.log("\tExpense Update Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.delete("/deleteExpense",(req,res)=>{
+    try {
+        const {username,expId} = req.body;
+        const sql = `DELETE FROM ${username}.expense WHERE expenseId=${expId}`;
         conn.query(sql,(err,result)=>{
             if(err)
             {
                 res.send(err)
+                console.log("\tError in Delete Expense");
+                console.log("\t\t",username);
+                console.log("\t\t",expId);
             }
-            else
-            {
+            else{
                 res.send(result)
+                console.log("\tDelete expense Successfully");
             }
         })
     } catch (error) {
@@ -268,7 +297,7 @@ app.post("/updateExpense",(req,res)=>{
 
 app.post("/addIncome", (req, res) => {
     try {
-        const { username, amount, date, description} = req.body
+        const { username, amount, date, description } = req.body
         const sql = `insert into ${username}.income(amount,date,description) values(${amount},"${date}","${description}")`
         conn.query(sql, (err, result) => {
             if (err) {

@@ -54,6 +54,13 @@ export const updateExpense = createAsyncThunk(
     }
 )
 
+export const deleteExpense = createAsyncThunk(
+    "deleteExpense",
+    async (data) => {
+        await axios.delete("http://localhost:9000/deleteExpense", { ...data })
+    }
+)
+
 export const addIncome = createAsyncThunk(
     "addIncome",
     async (data) => {

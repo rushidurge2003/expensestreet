@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllExpense, updateExpense } from '../../slice/RecordSlice'
+import { getAllExpense, updateExpense, deleteExpense } from '../../slice/RecordSlice'
 import dayjs from 'dayjs'
 import {
     Empty, Card, Statistic, Button, Tooltip,
@@ -36,7 +36,7 @@ export const Expense = () => {
     };
     const handleOkExpense = () => {
         setIsExpenseOpen(false);
-        // dispatch(updateExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate + ` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": expDescription, "type": expType, "category": expCategory }))
+        dispatch(updateExpense({ "username": localStorage.getItem("username"), "expId": expId, "amount": expAmount, "date": expDate , "description": expDescription, "type": expType, "category": expCategory }))
         dispatch(getAllExpense(localStorage.getItem("username")))
         setExpAmount(0)
         setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
@@ -58,10 +58,10 @@ export const Expense = () => {
     const state = useSelector((state) => state.RecordSliceReducer.expenseData)
     const dispatch = useDispatch()
 
-    const data = state.map((x, index) => {
+    const data = state.map((x) => {
         return ({
             id: x.expenseId,
-            date: x.date,
+            date: (x.date).slice(0,19).replace('T', ' '),
             amount: x.amount,
             description: x.description,
             type: x.type,
@@ -100,6 +100,13 @@ export const Expense = () => {
         )
     }
 
+    const DeleteExp = (username, id) => {
+        dispatch(deleteExpense({ "username": username, "expId": id }))
+        dispatch(getAllExpense(localStorage.getItem("username")))
+        console.log("check fact 1: ",username);
+        console.log("check fact 2: ",id);
+    }
+
     const dataTable = () => {
         return (
             <>
@@ -136,7 +143,9 @@ export const Expense = () => {
                                                 />
                                             </Tooltip>
                                             <Tooltip title="Delete">
-                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />} />
+                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                    onClick={()=>{DeleteExp(localStorage.getItem("username"),d.id)}}
+                                                />
                                             </Tooltip>
                                         </td>
                                     </tr>
