@@ -186,6 +186,8 @@ app.post('/upload', upload.single('image'), (req, res) => {
 //
 //
 //       After Login
+//  add Expenses, get Expenses
+//  add Income, get Income
 //
 //
 // =========================

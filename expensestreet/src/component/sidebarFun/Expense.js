@@ -2,7 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllExpense } from '../../slice/RecordSlice'
-import { Table, Empty, Card, Statistic } from 'antd';
+import { Empty, Card, Statistic,Button } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 
 export const Expense = () => {
 
@@ -15,69 +16,20 @@ export const Expense = () => {
     const state = useSelector((state) => state.RecordSliceReducer.expenseData)
     const dispatch = useDispatch()
 
+    const data = state.map((x, index) => {
+        return ({
+            date: x.date,
+            amount: x.amount,
+            description: x.description,
+            type:x.type,
+            category:x.category
+        })
+    })
+
     const displayData = () => {
         dispatch(getAllExpense(localStorage.getItem("username")))
         setResult(state)
     }
-
-    const onChange = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
-    };
-
-    const columns = [
-        {
-            title: 'Sr.No',
-            dataIndex: 'srno',
-        },
-        {
-            title: 'Amount',
-            dataIndex: 'amount',
-            sorter: {
-                compare: (a, b) => a.amount - b.amount,
-                multiple: 3,
-            },
-        },
-        {
-            title: 'Date',
-            dataIndex: 'date',
-            // sorter: {
-            //     compare: (a, b) => a.date - b.date,
-            //     multiple: 4,
-            // },
-        },
-        {
-            title: 'Type',
-            dataIndex: 'type',
-            // sorter: {
-            //     compare: (a, b) => a.type - b.type,
-            //     multiple: 4,
-            // },
-        },
-        {
-            title: 'Description',
-            dataIndex: 'description'
-        },
-        {
-            title: 'Category',
-            dataIndex: 'category',
-            // sorter: {
-            //     compare: (a, b) => a.category - b.category,
-            //     multiple: 1,
-            // },
-        },
-    ];
-
-    const data = state.map((x, index) => {
-        return ({
-            key: index,
-            srno: index + 1,
-            date: x.date,
-            amount: x.amount,
-            type: x.type,
-            description: x.description,
-            category: x.category,
-        })
-    })
 
     const expSum = () => {
         const sum = data.reduce((pre, curr) => pre + Number(curr.amount), 0)
@@ -105,6 +57,46 @@ export const Expense = () => {
         )
     }
 
+    const dataTable = () => {
+        return (
+            <>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            data.map((d,index)=>{
+                                return(
+                                    <tr>
+                                        <td>{index+1}</td>
+                                        <td>{d.date}</td>
+                                        <td>{d.amount}</td>
+                                        <td>{d.description}</td>
+                                        <td>{d.type}</td>
+                                        <td>{d.category}</td>
+                                        <td>
+                                            <td> <Button type="primary" danger shape="circle" icon={<SearchOutlined />} /></td>
+                                            <td> <Button type="primary" shape="circle" icon={<SearchOutlined />} /></td>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+            </>
+        )
+    }
+
     return (
         <>
             <div className='d-flex justify-content-between'>
@@ -112,7 +104,7 @@ export const Expense = () => {
                 <div>{displayAllExpense()}</div>
             </div>
             {
-                state.length === 0 ? <div style={{ marginTop: 50 }}>< Empty /></div> : <Table columns={columns} dataSource={data} onChange={onChange} />
+                state.length === 0 ? <div style={{ marginTop: 50 }}>< Empty /></div> : dataTable()
             }
 
         </>
