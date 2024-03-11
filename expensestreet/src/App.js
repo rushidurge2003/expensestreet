@@ -27,12 +27,16 @@ function App() {
               <Route path="*" Component={ErrorPage} />
             </Routes>
           </>
-          : <Routes>
-            <Route path="/" Component={Welcome} />
-            <Route path="/login" Component={Login} />
-            <Route path="/signup" Component={Signup} />
-            <Route path="*" Component={Login} />
-          </Routes>
+          :
+          <>
+            <Navbar />
+            <Routes>
+              <Route path="/" Component={Welcome} />
+              <Route path="/login" Component={Login} />
+              <Route path="/signup" Component={Signup} />
+              <Route path="*" Component={Login} />
+            </Routes>
+          </>
       }
       {/* </Routes> */}
     </BrowserRouter>

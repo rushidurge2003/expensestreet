@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import usePreventZomm from '../usePreventZoom'
 import fimg from './images/first.gif'
 import card from './images/credit-cad.png'
+import sdata from './images/secure-data.png'
 
 export const Welcome = () => {
   usePreventZomm()
@@ -21,10 +22,10 @@ export const Welcome = () => {
   return (
     <>
       <div className='welcome' style={{ display: "flex", justifyContent: "center" }}>
-        <div style={{ width: "60%", backgroundColor: "white", marginTop: 120 }}>
+        <div style={{ width: "60%", backgroundColor: "white", marginTop: 120, borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }}>
           <div>
-            <div style={{display:"flex",justifyContent:"center"}}>
-              <img src={card} alt="" draggable="false" style={{width:200}}/>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <img src={card} alt="" draggable="false" style={{ width: 200 }} />
             </div>
             <h1 className='text-center' style={{ fontFamily: "Workbench, sans-serif", fontSize: "100px", color: "black", paddingTop: 20 }}>ExpenseStreet</h1>
             <div>
@@ -55,7 +56,10 @@ export const Welcome = () => {
             </div>
             <div>
               <div>
-                <img src={fimg} alt="" draggable="false" />
+                <img src={fimg} alt="" draggable="false" style={{width:400}} />
+              </div>
+              <div>
+                <img src={sdata} alt="" draggable="false" style={{width:400}} />
               </div>
             </div>
           </div>
