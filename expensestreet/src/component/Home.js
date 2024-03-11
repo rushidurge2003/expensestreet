@@ -13,6 +13,7 @@ import {
   UserAddOutlined,
   LineChartOutlined,
   ReadOutlined,
+  DeleteOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 
@@ -43,25 +44,32 @@ const DisplayData = ({ contentNum }) => {
   if (contentNum === 4) {
     return (
       <>
-        <Graph/>
+        <h1>Deleted Transaction</h1>
       </>
     )
   }
   if (contentNum === 5) {
     return (
       <>
-        <h1>News</h1>
+        <Graph />
       </>
     )
   }
   if (contentNum === 6) {
     return (
       <>
-        <h1>Stock Market</h1>
+        <h1>News</h1>
       </>
     )
   }
   if (contentNum === 7) {
+    return (
+      <>
+        <h1>Stock Market</h1>
+      </>
+    )
+  }
+  if (contentNum === 8) {
     return (
       <>
         <h1>Friend</h1>
@@ -124,32 +132,38 @@ export const Home = () => {
                   icon: <FileAddOutlined />,
                   label: 'All Transaction',
                   onClick: () => { setContentNum(3) }
+                },
+                {
+                  key: '5',
+                  icon: <DeleteOutlined />,
+                  label: 'Deleted Transaction',
+                  onClick: () => { setContentNum(4) }
                 }
               ],
             },
             {
-              key: '5',
+              key: '6',
               icon: <PieChartOutlined />,
               label: 'Analysis',
-              onClick: () => { setContentNum(4) }
-            },
-            {
-              key: '6',
-              icon: <ReadOutlined />,
-              label: 'News',
               onClick: () => { setContentNum(5) }
             },
             {
               key: '7',
-              icon: <LineChartOutlined />,
-              label: 'Stock Market',
+              icon: <ReadOutlined />,
+              label: 'News',
               onClick: () => { setContentNum(6) }
             },
             {
               key: '8',
+              icon: <LineChartOutlined />,
+              label: 'Stock Market',
+              onClick: () => { setContentNum(7) }
+            },
+            {
+              key: '9',
               icon: <UserAddOutlined />,
               label: 'Friend',
-              onClick: () => { setContentNum(7) }
+              onClick: () => { setContentNum(8) }
             }
           ]} />
         </Sider>

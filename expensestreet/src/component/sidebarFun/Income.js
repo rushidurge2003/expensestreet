@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllExpense } from '../../slice/RecordSlice'
-import { Table,Empty } from 'antd';
+import { getAllIncome } from '../../slice/RecordSlice'
+import { Empty, Card, Statistic } from 'antd';
 
 export const Income = () => {
 
@@ -12,56 +12,13 @@ export const Income = () => {
         displayData()
     }, [])
 
-    const state = useSelector((state) => state.RecordSliceReducer.expenseData)
+    const state = useSelector((state) => state.RecordSliceReducer.incomeData)
     const dispatch = useDispatch()
 
     const displayData = () => {
-        dispatch(getAllExpense(localStorage.getItem("username")))
+        dispatch(getAllIncome(localStorage.getItem("username")))
         setResult(state)
     }
-
-    const onChange = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
-    };
-
-    const columns = [
-        {
-            title: 'Sr.No',
-            dataIndex: 'srno',
-        },
-        {
-            title: 'Amount',
-            dataIndex: 'amount',
-            sorter: {
-                compare: (a, b) => a.amount - b.amount,
-                multiple: 3,
-            },
-        },
-        {
-            title: 'Date',
-            dataIndex: 'date',
-        },
-        {
-            title: 'Type',
-            dataIndex: 'type',
-            sorter: {
-                compare: (a, b) => a.type - b.type,
-                multiple: 4,
-            },
-        },
-        {
-            title: 'Description',
-            dataIndex: 'description'
-        },
-        {
-            title: 'Category',
-            dataIndex: 'category',
-            sorter: {
-                compare: (a, b) => a.category - b.category,
-                multiple: 1,
-            },
-        },
-    ];
 
     const data = state.map((x, index) => {
         return ({
@@ -69,17 +26,76 @@ export const Income = () => {
             srno: index + 1,
             date: x.date,
             amount: x.amount,
-            type: x.type,
             description: x.description,
-            category: x.category,
         })
     })
 
+    const incSum = () => {
+        const sum = data.reduce((pre, curr) => pre + Number(curr.amount), 0)
+        return sum
+    }
+
+    const displayAllIncome = () => {
+        return (
+            <>
+                <Card bordered={false}>
+                    <Statistic
+                        title="Total Income"
+                        value={
+                            incSum()
+                        }
+                        precision={2}
+                        valueStyle={{
+                            color: 'green',
+                        }}
+                        // prefix={<ArrowUpOutlined />}
+                        suffix="₹"
+                    />
+                </Card>
+            </>
+        )
+    }
+
+    const dataTable = () => {
+        return (
+            <>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            data.map((d,index)=>{
+                                return(
+                                    <tr>
+                                        <td>{index+1}</td>
+                                        <td>{d.date}</td>
+                                        <td>{d.amount}</td>
+                                        <td>{d.description}</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+            </>
+        )
+    }
+
     return (
         <>
-            <h5>Income</h5>
+            <div className='d-flex justify-content-between'>
+                <div><h5 style={{ marginTop: "50%" }}>Income</h5></div>
+                <div>{displayAllIncome()}</div>
+            </div>
             {
-                state.length === 0 ? <div style={{marginTop:50}}>< Empty/></div> : <Table columns={columns} dataSource={data} onChange={onChange} />
+                state.length === 0 ? <div style={{ marginTop: 50 }}>< Empty /></div> : dataTable()
             }
 
         </>

@@ -103,13 +103,20 @@ app.post("/creatDataBase", (req, res) => {
     insert into ${username}.userprofile(name,email,username,contact,notification) values("${name}","${email}","${username}","${contact}",0);
 
     CREATE TABLE ${username}.expense (
-        expenseNo INT NOT NULL AUTO_INCREMENT,
+        expenseId INT NOT NULL AUTO_INCREMENT,
         amount VARCHAR(45) NOT NULL,
-        date VARCHAR(45) NOT NULL,
+        date DATETIME NOT NULL,
         description VARCHAR(45) NOT NULL,
         type VARCHAR(45) NOT NULL,
         category VARCHAR(45) NOT NULL,
-        PRIMARY KEY (expenseNo));
+        PRIMARY KEY (expenseId));
+
+    CREATE TABLE ${username}.income (
+        incomeId INT NOT NULL AUTO_INCREMENT,
+        amount VARCHAR(45) NOT NULL,
+        description VARCHAR(45) NOT NULL,
+        date DATETIME NOT NULL,
+        PRIMARY KEY (incomeId));
     `;
     conn.query(sql, (err, result) => {
         if (err) {
@@ -179,6 +186,9 @@ app.post('/upload', upload.single('image'), (req, res) => {
 //
 //
 //       After Login
+//  get userProfile Details
+//  add Expenses, get Expenses, update Expenses, delete Expenses
+//  add Income, get Income, update Income, delete Income
 //
 //
 // =========================
@@ -202,22 +212,20 @@ app.get("/userprofile/:username", (req, res) => {
     }
 })
 
-app.post("/addExpense",(req,res)=>{
+app.post("/addExpense", (req, res) => {
     try {
-        const {username,amount,date,description,type,category} = req.body
+        const { username, amount, date, description, type, category } = req.body
         const sql = `insert into ${username}.expense(amount,date,description,type,category) values(${amount},"${date}","${description}","${type}","${category}")`
-        conn.query(sql,(err,result)=>{
-            if(err)
-            {
+        conn.query(sql, (err, result) => {
+            if (err) {
                 res.send(err)
             }
-            else
-            {
+            else {
                 res.send(result)
             }
         })
     } catch (error) {
-        
+
     }
 })
 
@@ -225,13 +233,96 @@ app.get("/getAllExpense/:username", (req, res) => {
     try {
         const username = req.params.username
         const sql = `select * from ${username}.expense`
-        conn.query(sql,(err,result)=>{
-            if(err){
+        conn.query(sql, (err, result) => {
+            if (err) {
                 res.send(err)
             }
-            else{
+            else {
                 res.json(result)
                 console.log("\tAll Expense get Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/updateExpense", (req, res) => {
+    try {
+        const { username, expId, amount, date, description, type, category } = req.body
+        const sql = `UPDATE ${username}.expense set amount=${amount},date="${date}",description="${description}",type="${type}",category="${category}" where expenseId=${expId}`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in Update Expense");
+                console.log("\t\t",username);
+                console.log("\t\t",expId);
+                console.log("\t\t",amount);
+                console.log("\t\t",date);
+                console.log("\t\t",description);
+                console.log("\t\t",type);
+                console.log("\t\t",category);
+            }
+            else {
+                res.send(result)
+                console.log("\tExpense Update Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.delete("/deleteExpense",(req,res)=>{
+    try {
+        const {username,expId} = req.body;
+        const sql = `DELETE FROM ${username}.expense WHERE expenseId=${expId}`;
+        conn.query(sql,(err,result)=>{
+            if(err)
+            {
+                res.send(err)
+                console.log("\tError in Delete Expense");
+                console.log("\t\t",username);
+                console.log("\t\t",expId);
+            }
+            else{
+                res.send(result)
+                console.log("\tDelete expense Successfully");
+            }
+        })
+    } catch (error) {
+        
+    }
+})
+
+app.post("/addIncome", (req, res) => {
+    try {
+        const { username, amount, date, description } = req.body
+        const sql = `insert into ${username}.income(amount,date,description) values(${amount},"${date}","${description}")`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            }
+            else {
+                res.send(result)
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.get("/getAllIncome/:username", (req, res) => {
+    try {
+        const username = req.params.username
+        const sql = `select * from ${username}.income`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            }
+            else {
+                res.json(result)
+                console.log("\tAll Income get Successfully");
             }
         })
     } catch (error) {

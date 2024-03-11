@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-    expenseData: []
+    expenseData: [],
+    incomeData: []
 }
 
 const RecordSlice = createSlice({
@@ -12,12 +13,21 @@ const RecordSlice = createSlice({
 
     },
     extraReducers: (builder) => {
+        // For Expense Data
         builder.addCase(getAllExpense.pending, (state, action) => {
         });
         builder.addCase(getAllExpense.fulfilled, (state, action) => {
             state.expenseData = action.payload.data
         });
         builder.addCase(getAllExpense.rejected, (state, action) => {
+        });
+        // For Income Data
+        builder.addCase(getAllIncome.pending, (state, action) => {
+        });
+        builder.addCase(getAllIncome.fulfilled, (state, action) => {
+            state.incomeData = action.payload.data
+        });
+        builder.addCase(getAllIncome.rejected, (state, action) => {
         });
     }
 })
@@ -33,6 +43,35 @@ export const getAllExpense = createAsyncThunk(
     "getAllExpense",
     async (username) => {
         const result = await axios.get("http://localhost:9000/getAllExpense/" + username)
+        return result
+    }
+)
+
+export const updateExpense = createAsyncThunk(
+    "updateExpense",
+    async (data) => {
+        await axios.post("http://localhost:9000/updateExpense", { ...data })
+    }
+)
+
+export const deleteExpense = createAsyncThunk(
+    "deleteExpense",
+    async (data) => {
+        await axios.delete("http://localhost:9000/deleteExpense", { ...data })
+    }
+)
+
+export const addIncome = createAsyncThunk(
+    "addIncome",
+    async (data) => {
+        await axios.post("http://localhost:9000/addIncome", { ...data })
+    }
+)
+
+export const getAllIncome = createAsyncThunk(
+    "getAllIncome",
+    async (username) => {
+        const result = await axios.get("http://localhost:9000/getAllIncome/" + username)
         return result
     }
 )

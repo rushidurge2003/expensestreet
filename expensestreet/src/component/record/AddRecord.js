@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addExpense, getAllExpense } from '../../slice/RecordSlice';
+import { addExpense, getAllExpense, addIncome, getAllIncome } from '../../slice/RecordSlice';
 import dayjs from 'dayjs'
 import {
     Form,
@@ -25,17 +25,24 @@ export const AddRecord = () => {
     const [incAmount, setIncAmount] = useState(0)
     const [incDate, setIncDate] = useState(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     const [incDescription, setIncDescription] = useState("")
-    const [incType, setIncType] = useState("")
-    const [incCategory, setIncCategory] = useState("")
+
     const [isIncomeOpen, setIsIncomeOpen] = useState(false);
     const showModalIncome = () => {
         setIsIncomeOpen(true);
     };
     const handleOkIncome = () => {
         setIsIncomeOpen(false);
+        dispatch(addIncome({ "username": localStorage.getItem("username"), "amount": incAmount, "date": incDate+` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": incDescription }))
+        dispatch(getAllIncome(localStorage.getItem("username")))
+        setIncAmount(0)
+        setIncDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+        setIncDescription("")
     };
     const handleCancelIncome = () => {
         setIsIncomeOpen(false);
+        setIncAmount(0)
+        setIncDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+        setIncDescription("")
     };
 
 
@@ -45,13 +52,14 @@ export const AddRecord = () => {
     const [expDescription, setExpDescription] = useState("")
     const [expType, setExpType] = useState("")
     const [expCategory, setExpCategory] = useState("")
+
     const [isExpenseOpen, setIsExpenseOpen] = useState(false);
     const showModalExpense = () => {
         setIsExpenseOpen(true);
     };
     const handleOkExpense = () => {
         setIsExpenseOpen(false);
-        dispatch(addExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate, "description": expDescription, "type": expType, "category": expCategory }))
+        dispatch(addExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate+` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": expDescription, "type": expType, "category": expCategory }))
         dispatch(getAllExpense(localStorage.getItem("username")))
         setExpAmount(0)
         setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
@@ -131,7 +139,7 @@ export const AddRecord = () => {
                         </Select>
                     </Form.Item>
                     <Form.Item label="Image">
-
+                        <strong><small>Feature add in next update</small></strong>
                     </Form.Item>
                 </Form>
             </Modal>
