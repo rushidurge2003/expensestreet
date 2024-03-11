@@ -2,7 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllIncome } from '../../slice/RecordSlice'
-import { Empty, Card, Statistic } from 'antd';
+import { Empty, Card, Statistic,Button, Tooltip, } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 export const Income = () => {
 
@@ -71,13 +72,21 @@ export const Income = () => {
                     </thead>
                     <tbody>
                         {
-                            data.map((d,index)=>{
-                                return(
+                            data.map((d, index) => {
+                                return (
                                     <tr>
-                                        <td>{index+1}</td>
+                                        <td>{index + 1}</td>
                                         <td>{d.date}</td>
                                         <td>{d.amount}</td>
                                         <td>{d.description}</td>
+                                        <td className='d-flex justify-content-evenly'>
+                                            <Tooltip title="Edit">
+                                                <Button type="primary" shape="circle" icon={<EditOutlined />} />
+                                            </Tooltip>
+                                            <Tooltip title="Delete">
+                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />} />
+                                            </Tooltip>
+                                        </td>
                                     </tr>
                                 )
                             })

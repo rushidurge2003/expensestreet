@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { Navbar } from "./component/Navbar";
 import { Profile } from "./component/profile/Profile";
 import { Notification } from "./component/notification/Notification";
+import { WelcomeNavbar } from "./component/welcome/WelcomeNavbar";
+import { About } from "./component/welcome/About";
 
 function App() {
   const state = useSelector((state) => state)
@@ -29,11 +31,12 @@ function App() {
           </>
           :
           <>
-            <Navbar />
+            {/* <WelcomeNavbar /> */}
             <Routes>
               <Route path="/" Component={Welcome} />
               <Route path="/login" Component={Login} />
               <Route path="/signup" Component={Signup} />
+              <Route path="/about" Component={About} />
               <Route path="*" Component={Login} />
             </Routes>
           </>
