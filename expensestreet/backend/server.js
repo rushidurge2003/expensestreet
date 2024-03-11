@@ -3,6 +3,7 @@ const cors = require('cors')
 const mysql = require('mysql')
 const bodyParser = require('body-parser');
 const multer = require("multer")
+var nodemailer = require('nodemailer')
 
 
 const app = express()
@@ -37,6 +38,40 @@ if (conn) {
 else {
     console.log("Failed to Connect");
 }
+
+// 
+//  Mail
+// 
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'rushikeshdurge7794@gmail.com',
+        pass: 'ypha quso uppa knbz'
+    }
+});
+
+app.post("/sendMail", (req, res) => {
+
+    const {email} = req.body
+    const mailOptions = {
+        from: 'ExpensStreet <rushikeshdurge7794@gmail.com>',
+        to: `${email}`,
+        subject: 'Successfully Sign Up',
+        // text: 'That was easy!',
+        html:`
+            <h1>ExpenseStreet</h1>
+        `
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('\tEmail sent: ' + info.response);
+        }
+    });
+})
 
 
 // =========================
@@ -124,6 +159,7 @@ app.post("/creatDataBase", (req, res) => {
         }
         else {
             res.send(result)
+            console.log("\tCreate Database Successfully");
         }
     })
 })
@@ -255,13 +291,13 @@ app.post("/updateExpense", (req, res) => {
             if (err) {
                 res.send(err)
                 console.log("\tError in Update Expense");
-                console.log("\t\t",username);
-                console.log("\t\t",expId);
-                console.log("\t\t",amount);
-                console.log("\t\t",date);
-                console.log("\t\t",description);
-                console.log("\t\t",type);
-                console.log("\t\t",category);
+                console.log("\t\t", username);
+                console.log("\t\t", expId);
+                console.log("\t\t", amount);
+                console.log("\t\t", date);
+                console.log("\t\t", description);
+                console.log("\t\t", type);
+                console.log("\t\t", category);
             }
             else {
                 res.send(result)
@@ -273,25 +309,24 @@ app.post("/updateExpense", (req, res) => {
     }
 })
 
-app.delete("/deleteExpense",(req,res)=>{
+app.delete("/deleteExpense", (req, res) => {
     try {
-        const {username,expId} = req.body;
+        const { username, expId } = req.body;
         const sql = `DELETE FROM ${username}.expense WHERE expenseId=${expId}`;
-        conn.query(sql,(err,result)=>{
-            if(err)
-            {
+        conn.query(sql, (err, result) => {
+            if (err) {
                 res.send(err)
                 console.log("\tError in Delete Expense");
-                console.log("\t\t",username);
-                console.log("\t\t",expId);
+                console.log("\t\t", username);
+                console.log("\t\t", expId);
             }
-            else{
+            else {
                 res.send(result)
                 console.log("\tDelete expense Successfully");
             }
         })
     } catch (error) {
-        
+
     }
 })
 

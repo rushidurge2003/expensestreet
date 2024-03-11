@@ -55,13 +55,14 @@ export const Signup = () => {
                 }
                 else {
                     dispatch(signupUser({ "name": name, "email": email, "username": username, "password": password, "contact": contact }))
+                    navigate("/login")
+                    message.success("Successfully Signup")
+                    await axios.post("http://localhost:9000/creatDataBase", { "name": name, "email": email, "username": username, "contact": contact })
+                    await axios.post("http://localhost:9000/sendMail",{"email":email})
                     setName("")
                     setUsername("")
                     setPassword("")
                     seteMail("")
-                    await axios.post("http://localhost:9000/creatDataBase", { "name": name, "email": email, "username": username, "contact": contact })
-                    navigate("/login")
-                    message.success("Successfully Signup")
                 }
             }
         } catch (error) {
