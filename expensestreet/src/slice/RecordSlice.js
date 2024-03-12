@@ -83,4 +83,11 @@ export const updateIncome = createAsyncThunk(
     }
 )
 
+export const deleteIncome = createAsyncThunk(
+    "deleteIncome",
+    async (data) => {
+        await axios.post("http://localhost:9000/deleteIncome", { ...data })
+    }
+)
+
 export default RecordSlice.reducer

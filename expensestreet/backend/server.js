@@ -378,3 +378,24 @@ app.post("/updateIncome", (req, res) => {
 
     }
 })
+
+app.post("/deleteIncome", (req, res) => {
+    try {
+        const { username, incId } = req.body;
+        const sql = `DELETE FROM ${username}.income WHERE incomeId=${incId}`;
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in Delete Expense");
+                // console.log("Username : ",username);
+                // console.log("Username : ",incId);
+            }
+            else {
+                res.send(result)
+                console.log("\tDelete expense Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})

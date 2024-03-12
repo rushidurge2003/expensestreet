@@ -37,6 +37,7 @@ export const AddRecord = () => {
         setIncAmount(0)
         setIncDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
         setIncDescription("")
+        dispatch(getAllIncome(localStorage.getItem("username")))
     };
     const handleCancelIncome = () => {
         setIsIncomeOpen(false);

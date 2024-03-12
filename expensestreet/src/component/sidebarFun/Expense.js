@@ -104,8 +104,6 @@ export const Expense = () => {
     const DeleteExp = (Id) => {
         dispatch(deleteExpense({ "username": localStorage.getItem("username"), "expId": Id }))
         dispatch(getAllExpense(localStorage.getItem("username")))
-        console.log("check fact 1: ", localStorage.getItem("username"));
-        console.log("check fact 2: ", expId);
         dispatch(getAllExpense(localStorage.getItem("username")))
     }
 

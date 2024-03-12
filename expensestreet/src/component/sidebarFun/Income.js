@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllIncome, updateIncome } from '../../slice/RecordSlice'
+import { deleteIncome, getAllIncome, updateIncome } from '../../slice/RecordSlice'
 import dayjs from 'dayjs'
 import {
     Empty, Card, Statistic, Button, Tooltip,
@@ -91,6 +91,12 @@ export const Income = () => {
         )
     }
 
+    const DeleteInc = (Id) => {
+        dispatch(deleteIncome({ "username": localStorage.getItem("username"), "incId": Id }))
+        dispatch(getAllIncome(localStorage.getItem("username")))
+        dispatch(getAllIncome(localStorage.getItem("username")))
+    }
+
     const dataTable = () => {
         return (
             <>
@@ -123,7 +129,9 @@ export const Income = () => {
                                                 />
                                             </Tooltip>
                                             <Tooltip title="Delete">
-                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />} />
+                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />} 
+                                                    onClick={()=>{DeleteInc(d.id)}}
+                                                />
                                             </Tooltip>
                                         </td>
                                     </tr>
