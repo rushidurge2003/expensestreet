@@ -66,6 +66,7 @@ export const AddRecord = () => {
         setExpDescription("")
         setExpType("")
         setExpCategory("")
+        dispatch(getAllExpense(localStorage.getItem("username")))
     };
     const handleCancelExpense = () => {
         setIsExpenseOpen(false);

@@ -57,7 +57,7 @@ export const updateExpense = createAsyncThunk(
 export const deleteExpense = createAsyncThunk(
     "deleteExpense",
     async (data) => {
-        await axios.delete("http://localhost:9000/deleteExpense", { ...data })
+        await axios.post("http://localhost:9000/deleteExpense", { ...data })
     }
 )
 
@@ -73,6 +73,13 @@ export const getAllIncome = createAsyncThunk(
     async (username) => {
         const result = await axios.get("http://localhost:9000/getAllIncome/" + username)
         return result
+    }
+)
+
+export const updateIncome = createAsyncThunk(
+    "updateIncome",
+    async (data) => {
+        await axios.post("http://localhost:9000/updateIncome", { ...data })
     }
 )
 

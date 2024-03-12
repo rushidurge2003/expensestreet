@@ -1,13 +1,47 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllIncome } from '../../slice/RecordSlice'
-import { Empty, Card, Statistic,Button, Tooltip, } from 'antd';
+import { getAllIncome, updateIncome } from '../../slice/RecordSlice'
+import dayjs from 'dayjs'
+import {
+    Empty, Card, Statistic, Button, Tooltip,
+    Form, Modal, Input, DatePicker,
+} from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 export const Income = () => {
 
+    const date = new Date()
+
     const [result, setResult] = useState([])
+    const [incId, setIncId] = useState(null)
+
+    const [incAmount, setIncAmount] = useState(0)
+    const [incDate, setIncDate] = useState(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+    const [incDescription, setIncDescription] = useState("")
+
+    const [isIncomeOpen, setIsIncomeOpen] = useState(false);
+    const showModalIncome = (amount, date, description) => {
+        setIsIncomeOpen(true);
+        setIncAmount(amount)
+        setIncDate(date)
+        setIncDescription(description)
+    };
+    const handleOkIncome = () => {
+        setIsIncomeOpen(false);
+        dispatch(updateIncome({ "username": localStorage.getItem("username"), "incId": incId, "amount": incAmount, "date": incDate, "description": incDescription }))
+        dispatch(getAllIncome(localStorage.getItem("username")))
+        setIncAmount(0)
+        setIncDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+        setIncDescription("")
+        dispatch(getAllIncome(localStorage.getItem("username")))
+    };
+    const handleCancelIncome = () => {
+        setIsIncomeOpen(false);
+        setIncAmount(0)
+        setIncDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+        setIncDescription("")
+    };
 
     useEffect(() => {
         displayData()
@@ -24,8 +58,8 @@ export const Income = () => {
     const data = state.map((x, index) => {
         return ({
             key: index,
-            srno: index + 1,
-            date: x.date,
+            id: x.incomeId,
+            date: (x.date).slice(0, 19).replace('T', ' '),
             amount: x.amount,
             description: x.description,
         })
@@ -81,7 +115,12 @@ export const Income = () => {
                                         <td>{d.description}</td>
                                         <td className='d-flex justify-content-evenly'>
                                             <Tooltip title="Edit">
-                                                <Button type="primary" shape="circle" icon={<EditOutlined />} />
+                                                <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                    onClick={() => {
+                                                        showModalIncome(d.amount, d.date, d.description)
+                                                        setIncId(d.id)
+                                                    }}
+                                                />
                                             </Tooltip>
                                             <Tooltip title="Delete">
                                                 <Button type="primary" danger shape="circle" icon={<DeleteOutlined />} />
@@ -106,6 +145,23 @@ export const Income = () => {
             {
                 state.length === 0 ? <div style={{ marginTop: 50 }}>< Empty /></div> : dataTable()
             }
+
+            <Modal width={500} title="Add Income" open={isIncomeOpen} onOk={handleOkIncome} onCancel={handleCancelIncome}>
+                <Form
+                    labelCol={{ span: 6 }}
+                    wrapperCol={{ span: 15 }}
+                    layout="horizontal"
+                >
+                    <Form.Item label="Amount">
+                        <Input value={incAmount} onChange={(e) => setIncAmount(e.target.value)} />
+                    </Form.Item><Form.Item label="Date">
+                        <DatePicker value={dayjs(incDate)} onChange={(_, strDate) => setIncDate(strDate)} />
+                    </Form.Item>
+                    <Form.Item label="Description">
+                        <Input value={incDescription} onChange={(e) => setIncDescription(e.target.value)} />
+                    </Form.Item>
+                </Form>
+            </Modal>
 
         </>
     )

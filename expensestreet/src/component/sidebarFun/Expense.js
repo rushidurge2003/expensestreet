@@ -36,13 +36,14 @@ export const Expense = () => {
     };
     const handleOkExpense = () => {
         setIsExpenseOpen(false);
-        dispatch(updateExpense({ "username": localStorage.getItem("username"), "expId": expId, "amount": expAmount, "date": expDate , "description": expDescription, "type": expType, "category": expCategory }))
+        dispatch(updateExpense({ "username": localStorage.getItem("username"), "expId": expId, "amount": expAmount, "date": expDate, "description": expDescription, "type": expType, "category": expCategory }))
         dispatch(getAllExpense(localStorage.getItem("username")))
         setExpAmount(0)
         setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
         setExpDescription("")
         setExpType("")
         setExpCategory("")
+        dispatch(getAllExpense(localStorage.getItem("username")))
     };
     const handleCancelExpense = () => {
         setIsExpenseOpen(false);
@@ -61,7 +62,7 @@ export const Expense = () => {
     const data = state.map((x) => {
         return ({
             id: x.expenseId,
-            date: (x.date).slice(0,19).replace('T', ' '),
+            date: (x.date).slice(0, 19).replace('T', ' '),
             amount: x.amount,
             description: x.description,
             type: x.type,
@@ -100,17 +101,18 @@ export const Expense = () => {
         )
     }
 
-    const DeleteExp = (username, id) => {
-        dispatch(deleteExpense({ "username": username, "expId": id }))
+    const DeleteExp = (Id) => {
+        dispatch(deleteExpense({ "username": localStorage.getItem("username"), "expId": Id }))
         dispatch(getAllExpense(localStorage.getItem("username")))
-        console.log("check fact 1: ",username);
-        console.log("check fact 2: ",id);
+        console.log("check fact 1: ", localStorage.getItem("username"));
+        console.log("check fact 2: ", expId);
+        dispatch(getAllExpense(localStorage.getItem("username")))
     }
 
     const dataTable = () => {
         return (
             <>
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -126,7 +128,7 @@ export const Expense = () => {
                         {
                             data.map((d, index) => {
                                 return (
-                                    <tr>
+                                    <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{d.date}</td>
                                         <td>{d.amount}</td>
@@ -144,7 +146,7 @@ export const Expense = () => {
                                             </Tooltip>
                                             <Tooltip title="Delete">
                                                 <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
-                                                    onClick={()=>{DeleteExp(localStorage.getItem("username"),d.id)}}
+                                                    onClick={() => { DeleteExp(d.id) }}
                                                 />
                                             </Tooltip>
                                         </td>

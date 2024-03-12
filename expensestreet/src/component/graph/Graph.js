@@ -13,7 +13,7 @@ const Graph = () => {
 
   console.log("Main graph data : ", state)
 
-  const gdata = [...new Set(state?.map((i) => i.date))]
+  const gdata = [...new Set(state?.map((i) => (i.date).slice(0, 10)))]
   gdata.sort()
 
   console.log("Gdata : ", gdata)
@@ -27,7 +27,7 @@ const Graph = () => {
       // if ((gdata[i] === state[j].date) && state[j].exptype === "Spend") {
       //   amtTemp += state[j].expamt
       // }
-      if ((gdata[i] === state[j].date)) {
+      if ((gdata[i] === (state[j].date).slice(0, 10))) {
         // amtTemp += state[j].amount
         amtTemp += Number(state[j].amount)
       }

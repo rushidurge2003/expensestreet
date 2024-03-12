@@ -53,13 +53,13 @@ const transporter = nodemailer.createTransport({
 
 app.post("/sendMail", (req, res) => {
 
-    const {email} = req.body
+    const { email } = req.body
     const mailOptions = {
         from: 'ExpensStreet <rushikeshdurge7794@gmail.com>',
         to: `${email}`,
         subject: 'Successfully Sign Up',
         // text: 'That was easy!',
-        html:`
+        html: `
             <h1>ExpenseStreet</h1>
         `
     };
@@ -291,13 +291,6 @@ app.post("/updateExpense", (req, res) => {
             if (err) {
                 res.send(err)
                 console.log("\tError in Update Expense");
-                console.log("\t\t", username);
-                console.log("\t\t", expId);
-                console.log("\t\t", amount);
-                console.log("\t\t", date);
-                console.log("\t\t", description);
-                console.log("\t\t", type);
-                console.log("\t\t", category);
             }
             else {
                 res.send(result)
@@ -309,7 +302,7 @@ app.post("/updateExpense", (req, res) => {
     }
 })
 
-app.delete("/deleteExpense", (req, res) => {
+app.post("/deleteExpense", (req, res) => {
     try {
         const { username, expId } = req.body;
         const sql = `DELETE FROM ${username}.expense WHERE expenseId=${expId}`;
@@ -323,6 +316,8 @@ app.delete("/deleteExpense", (req, res) => {
             else {
                 res.send(result)
                 console.log("\tDelete expense Successfully");
+                console.log("\t\t", username);
+                console.log("\t\t", expId);
             }
         })
     } catch (error) {
@@ -358,6 +353,25 @@ app.get("/getAllIncome/:username", (req, res) => {
             else {
                 res.json(result)
                 console.log("\tAll Income get Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/updateIncome", (req, res) => {
+    try {
+        const { username, incId, amount, date, description } = req.body
+        const sql = `UPDATE ${username}.income set amount=${amount},date="${date}",description="${description}" where incomeId=${incId}`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in Update Expense");
+            }
+            else {
+                res.send(result)
+                console.log("\tExpense Update Successfully");
             }
         })
     } catch (error) {
