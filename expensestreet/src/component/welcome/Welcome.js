@@ -4,7 +4,7 @@ import Typewriter from 'typewriter-effect'
 import { useNavigate } from 'react-router-dom'
 import usePreventZomm from '../usePreventZoom'
 import fimg from './images/first.gif'
-import card from './images/credit-cad.png'
+import card from './images/ExpenseStreet.png'
 import sdata from './images/secure-data.png'
 import bvid from './images/back-video.mp4'
 
@@ -26,10 +26,10 @@ export const Welcome = () => {
       </div>
       {/* <div className='welcome' style={{ display: "flex", justifyContent: "center" }}> */}
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <div style={{ width: "60%", backgroundColor: "white", marginTop: 120, borderTopLeftRadius: "20px", borderTopRightRadius: "20px", boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.16),0px 3px 6px 0px rgba(0,0,0,0.23)" }}>
+        <div style={{ width: "60%", backgroundColor: "white", marginTop: 100, borderTopLeftRadius: "20px", borderTopRightRadius: "20px", boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.16),0px 3px 6px 0px rgba(0,0,0,0.23)" }}>
           <div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <img src={card} alt="" draggable="false" style={{ width: 200 }} />
+              <img src={card} alt="" draggable="false" style={{ width: 300 }} />
             </div>
             {/* <h1 className='text-center' style={{ fontFamily: "Workbench, sans-serif", fontSize: "100px", color: "black", paddingTop: 20 }}>ExpenseStreet</h1> */}
             <h1 className='text-center' style={{ fontFamily: "Workbench, sans-serif", fontSize: "100px", color: "black", paddingTop: 20 }}>ExpenseStreet</h1>
