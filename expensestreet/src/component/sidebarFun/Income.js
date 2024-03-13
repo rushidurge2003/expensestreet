@@ -29,7 +29,7 @@ export const Income = () => {
     };
     const handleOkIncome = () => {
         setIsIncomeOpen(false);
-        dispatch(updateIncome({ "username": localStorage.getItem("username"), "incId": incId, "amount": incAmount, "date": incDate, "description": incDescription }))
+        dispatch(updateIncome({ "username": localStorage.getItem("username"), "incId": incId, "amount": incAmount, "date": (incDate).slice(0, 19).replace('T', ' '), "description": incDescription }))
         dispatch(getAllIncome(localStorage.getItem("username")))
         setIncAmount(0)
         setIncDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
@@ -59,11 +59,14 @@ export const Income = () => {
         return ({
             key: index,
             id: x.incomeId,
-            date: (x.date).slice(0, 19).replace('T', ' '),
+            // date: (x.date).slice(0, 19).replace('T', ' '),
+            date: x.date,
             amount: x.amount,
             description: x.description,
         })
     })
+
+    data.sort((a,b)=>(new Date(b.date) - new Date(a.date)))
 
     const incSum = () => {
         const sum = data.reduce((pre, curr) => pre + Number(curr.amount), 0)
@@ -116,7 +119,7 @@ export const Income = () => {
                                 return (
                                     <tr>
                                         <td>{index + 1}</td>
-                                        <td>{d.date}</td>
+                                        <td>{(d.date).slice(0, 10)}</td>
                                         <td>{d.amount}</td>
                                         <td>{d.description}</td>
                                         <td className='d-flex justify-content-evenly'>

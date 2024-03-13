@@ -22,26 +22,26 @@ export const Expense = () => {
     const [expAmount, setExpAmount] = useState(0)
     const [expDate, setExpDate] = useState(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     const [expDescription, setExpDescription] = useState("")
-    const [expType, setExpType] = useState("")
+    const [expPayment_Mode, setExpPayment_Mode] = useState("")
     const [expCategory, setExpCategory] = useState("")
 
     const [isExpenseOpen, setIsExpenseOpen] = useState(false);
-    const showModalExpense = (amount, date, description, type, category) => {
+    const showModalExpense = (amount, date, description, payment_mode, category) => {
         setIsExpenseOpen(true);
         setExpAmount(amount)
         setExpDate(date)
         setExpDescription(description)
-        setExpType(type)
+        setExpPayment_Mode(payment_mode)
         setExpCategory(category)
     };
     const handleOkExpense = () => {
         setIsExpenseOpen(false);
-        dispatch(updateExpense({ "username": localStorage.getItem("username"), "expId": expId, "amount": expAmount, "date": expDate, "description": expDescription, "type": expType, "category": expCategory }))
+        dispatch(updateExpense({ "username": localStorage.getItem("username"), "expId": expId, "amount": expAmount, "date": (expDate).slice(0, 19).replace('T', ' '), "description": expDescription, "payment_mode": expPayment_Mode, "category": expCategory }))
         dispatch(getAllExpense(localStorage.getItem("username")))
         setExpAmount(0)
         setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
         setExpDescription("")
-        setExpType("")
+        setExpPayment_Mode("")
         setExpCategory("")
         dispatch(getAllExpense(localStorage.getItem("username")))
     };
@@ -50,7 +50,7 @@ export const Expense = () => {
         setExpAmount(0)
         setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
         setExpDescription("")
-        setExpType("")
+        setExpPayment_Mode("")
         setExpCategory("")
     };
 
@@ -62,13 +62,16 @@ export const Expense = () => {
     const data = state.map((x) => {
         return ({
             id: x.expenseId,
-            date: (x.date).slice(0, 19).replace('T', ' '),
+            // date: (x.date).slice(0, 19).replace('T', ' '),
+            date: (x.date),
             amount: x.amount,
             description: x.description,
-            type: x.type,
+            payment_mode: x.payment_mode,
             category: x.category
         })
     })
+
+    data.sort((a,b)=>(new Date(b.date) - new Date(a.date)))
 
     const displayData = () => {
         dispatch(getAllExpense(localStorage.getItem("username")))
@@ -117,7 +120,7 @@ export const Expense = () => {
                             <th scope="col">Date</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Type</th>
+                            <th scope="col">Payment Mode</th>
                             <th scope="col">Category</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -128,16 +131,16 @@ export const Expense = () => {
                                 return (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
-                                        <td>{d.date}</td>
+                                        <td>{(d.date).slice(0, 10)}</td>
                                         <td>{d.amount}</td>
                                         <td>{d.description}</td>
-                                        <td>{d.type}</td>
+                                        <td>{d.payment_mode}</td>
                                         <td>{d.category}</td>
                                         <td className='d-flex justify-content-evenly'>
                                             <Tooltip title="Edit">
                                                 <Button type="primary" shape="circle" icon={<EditOutlined />}
                                                     onClick={() => {
-                                                        showModalExpense(d.amount, d.date, d.description, d.type, d.category)
+                                                        showModalExpense(d.amount, d.date, d.description, d.payment_mode, d.category)
                                                         setExpId(d.id)
                                                     }}
                                                 />
@@ -185,7 +188,7 @@ export const Expense = () => {
                         <Input value={expDescription} onChange={(e) => setExpDescription(e.target.value)} />
                     </Form.Item>
                     <Form.Item label="Type">
-                        <Select value={expType} onChange={(_, opt) => setExpType(opt.value)}>
+                        <Select value={expPayment_Mode} onChange={(_, opt) => setExpPayment_Mode(opt.value)}>
                             <Select.Option value="Cash">Cash</Select.Option>
                             <Select.Option value="Online">Online</Select.Option>
                             <Select.Option value="Card">Card</Select.Option>

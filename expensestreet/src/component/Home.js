@@ -5,6 +5,7 @@ import { Chatbot } from './chat/Chatbot'
 import { AddRecord } from './record/AddRecord';
 import { Expense } from './sidebarFun/Expense';
 import { Income } from './sidebarFun/Income';
+import { AllTransaction } from './sidebarFun/AllTransaction';
 import Graph from './graph/Graph';
 
 import {
@@ -37,7 +38,7 @@ const DisplayData = ({ contentNum }) => {
   if (contentNum === 3) {
     return (
       <>
-        <h1>All Transactions</h1>
+        <AllTransaction />
       </>
     )
   }

@@ -51,7 +51,7 @@ export const AddRecord = () => {
     const [expAmount, setExpAmount] = useState(0)
     const [expDate, setExpDate] = useState(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     const [expDescription, setExpDescription] = useState("")
-    const [expType, setExpType] = useState("")
+    const [expPayment_Mode, setExpPayment_Mode] = useState("")
     const [expCategory, setExpCategory] = useState("")
 
     const [isExpenseOpen, setIsExpenseOpen] = useState(false);
@@ -60,12 +60,12 @@ export const AddRecord = () => {
     };
     const handleOkExpense = () => {
         setIsExpenseOpen(false);
-        dispatch(addExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate+` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": expDescription, "type": expType, "category": expCategory }))
+        dispatch(addExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate+` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": expDescription, "payment_mode": expPayment_Mode, "category": expCategory }))
         dispatch(getAllExpense(localStorage.getItem("username")))
         setExpAmount(0)
         setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
         setExpDescription("")
-        setExpType("")
+        setExpPayment_Mode("")
         setExpCategory("")
         dispatch(getAllExpense(localStorage.getItem("username")))
     };
@@ -74,7 +74,7 @@ export const AddRecord = () => {
         setExpAmount(0)
         setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
         setExpDescription("")
-        setExpType("")
+        setExpPayment_Mode("")
         setExpCategory("")
     };
 
@@ -125,15 +125,15 @@ export const AddRecord = () => {
                     <Form.Item label="Description">
                         <Input value={expDescription} onChange={(e) => setExpDescription(e.target.value)} />
                     </Form.Item>
-                    <Form.Item label="Type">
-                        <Select onChange={(_, opt) => setExpType(opt.value)}>
+                    <Form.Item label="Payment Mode">
+                        <Select value={expPayment_Mode} onChange={(_, opt) => setExpPayment_Mode(opt.value)}>
                             <Select.Option value="Cash">Cash</Select.Option>
                             <Select.Option value="Online">Online</Select.Option>
                             <Select.Option value="Card">Card</Select.Option>
                         </Select>
                     </Form.Item>
                     <Form.Item label="Category">
-                        <Select onChange={(_, opt) => setExpCategory(opt.value)}>
+                        <Select value={expCategory} onChange={(_, opt) => setExpCategory(opt.value)}>
                             <Select.Option value="Utilities">Utilities</Select.Option>
                             <Select.Option value="Food">Food</Select.Option>
                             <Select.Option value="Entertainment">Entertainment</Select.Option>

@@ -40,7 +40,7 @@ else {
 }
 
 // 
-//  Mail
+//  Mail after Successfully SignUp
 // 
 
 const transporter = nodemailer.createTransport({
@@ -142,14 +142,16 @@ app.post("/creatDataBase", (req, res) => {
         amount VARCHAR(45) NOT NULL,
         date DATETIME NOT NULL,
         description VARCHAR(45) NOT NULL,
-        type VARCHAR(45) NOT NULL,
+        payment_mode VARCHAR(45) NOT NULL,
         category VARCHAR(45) NOT NULL,
+        type VARCHAR(45) NOT NULL DEFAULT 'expense',
         PRIMARY KEY (expenseId));
 
     CREATE TABLE ${username}.income (
         incomeId INT NOT NULL AUTO_INCREMENT,
         amount VARCHAR(45) NOT NULL,
         description VARCHAR(45) NOT NULL,
+        type VARCHAR(45) NOT NULL DEFAULT 'income',
         date DATETIME NOT NULL,
         PRIMARY KEY (incomeId));
     `;
@@ -250,8 +252,8 @@ app.get("/userprofile/:username", (req, res) => {
 
 app.post("/addExpense", (req, res) => {
     try {
-        const { username, amount, date, description, type, category } = req.body
-        const sql = `insert into ${username}.expense(amount,date,description,type,category) values(${amount},"${date}","${description}","${type}","${category}")`
+        const { username, amount, date, description, payment_mode,category  } = req.body
+        const sql = `insert into ${username}.expense(amount,date,description,payment_mode,category) values(${amount},"${date}","${description}","${payment_mode}","${category}")`
         conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
@@ -285,8 +287,8 @@ app.get("/getAllExpense/:username", (req, res) => {
 
 app.post("/updateExpense", (req, res) => {
     try {
-        const { username, expId, amount, date, description, type, category } = req.body
-        const sql = `UPDATE ${username}.expense set amount=${amount},date="${date}",description="${description}",type="${type}",category="${category}" where expenseId=${expId}`
+        const { username, expId, amount, date, description, payment_mode, category } = req.body
+        const sql = `UPDATE ${username}.expense set amount=${amount},date="${date}",description="${description}",payment_mode="${payment_mode}",category="${category}" where expenseId=${expId}`
         conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
@@ -367,7 +369,7 @@ app.post("/updateIncome", (req, res) => {
         conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
-                console.log("\tError in Update Expense");
+                console.log("\tError in Update Income");
             }
             else {
                 res.send(result)

@@ -71,7 +71,7 @@ export const Login = () => {
           </div>
           <div className='mb-3 d-flex justify-content-between'>
             <div><input type="checkbox" checked={viewpassword} onClick={()=>{setViewPassword(!viewpassword)}}/> <small>View Password</small></div>
-            <div><Link to="#">forget password</Link></div>
+            <div><Link to="/forgetpassword">forget password</Link></div>
           </div>
           <button type="submit" className="btn btn-primary" onClick={LoginProceed}>Login</button>
         </form>
