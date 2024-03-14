@@ -24,6 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Mysql Connection
 const conn = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -39,10 +40,7 @@ else {
     console.log("Failed to Connect");
 }
 
-// 
-//  Mail after Successfully SignUp
-// 
-
+// gmail connection
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -50,6 +48,11 @@ const transporter = nodemailer.createTransport({
         pass: 'ypha quso uppa knbz'
     }
 });
+
+// =============================
+//  Mail after Successfully SignUp
+// =============================
+
 
 app.post("/sendMail", (req, res) => {
 
@@ -61,6 +64,55 @@ app.post("/sendMail", (req, res) => {
         // text: 'That was easy!',
         html: `
             <h1>ExpenseStreet</h1>
+        `
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('\tEmail sent: ' + info.response);
+        }
+    });
+})
+
+// =====================
+
+// ======================
+// 
+//  Forget Password
+//  
+// =======================
+
+app.get("/getUserEmail/:username", (req, res) => {
+    try {
+        const username = req.params.username
+        const sql = "select * from user where username=?"
+        conn.query(sql, [username], (err, result) => {
+            if (err) {
+                res.send(err)
+            } else {
+                if (result.length > 0) {
+                    res.send({ mail: result[0].email})
+                }
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/sendOtpMail", (req, res) => {
+
+    const { email,otp } = req.body
+    const mailOptions = {
+        from: 'ExpensStreet <rushikeshdurge7794@gmail.com>',
+        to: `${email}`,
+        subject: 'Reset Password OTP',
+        // text: 'That was easy!',
+        html: `
+            <h1>ExpenseStreet</h1>
+            <p>OTP : ${otp}</p>
         `
     };
 
@@ -252,7 +304,7 @@ app.get("/userprofile/:username", (req, res) => {
 
 app.post("/addExpense", (req, res) => {
     try {
-        const { username, amount, date, description, payment_mode,category  } = req.body
+        const { username, amount, date, description, payment_mode, category } = req.body
         const sql = `insert into ${username}.expense(amount,date,description,payment_mode,category) values(${amount},"${date}","${description}","${payment_mode}","${category}")`
         conn.query(sql, (err, result) => {
             if (err) {
