@@ -71,7 +71,7 @@ export const Signup = () => {
     }
 
     return (
-        <div style={{ position: "absolute", top: "3%", left: "30%" }}>
+        <div style={{ position: "absolute", top: 70, left: "30%" }}>
             <div
                 style={{
                     width: "500px"
@@ -99,7 +99,7 @@ export const Signup = () => {
                     <div className="mb-3">
                         <label for="exampleInputPassword1" className="form-label">Password</label>
                         <input type={viewpassword ? "text" : "password"} value={password} className="form-control" id="exampleInputPassword1" onChange={(e) => { setPassword(e.target.value) }} />
-                        <div><input type="checkbox" checked={viewpassword} onClick={() => { setViewPassword(!viewpassword) }} /> <small>View Password</small></div>
+                        <div><input type="checkbox" checked={viewpassword} onClick={() => { setViewPassword(!viewpassword) }} /> <small>Show Password</small></div>
                     </div>
                     <div className="mb-3 d-flex">
                         <div style={{ margin: "auto" }}>

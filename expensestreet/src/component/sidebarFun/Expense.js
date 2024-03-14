@@ -63,15 +63,16 @@ export const Expense = () => {
         return ({
             id: x.expenseId,
             // date: (x.date).slice(0, 19).replace('T', ' '),
-            date: (x.date),
+            date: x.date,
             amount: x.amount,
             description: x.description,
             payment_mode: x.payment_mode,
-            category: x.category
+            category: x.category,
+            type: x.type
         })
     })
 
-    data.sort((a,b)=>(new Date(b.date) - new Date(a.date)))
+    data.sort((a, b) => (new Date(b.date) - new Date(a.date)))
 
     const displayData = () => {
         dispatch(getAllExpense(localStorage.getItem("username")))
@@ -104,8 +105,8 @@ export const Expense = () => {
         )
     }
 
-    const DeleteExp = (Id) => {
-        dispatch(deleteExpense({ "username": localStorage.getItem("username"), "expId": Id }))
+    const DeleteExp = (Id, amount, date, description, payment_mode, category, type) => {
+        dispatch(deleteExpense({ "username": localStorage.getItem("username"), "expId": Id, "amount": amount, "date": date, "description": description, "payment_mode": payment_mode, "category": category, "type": type }))
         dispatch(getAllExpense(localStorage.getItem("username")))
         dispatch(getAllExpense(localStorage.getItem("username")))
     }
@@ -147,7 +148,7 @@ export const Expense = () => {
                                             </Tooltip>
                                             <Tooltip title="Delete">
                                                 <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
-                                                    onClick={() => { DeleteExp(d.id) }}
+                                                    onClick={() => { DeleteExp(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.payment_mode, d.category, d.type) }}
                                                 />
                                             </Tooltip>
                                         </td>

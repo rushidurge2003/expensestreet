@@ -2,6 +2,8 @@ import React from 'react'
 
 export const About = () => {
   return (
-    <div>About</div>
+    <>
+      <div style={{position:"relative",top:70}}>About</div>
+    </>
   )
 }

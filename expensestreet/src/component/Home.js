@@ -6,6 +6,7 @@ import { AddRecord } from './record/AddRecord';
 import { Expense } from './sidebarFun/Expense';
 import { Income } from './sidebarFun/Income';
 import { AllTransaction } from './sidebarFun/AllTransaction';
+import { DeletedTransaction } from './sidebarFun/DeletedTransaction';
 import Graph from './graph/Graph';
 
 import {
@@ -45,7 +46,7 @@ const DisplayData = ({ contentNum }) => {
   if (contentNum === 4) {
     return (
       <>
-        <h1>Deleted Transaction</h1>
+        <DeletedTransaction />
       </>
     )
   }

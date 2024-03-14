@@ -278,7 +278,7 @@ export const AllTransaction = () => {
     return (
         <>
             <div className='d-flex justify-content-between'>
-                <div><h5 style={{ marginTop: "50%" }}>AllTransaction</h5></div>
+                <div><h5 style={{ marginTop: "40%" }}>AllTransaction</h5></div>
                 <div className='d-flex'>
                     <div>{displayAllIncome()}</div>
                     <div>{displayAllExpense()}</div>

@@ -93,7 +93,7 @@ app.get("/getUserEmail/:username", (req, res) => {
                 res.send(err)
             } else {
                 if (result.length > 0) {
-                    res.send({ mail: result[0].email})
+                    res.send({ mail: result[0].email })
                 }
             }
         })
@@ -104,7 +104,7 @@ app.get("/getUserEmail/:username", (req, res) => {
 
 app.post("/sendOtpMail", (req, res) => {
 
-    const { email,otp } = req.body
+    const { email, otp } = req.body
     const mailOptions = {
         from: 'ExpensStreet <rushikeshdurge7794@gmail.com>',
         to: `${email}`,
@@ -123,6 +123,24 @@ app.post("/sendOtpMail", (req, res) => {
             console.log('\tEmail sent: ' + info.response);
         }
     });
+})
+
+app.post("/resetPassword", (req, res) => {
+    try {
+        const { password, username } = req.body
+        const sql = `UPDATE user SET password="${password}" where username="${username}"`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            }
+            else {
+                res.send(result)
+                console.log("\tPassword Reset Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
 })
 
 
@@ -206,7 +224,17 @@ app.post("/creatDataBase", (req, res) => {
         type VARCHAR(45) NOT NULL DEFAULT 'income',
         date DATETIME NOT NULL,
         PRIMARY KEY (incomeId));
+
+    CREATE TABLE ${username}.deleteTransaction (
+        deleteId INT NOT NULL,
+        amount VARCHAR(45) NOT NULL,
+        date DATETIME NOT NULL,
+        description VARCHAR(45) NOT NULL,
+        payment_mode VARCHAR(45) NOT NULL,
+        category VARCHAR(45) NOT NULL,
+        type VARCHAR(45) NOT NULL);
     `;
+
     conn.query(sql, (err, result) => {
         if (err) {
             res.send(err)
@@ -358,8 +386,10 @@ app.post("/updateExpense", (req, res) => {
 
 app.post("/deleteExpense", (req, res) => {
     try {
-        const { username, expId } = req.body;
-        const sql = `DELETE FROM ${username}.expense WHERE expenseId=${expId}`;
+        const { username, expId,amount,date,description,payment_mode,category,type } = req.body;
+        const sql = `DELETE FROM ${username}.expense WHERE expenseId=${expId}; 
+                    insert into ${username}.deleteTransaction(deleteId,amount,date,description,payment_mode,category,type) values(${expId},${amount},"${date}","${description}","${payment_mode}","${category}","${type}") 
+                    `;
         conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)

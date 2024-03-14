@@ -53,7 +53,7 @@ export const Login = () => {
 
 
   return (
-    <div style={{ position: "absolute", top: "10%", left: "30%" }}>
+    <div style={{ position: "absolute", top: 80, left: "30%" }}>
       <div style={{ width: "500px" }}>
         <h2 className='text-center'>Login</h2>
         <form>

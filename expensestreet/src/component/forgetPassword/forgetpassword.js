@@ -3,8 +3,14 @@ import { useState } from 'react'
 import { message } from 'antd'
 import axios from 'axios'
 import randn from 'randn'
+import { useNavigate } from 'react-router-dom'
+import usePreventZoom from '../usePreventZoom'
 
 const ForgetPassword = () => {
+    
+    usePreventZoom()
+    const navigate = useNavigate()
+
     const [username, setUsername] = useState("")
     const [otp, setOtp] = useState(0)
     const [userEnterOtp, setUserEnterOtp] = useState("")
@@ -38,20 +44,22 @@ const ForgetPassword = () => {
     const validateOtp = (e) => {
         e.preventDefault()
         if (otp === userEnterOtp) {
-            message.success("Otp match")
+            message.success("Otp Validate Successfully")
             setValidateBtnDisable(true)
             setValidOtp(true)
         }
         else {
-            message.error("Otp not match")
+            message.error("Please enter valid otp")
         }
     }
 
-    const resetPasswordFun = (e)=>{
+    const resetPasswordFun = async(e)=>{
         e.preventDefault()
         if(resetPassword === resetConfirmPassword)
         {
-
+          await axios.post("http://localhost:9000/resetPassword",{"password":resetConfirmPassword,"username":username})
+          message.success("Password reset successfully")
+          navigate("/login")
         }
         else
         {

@@ -32,7 +32,7 @@ function App() {
           </>
           :
           <>
-            {/* <WelcomeNavbar /> */}
+            <WelcomeNavbar />
             <Routes>
               <Route path="/" Component={Welcome} />
               <Route path="/login" Component={Login} />
