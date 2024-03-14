@@ -63,10 +63,11 @@ export const Income = () => {
             date: x.date,
             amount: x.amount,
             description: x.description,
+            type: x.type
         })
     })
 
-    data.sort((a,b)=>(new Date(b.date) - new Date(a.date)))
+    data.sort((a, b) => (new Date(b.date) - new Date(a.date)))
 
     const incSum = () => {
         const sum = data.reduce((pre, curr) => pre + Number(curr.amount), 0)
@@ -94,8 +95,8 @@ export const Income = () => {
         )
     }
 
-    const DeleteInc = (Id) => {
-        dispatch(deleteIncome({ "username": localStorage.getItem("username"), "incId": Id }))
+    const DeleteInc = (Id, amount, date, description, type) => {
+        dispatch(deleteIncome({ "username": localStorage.getItem("username"), "incId": Id, "amount": amount, "date": date, "description": description, "type": type }))
         dispatch(getAllIncome(localStorage.getItem("username")))
         dispatch(getAllIncome(localStorage.getItem("username")))
     }
@@ -132,8 +133,8 @@ export const Income = () => {
                                                 />
                                             </Tooltip>
                                             <Tooltip title="Delete">
-                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />} 
-                                                    onClick={()=>{DeleteInc(d.id)}}
+                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                    onClick={() => { DeleteInc(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.type) }}
                                                 />
                                             </Tooltip>
                                         </td>

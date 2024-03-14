@@ -3,7 +3,8 @@ import axios from "axios";
 
 const initialState = {
     expenseData: [],
-    incomeData: []
+    incomeData: [],
+    deleteTransData: []
 }
 
 const RecordSlice = createSlice({
@@ -28,6 +29,14 @@ const RecordSlice = createSlice({
             state.incomeData = action.payload.data
         });
         builder.addCase(getAllIncome.rejected, (state, action) => {
+        });
+        // For Deleted Transaction Data
+        builder.addCase(getdeleteTransData.pending, (state, action) => {
+        });
+        builder.addCase(getdeleteTransData.fulfilled, (state, action) => {
+            state.deleteTransData = action.payload.data
+        });
+        builder.addCase(getdeleteTransData.rejected, (state, action) => {
         });
     }
 })
@@ -89,5 +98,57 @@ export const deleteIncome = createAsyncThunk(
         await axios.post("http://localhost:9000/deleteIncome", { ...data })
     }
 )
+
+// =====================
+// 
+//  Deleted Tab Operation
+// 
+// =====================
+
+export const getdeleteTransData = createAsyncThunk(
+    "getdeleteTransData",
+    async (username) => {
+        try {
+            const result = await axios.get("http://localhost:9000/getdeleteTransData/" + username)
+            return result
+        } catch (error) {
+
+        }
+    }
+)
+
+export const deleteDeletedTrans = createAsyncThunk(
+    "deleteDeletedTrans",
+    async (data) => {
+        try {
+            await axios.post("http://localhost:9000/deleteDeletedTrans", { ...data })
+        } catch (error) {
+
+        }
+    }
+)
+
+export const deletRestoreExpense = createAsyncThunk(
+    "deletRestoreExpense",
+    async (data) => {
+        try {
+            await axios.post("http://localhost:9000/deletRestoreExpense", { ...data })
+        } catch (error) {
+
+        }
+    }
+)
+
+export const deleteRestoreIncome = createAsyncThunk(
+    "deleteRestoreIncome",
+    async (data) => {
+        try {
+            await axios.post("http://localhost:9000/deleteRestoreIncome", { ...data })
+        } catch (error) {
+
+        }
+    }
+)
+
 
 export default RecordSlice.reducer

@@ -18,8 +18,8 @@ export const WelcomeNavbar = () => {
               <img src={icon} alt="Logo" width="30" height="24" className="d-inline-block align-text-top" />
               <b>ExpenseStreet</b>
             </Link>
-            <Button type='text' block onClick={() => { navigate("/about") }}><strong style={{ color: "black" }}>About</strong></Button>
-            <Button type='text' block className='text-center'><GithubOutlined size={10} /></Button>
+            <Button type='text' style={{paddingTop:8}} onClick={() => { navigate("/about") }}><strong style={{ color: "black" }}>About</strong></Button>
+            <Button type='text' block><GithubOutlined size={10}/></Button>
           </div>
           <div className='d-flex'>
           </div>

@@ -10,6 +10,7 @@ import {
     Input,
     Select,
     DatePicker,
+    Button, Tooltip
 } from 'antd'
 import {
     PlusOutlined,
@@ -32,7 +33,7 @@ export const AddRecord = () => {
     };
     const handleOkIncome = () => {
         setIsIncomeOpen(false);
-        dispatch(addIncome({ "username": localStorage.getItem("username"), "amount": incAmount, "date": incDate+` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": incDescription }))
+        dispatch(addIncome({ "username": localStorage.getItem("username"), "amount": incAmount, "date": incDate + ` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": incDescription }))
         dispatch(getAllIncome(localStorage.getItem("username")))
         setIncAmount(0)
         setIncDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
@@ -60,7 +61,7 @@ export const AddRecord = () => {
     };
     const handleOkExpense = () => {
         setIsExpenseOpen(false);
-        dispatch(addExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate+` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": expDescription, "payment_mode": expPayment_Mode, "category": expCategory }))
+        dispatch(addExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate + ` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": expDescription, "payment_mode": expPayment_Mode, "category": expCategory }))
         dispatch(getAllExpense(localStorage.getItem("username")))
         setExpAmount(0)
         setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
@@ -87,8 +88,16 @@ export const AddRecord = () => {
                 icon={<PlusOutlined />}
                 tooltip={<><div>Record your Expense/Income</div></>}
             >
-                <FloatButton tooltip={<><div>Income</div></>} icon={<CommentOutlined />} onClick={showModalIncome} />
-                <FloatButton tooltip={<><div>Expense</div></>} icon={<CommentOutlined />} onClick={showModalExpense} />
+                {/* <Button type='primary' style={{marginBottom:5}}>Click</Button>
+                <Button type='primary' danger style={{marginBottom:0}}>Click</Button> */}
+                <Tooltip title="Add Income" open placement='left'>
+                    <FloatButton icon={<CommentOutlined />} onClick={showModalIncome} />
+                </Tooltip>
+                <Tooltip title="Add Expense" open placement='left'>
+                    <FloatButton icon={<CommentOutlined />} onClick={showModalIncome} />
+                </Tooltip>
+                {/* <FloatButton tooltip={<><div>Income</div></>} icon={<CommentOutlined />} onClick={showModalIncome} />
+                <FloatButton tooltip={<><div>Expense</div></>} icon={<CommentOutlined />} onClick={showModalExpense} /> */}
             </FloatButton.Group>
 
 

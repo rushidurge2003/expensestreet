@@ -226,13 +226,15 @@ app.post("/creatDataBase", (req, res) => {
         PRIMARY KEY (incomeId));
 
     CREATE TABLE ${username}.deleteTransaction (
+        deletePermantID INT NOT NULL AUTO_INCREMENT,
         deleteId INT NOT NULL,
         amount VARCHAR(45) NOT NULL,
         date DATETIME NOT NULL,
         description VARCHAR(45) NOT NULL,
-        payment_mode VARCHAR(45) NOT NULL,
-        category VARCHAR(45) NOT NULL,
-        type VARCHAR(45) NOT NULL);
+        payment_mode VARCHAR(45),
+        category VARCHAR(45),
+        type VARCHAR(45) NOT NULL,
+        PRIMARY KEY (deletePermantID));
     `;
 
     conn.query(sql, (err, result) => {
@@ -386,7 +388,7 @@ app.post("/updateExpense", (req, res) => {
 
 app.post("/deleteExpense", (req, res) => {
     try {
-        const { username, expId,amount,date,description,payment_mode,category,type } = req.body;
+        const { username, expId, amount, date, description, payment_mode, category, type } = req.body;
         const sql = `DELETE FROM ${username}.expense WHERE expenseId=${expId}; 
                     insert into ${username}.deleteTransaction(deleteId,amount,date,description,payment_mode,category,type) values(${expId},${amount},"${date}","${description}","${payment_mode}","${category}","${type}") 
                     `;
@@ -465,8 +467,10 @@ app.post("/updateIncome", (req, res) => {
 
 app.post("/deleteIncome", (req, res) => {
     try {
-        const { username, incId } = req.body;
-        const sql = `DELETE FROM ${username}.income WHERE incomeId=${incId}`;
+        const { username, incId, amount, date, description, type } = req.body;
+        const sql = `DELETE FROM ${username}.income WHERE incomeId=${incId};
+        insert into ${username}.deleteTransaction(deleteId,amount,date,description,type) values(${incId},${amount},"${date}","${description}","${type}")
+        `;
         conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
@@ -477,6 +481,83 @@ app.post("/deleteIncome", (req, res) => {
             else {
                 res.send(result)
                 console.log("\tDelete expense Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+// =================
+// 
+// Deleted All Transaction Data
+// 
+// =================
+
+app.get("/getdeleteTransData/:username", (req, res) => {
+    try {
+        const username = req.params.username
+        const sql = `SELECT * FROM ${username}.deletetransaction`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            }
+            else {
+                res.send(result)
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/deleteDeletedTrans", (req, res) => {
+    try {
+        const { username, delId } = req.body
+        const sql = `DELETE FROM ${username}.deletetransaction WHERE deletePermantID = ${delId}`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(result)
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/deletRestoreExpense", (req, res) => {
+    try {
+        const { username, expId, amount, date, description, payment_mode, category } = req.body
+        const sql = `insert into ${username}.expense(expenseId,amount,date,description,payment_mode,category) values(${expId},${amount},"${date}","${description}","${payment_mode}","${category}")`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError expense restore");
+            }
+            else {
+                res.send(result)
+                console.log("\tSuccess expense restore");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/deleteRestoreIncome", (req, res) => {
+    try {
+        const { username, incId, amount, date, description } = req.body
+        const sql = `insert into ${username}.income(incomeId,amount,date,description) values(${incId},${amount},"${date}","${description}")`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError income restore");
+            }
+            else {
+                res.send(result)
+                console.log("\tSuccess income restore");
             }
         })
     } catch (error) {
