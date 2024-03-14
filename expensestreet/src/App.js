@@ -10,7 +10,7 @@ import { Profile } from "./component/profile/Profile";
 import { Notification } from "./component/notification/Notification";
 import { WelcomeNavbar } from "./component/welcome/WelcomeNavbar";
 import { About } from "./component/welcome/About";
-import { Forgetpassword } from "./component/forgetPassword/Forgetpassword";
+import ForgetPassword from "./component/forgetPassword/ForgetPassword";
 
 function App() {
   const state = useSelector((state) => state)
@@ -38,7 +38,7 @@ function App() {
               <Route path="/login" Component={Login} />
               <Route path="/signup" Component={Signup} />
               <Route path="/about" Component={About} />
-              <Route path="/forgetpassword" Component={Forgetpassword} />
+              <Route path="/forgetpassword" Component={ForgetPassword} />
               <Route path="*" Component={Login} />
             </Routes>
           </>

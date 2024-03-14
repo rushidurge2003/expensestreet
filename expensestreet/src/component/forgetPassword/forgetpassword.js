@@ -1,136 +1,116 @@
-// import React from 'react'
-// import axios from 'axios'
-// import randn from 'randn'
-// import { useState } from 'react'
-// import { message } from 'antd'
-
-// export const Forgetpassword = () => {
-//   const [otp, setOtp] = useState(0)
-//   const [username, setUsername] = useState("")
-//   const [btnDisable, setBtnDisable] = useState(false)
-//   const [userEnterOtp, setUserEnterOtp] = useState("")
-//   const [otpMatch, setOtpMatch] = useState(false)
-//   const [email, setEmail] = useState("")
-
-//   const sendMailOtpFun = async (e) => {
-//     e.preventDefault()
-//     // await axios.post("http://localhost:9000/sendOtpMail", { "email": email, "otp": otp })
-//     setOtp(randn(6))
-//     // console.log("Email : ", email);
-//     console.log("OTP : ", otp);
-//   }
-
-//   const generateOTP = async (e) => {
-//     try {
-//       e.preventDefault()
-//       if (username === "") {
-//         message.warning("Please enter username")
-//       }
-//       else {
-//         // setOtp(randn(6))
-//         const result = await axios.get("http://localhost:9000/userexist/" + username)
-//         console.log("gtp Result : ",result);
-//         if (result.data.exist) {
-//           // const result1 = await axios.get("http://localhost:9000/getUserEmail/" + username)
-//           // setEmail(result1.data.mail)
-//           // console.log("Email : ", email);
-//           console.log("OTP : ", otp);
-//           // console.log("This is gotp");
-//           setBtnDisable(true)
-
-//           // setTimeout(cleanOtp,3000)
-//           // sendMailOtpFun()
-//         }
-//         else {
-//           message.error("User not exist")
-//         }
-//       }
-//     } catch (error) {
-
-//     }
-//   }
-
-//   const validateOtp = async (e) => {
-//     e.preventDefault()
-//     if (userEnterOtp === "") {
-//       message.warning("Please enter OTP")
-//     }
-//     else if (userEnterOtp.length < 6) {
-//       message.warning("Please enter 6 digit OTP")
-//     }
-//     else if (otp === userEnterOtp) {
-//       message.success("OTP Match")
-//       setOtpMatch(true)
-//     }
-//   }
-
-//   return (
-//     <>
-//       <div style={{ position: "absolute", top: "10%", left: "30%" }}>
-//         <div
-//           style={{
-//             width: "500px"
-//           }}
-//         >
-//           <h2 className='text-center'>Set New Password</h2>
-//           <form>
-//             <div className='row'>
-//               <label htmlForfor="exampleInputEmail1" className="form-label">Username</label>
-//               <div className="mb-3 col-8">
-//                 <input type="username" value={username} onChange={(e) => { setUsername(e.target.value) }} className="form-control" id="exampleInputEmail1" />
-//               </div>
-//               <div className='col-4'>
-//                 <button type="submit" disabled={btnDisable} className="btn btn-primary" onClick={generateOTP}>Generate OTP</button>
-//               </div>
-//             </div>
-//             <h5>Email : {email}</h5>
-//             <h5>OTP : {otp}</h5>
-//             {
-//               otp === 0 ?
-//                 "" :
-//                 <>
-//                   <div className='row'>
-//                     <label htmlForfor="exampleInputPassword1" className="form-label">Enter OTP</label>
-//                     <div className="mb-3 col-8">
-//                       {/* <br /> */}
-//                       <input type="text" value={userEnterOtp} onChange={(e) => { setUserEnterOtp(e.target.value) }} maxLength={6} className="form-control" id="exampleInputPassword1" />
-//                     </div>
-//                     <div className='col-4'>
-//                       <button type="submit" className="btn btn-primary" onClick={validateOtp}>Validate OTP</button>
-//                     </div>
-//                   </div>
-//                 </>
-//             }
-//             {
-//               otpMatch ?
-//                 <>{email}</> : ""
-//             }
-//           </form>
-//         </div>
-//       </div>
-//     </>
-//   )
-// }
-
-
 import React from 'react'
 import { useState } from 'react'
-const randn = require('randn')
+import { message } from 'antd'
+import axios from 'axios'
+import randn from 'randn'
 
-export const Forgetpassword = () => {
-  const [otp,setOtp] = useState(0)
+const ForgetPassword = () => {
+    const [username, setUsername] = useState("")
+    const [otp, setOtp] = useState(0)
+    const [userEnterOtp, setUserEnterOtp] = useState("")
+    const [generateBtnDisable, setGenerateBtnDisable] = useState(false)
+    const [validateBtnDisable, setValidateBtnDisable] = useState(false)
+    const [validOtp, setValidOtp] = useState(false)
+    const [viewpassword, setViewpassword] = useState(false)
+    const [resetPassword, setResetPassword] = useState("")
+    const [resetConfirmPassword, setResetConfirmPassword] = useState("")
 
-  const getOtp = (e)=>{
-    console.log("OTP 1 : ",otp);
-    setOtp(randn(6))
-    console.log("OTP 2 : ",otp);
-  }
+    const generateOtp = async (e) => {
+        e.preventDefault()
+        if (username === "") {
+            message.warning("Please enter username")
+        }
+        else {
+            const result = await axios.get("http://localhost:9000/userexist/" + username)
+            if (result.data.exist) {
+                setGenerateBtnDisable(true)
+                const result1 = await axios.get("http://localhost:9000/getUserEmail/" + username)
+                const OTP = randn(6)
+                setOtp(OTP)
+                await axios.post("http://localhost:9000/sendOtpMail", { "email": result1.data.mail, "otp": OTP })
+            }
+            else {
+                message.error("username no exist")
+            }
+        }
+    }
 
-  return (
-    <>
-      <input type="button" value="Submit" onClick={getOtp} />
-      <h5>OTP : {otp}</h5>
-    </>
-  )
+    const validateOtp = (e) => {
+        e.preventDefault()
+        if (otp === userEnterOtp) {
+            message.success("Otp match")
+            setValidateBtnDisable(true)
+            setValidOtp(true)
+        }
+        else {
+            message.error("Otp not match")
+        }
+    }
+
+    const resetPasswordFun = (e)=>{
+        e.preventDefault()
+        if(resetPassword === resetConfirmPassword)
+        {
+
+        }
+        else
+        {
+            message.error("Password and Confirm Password doesn't match")
+        }
+    }
+
+    return (
+        <>
+            <div style={{ position: "absolute", top: "10%", left: "30%" }}>
+                <div style={{ width: "500px" }}>
+                    <h2 className='text-center'>Reset Password</h2>
+                    <form>
+                        <div className="mb-3 row">
+                            <label htmlForfor="exampleInputEmail1" className="form-label">Username</label>
+                            <div className='col-8'>
+                                <input type="username" value={username} className="form-control" id="exampleInputEmail1" onChange={(e) => { setUsername(e.target.value) }} />
+                            </div>
+                            <div className='col-4'>
+                                <button type="submit" disabled={generateBtnDisable} className="btn btn-primary" onClick={generateOtp}>Generate Otp</button>
+                            </div>
+                        </div>
+                        {
+                            otp === 0 ?
+                                "" :
+                                <div className="mb-3 row">
+                                    <label htmlForfor="exampleInputPassword1" className="form-label">Enter OTP</label>
+                                    <div className='col-8'>
+                                        <input type="text" value={userEnterOtp} className="form-control" id="exampleInputPassword1" onChange={(e) => { setUserEnterOtp(e.target.value) }} />
+                                    </div>
+                                    <div className='col-4'>
+                                        <button type="submit" disabled={validateBtnDisable} className="btn btn-primary" onClick={validateOtp}>Validate Otp</button>
+                                    </div>
+                                </div>
+                        }
+                        {
+                            validOtp ?
+                                <>
+                                    <div>
+                                        <div className="mb-3">
+                                            <label htmlForfor="exampleInputPassword1" className="form-label">Password</label>
+                                            <input type={viewpassword ? "text" : "password"} value={resetPassword} className="form-control" id="exampleInputPassword1" onChange={(e) => { setResetPassword(e.target.value) }} />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlForfor="exampleInputPassword1" className="form-label">Confirm Password</label>
+                                            <input type={viewpassword ? "text" : "password"} value={resetConfirmPassword} className="form-control" id="exampleInputPassword1" onChange={(e) => { setResetConfirmPassword(e.target.value) }} />
+                                        </div>
+                                        <div><input type="checkbox" checked={viewpassword} onClick={() => { setViewpassword(!viewpassword) }} /> <small>Show Password</small></div>
+                                        <div className='d-flex justify-content-center'>
+                                            <button type="submit" className="btn btn-primary" onClick={resetPasswordFun}>Reset</button>
+                                        </div>
+                                    </div>
+                                </> : ""
+                        }
+                    </form>
+                </div>
+            </div>
+        </>
+    )
 }
 
+export default ForgetPassword

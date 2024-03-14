@@ -13,7 +13,7 @@ export const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [viewpassword, setViewPassword] = useState(false)
-  
+
 
   const LoginProceed = async (e) => {
     try {
@@ -54,11 +54,7 @@ export const Login = () => {
 
   return (
     <div style={{ position: "absolute", top: "10%", left: "30%" }}>
-      <div
-        style={{
-          width: "500px"
-        }}
-      >
+      <div style={{ width: "500px" }}>
         <h2 className='text-center'>Login</h2>
         <form>
           <div className="mb-3">
@@ -67,10 +63,10 @@ export const Login = () => {
           </div>
           <div className="mb-3">
             <label htmlForfor="exampleInputPassword1" className="form-label">Password</label>
-            <input type={viewpassword ?"text":"password"} value={password} className="form-control" id="exampleInputPassword1" onChange={(e) => { setPassword(e.target.value) }} />
+            <input type={viewpassword ? "text" : "password"} value={password} className="form-control" id="exampleInputPassword1" onChange={(e) => { setPassword(e.target.value) }} />
           </div>
           <div className='mb-3 d-flex justify-content-between'>
-            <div><input type="checkbox" checked={viewpassword} onClick={()=>{setViewPassword(!viewpassword)}}/> <small>View Password</small></div>
+            <div><input type="checkbox" checked={viewpassword} onClick={() => { setViewPassword(!viewpassword) }} /> <small>Show Password</small></div>
             <div><Link to="/forgetpassword">forget password</Link></div>
           </div>
           <button type="submit" className="btn btn-primary" onClick={LoginProceed}>Login</button>
@@ -79,6 +75,6 @@ export const Login = () => {
           <div className='text-center' style={{ marginTop: '10%' }}>Don't have an account ?<Link to="/signup">Sign Up</Link></div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
