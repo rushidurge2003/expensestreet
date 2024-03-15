@@ -1,13 +1,30 @@
 import Chart from "chart.js/auto";
-import { CategoryScale } from "chart.js";
-import { useState } from "react";
-import LineChart from "./LineChart";
+import { CategoryScale, elements } from "chart.js"
+import { ExpenseChart } from "./ExpenseChart";
+import { IncomeChart } from "./IncomeChart";
+import PaymentModeGraph from "./PaymentModeGraph"
 import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { Select } from "antd";
+
+import CanvasJSReact from '@canvasjs/react-charts';
+
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 Chart.register(CategoryScale);
 
 
 const Graph = () => {
+
+  const [contentNum, setContentNum] = useState("Expense Chart")
+  const [totalExpAmt, setTotalExpAmt] = useState(0)
+
+  useEffect(() => {
+    state1.forEach(element => {
+      setTotalExpAmt((totalExpAmt) => totalExpAmt + Number(element.amount))
+    });
+  }, [])
 
   const state1 = useSelector((state) => state.RecordSliceReducer.expenseData)
   const state2 = useSelector((state) => state.RecordSliceReducer.incomeData)
@@ -20,6 +37,23 @@ const Graph = () => {
 
   const SpendGraphData = []
   const IncomeGraphData = []
+  const PaymentModeData = {
+    Cash: {
+      Payment_Mode: "Cash",
+      amount: 0,
+      percent: 0
+    },
+    Online: {
+      Payment_Mode: "Online",
+      amount: 0,
+      percent: 0
+    },
+    Card: {
+      Payment_Mode: "Card",
+      amount: 0,
+      percent: 0
+    }
+  }
 
   for (let i = 0; i < edata.length; i++) {
     let amtTemp = 0
@@ -28,7 +62,7 @@ const Graph = () => {
         amtTemp += Number(state1[j].amount)
       }
     }
-    SpendGraphData.push({ date: edata[i], amount: amtTemp })
+    SpendGraphData.push({ y: amtTemp, label: "" + edata[i] })
   }
 
   for (let i = 0; i < idata.length; i++) {
@@ -38,69 +72,59 @@ const Graph = () => {
         amtTemp += Number(state2[j].amount)
       }
     }
-    IncomeGraphData.push({ date: idata[i], amount: amtTemp })
+    IncomeGraphData.push({ y: amtTemp, label: "" + idata[i] })
   }
 
-  // for (let i = 0; i < edata.length; i++) {
-  //   let amtTemp = 0
-  //   for (let j = 0; j < state2.length; j++) {
-  //     if ((edata[i] === state2[j].expdate) && state[j].exptype === "Income") {
-  //       amtTemp += state2[j].expamt
-  //     }
-  //   }
-  //   if (amtTemp > 0) {
-  //     IncomeGraphData.push({ date: edata[i], amt: amtTemp })
-  //   }
-  // }
+  for (let i = 0; i < state1.length; i++) {
+    if(state1[i].payment_mode === "Cash")
+    {
+      PaymentModeData.Cash.amount += Number(state1[i].amount)
+      PaymentModeData.Cash.percent = Math.round(((PaymentModeData.Cash.amount/totalExpAmt)*100))
+    }
+    if(state1[i].payment_mode === "Online")
+    {
+      PaymentModeData.Online.amount += Number(state1[i].amount)
+      PaymentModeData.Online.percent = Math.round(((PaymentModeData.Online.amount/totalExpAmt)*100))
+    }
+    if(state1[i].payment_mode === "Card")
+    {
+      PaymentModeData.Card.amount += Number(state1[i].amount)
+      PaymentModeData.Card.percent = Math.round(((PaymentModeData.Card.amount/totalExpAmt)*100))
+    }
+  }
 
-  const [spendChartData, setSpendChartData] = useState({
-    labels: SpendGraphData.map((data) => data.date),
-    datasets: [
-      {
-        label: "Total Spend ",
-        data: SpendGraphData.map((data) => data.amount),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "&quot;#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0"
-        ],
-        borderColor: "black",
-        borderWidth: 2
-      }
-    ]
-  });
+  console.log("Payment Mde Data : ",PaymentModeData);
 
-  const [incomeChartData, setIncomeChartData] = useState({
-    labels: IncomeGraphData.map((data) => data.date),
-    datasets: [
-      {
-        label: "Total Income ",
-        data: IncomeGraphData.map((data) => data.amount),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "&quot;#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0"
-        ],
-        borderColor: "black",
-        borderWidth: 2
-      }
-    ]
-  });
+
+
+  const DisplayGraph = ({ contentNum }) => {
+    if (contentNum === "Expense Chart") {
+      return (
+        <ExpenseChart SpendGraphData={SpendGraphData} />
+      )
+    }
+    if (contentNum === "Income Chart") {
+      return (
+        <IncomeChart SpendGraphData={IncomeGraphData} />
+      )
+    }
+    if (contentNum === "Payment Mode") {
+      return (
+        <PaymentModeGraph PaymentModeData={PaymentModeData} />
+      )
+    }
+  }
 
   return (
     <>
-      <div className="d-flex justify-content-between px-3 py-3">
-        <LineChart chartData={spendChartData} type={"Spend"} />
-        <LineChart chartData={incomeChartData} type={"Income"} />
+      <div className='d-flex justify-content-between'>
+        <Select value={contentNum} onChange={(_, opt) => setContentNum(opt.value)} style={{ width: 180 }}>
+          <Select.Option value="Expense Chart">Expense Chart</Select.Option>
+          <Select.Option value="Income Chart">Income Chart</Select.Option>
+          <Select.Option value="Payment Mode">Payment Mode</Select.Option>
+        </Select>
       </div>
-      {/* <div>
-        <LineChart chartData={spendChartData} type={"Spend"} />
-        <LineChart chartData={incomeChartData} type={"Income"} />
-      </div> */}
+      <DisplayGraph contentNum={contentNum} />
     </>
   );
 }

@@ -107,8 +107,6 @@ export const AddRecord = () => {
                 icon={<PlusOutlined />}
                 tooltip={<><div>Record your Expense/Income</div></>}
             >
-                {/* <Button type='primary' style={{marginBottom:5}}>Click</Button>
-                <Button type='primary' danger style={{marginBottom:0}}>Click</Button> */}
                 <Tooltip title="Add Income" open placement='left'>
                     <FloatButton icon={<CommentOutlined />} onClick={showModalIncome} />
                 </Tooltip>

@@ -5,7 +5,10 @@ import {
     Empty, Button, Tooltip, Badge
 } from 'antd';
 import { ReloadOutlined, DeleteOutlined } from '@ant-design/icons';
-import { getdeleteTransData, deleteDeletedTrans, deletRestoreExpense, deleteRestoreIncome } from '../../slice/RecordSlice';
+import {
+    getdeleteTransData, deleteDeletedTrans, deletRestoreExpense, deleteRestoreIncome, getAllExpense,
+    getAllIncome
+} from '../../slice/RecordSlice';
 
 export const DeletedTransaction = () => {
     const dispatch = useDispatch()
@@ -33,16 +36,20 @@ export const DeletedTransaction = () => {
 
     const DeleteTrans = (delId) => {
         dispatch(deleteDeletedTrans({ "username": localStorage.getItem("username"), "delId": delId }))
+        dispatch(getAllExpense(localStorage.getItem("username")))
+        dispatch(getAllIncome(localStorage.getItem("username")))
     }
 
     const RestoreIncome = (incId, amount, date, description) => {
         const username = localStorage.getItem("username")
         dispatch(deleteRestoreIncome({ "username": username, "incId": incId, "amount": amount, "date": date, "description": description }))
+        // dispatch(getAllIncome(localStorage.getItem("username")))
     }
 
     const RestoreExpense = (expId, amount, date, description, payment_mode, category) => {
         const username = localStorage.getItem("username")
         dispatch(deletRestoreExpense({ "username": username, "expId": expId, "amount": amount, "date": date, "description": description, "payment_mode": payment_mode, "category": category }))
+        // dispatch(getAllExpense(localStorage.getItem("username")))
     }
 
     const dataTable = () => {

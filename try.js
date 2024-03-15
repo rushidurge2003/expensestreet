@@ -1,52 +1,75 @@
 const data = [
     {
-        price : 1,
-        note : "abc",
-        date : "2021-08-11T07:24:30.087+0000"
+        mode: "a",
+        price: 2,
     },
     {
-        price : 3,
-        note : "xyz",
-        date : "2021-08-09T07:24:30.087+0000"
+        mode: "b",
+        price: 3,
     },
     {
-        price : 4,
-        note : "pqr",
-        date : "2021-08-12T07:24:30.087+0000"
+        mode: "a",
+        price: 4,
     },
     {
-        price : 2,
-        note : "mno",
-        date : "2021-08-10T07:24:30.087+0000"
+        mode: "c",
+        price: 2,
+    },
+    {
+        mode: "b",
+        price: 3,
+    },
+    {
+        mode: "c",
+        price: 5,
     }
 ]
 
-const data1 = [
-    {
-        price : 11,
-        note : "abc",
-        date : "2021-08-28T07:24:30.087+0000"
+const obj = {
+    modea : {
+        total : 0,
+        per : 0
     },
-    {
-        price : 31,
-        note : "xyz",
-        date : "2021-08-28T07:24:30.087+0000"
+    modeb : {
+        total : 0,
+        per : 0
     },
-    {
-        price : 41,
-        note : "pqr",
-        date : "2021-08-25T07:24:30.087+0000"
-    },
-    {
-        price : 21,
-        note : "mno",
-        date : "2021-08-19T07:24:30.087+0000"
+    modec : {
+        total : 0,
+        per : 0
     }
-]
+}
 
+console.log(obj);
 
-const alldata = [...data,...data1]
+for (let i = 0; i < data.length; i++) {
+    if (data[i].mode === "a") {
+        obj.modea.total += data[i].price
+        obj.modea.per = ((obj.modea.total/19)*100)
+    }
+    if (data[i].mode === "b") {
+        obj.modeb.total += data[i].price
+        obj.modeb.per = ((obj.modeb.total/19)*100)
+    }
+    if (data[i].mode === "c") {
+        obj.modec.total += data[i].price
+        obj.modec.per = ((obj.modec.total/19)*100)
+    }
+}
 
-alldata.sort((a,b)=>(new Date(a.date) - new Date(b.date)))
+console.log("after",obj);
 
-console.log(alldata);
+    // const obj = [
+    //     {
+    //         mode: "a",
+    //         total: 0
+    //     },
+    //     {
+    //         mode: "b",
+    //         total: 0
+    //     },
+    //     {
+    //         mode: "c",
+    //         total: 0
+    //     }
+    // ]

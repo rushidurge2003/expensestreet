@@ -200,7 +200,7 @@ export const Home = () => {
               <DisplayData contentNum={contentNum} />
             </div>
           </Content>
-          <Footer
+          {/* <Footer
             style={{
               textAlign: 'center',
               position: "fixed",
@@ -210,7 +210,7 @@ export const Home = () => {
             }}
           >
             ExpenseStreet ©{new Date().getFullYear()} Created by Rushikesh Durge,Atharva Jori,Niraj Kate
-          </Footer>
+          </Footer> */}
         </Layout>
       </Layout>
       <Chatbot />
