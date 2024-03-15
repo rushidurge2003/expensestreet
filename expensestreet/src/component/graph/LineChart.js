@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 
 function LineChart({ chartData,type }) {
   return (
-    <div className="chart-container" style={{width:"600px"}}>
+    <div className="chart-container" style={{width:"800px"}}>
       <h2 style={{ textAlign: "center" }}>Total {type}</h2>
       <Line
         data={chartData}

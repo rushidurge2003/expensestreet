@@ -5,7 +5,7 @@ import { getAllExpense, updateExpense, deleteExpense } from '../../slice/RecordS
 import dayjs from 'dayjs'
 import {
     Empty, Card, Statistic, Button, Tooltip,
-    Form, Modal, Input, Select, DatePicker,
+    Form, Modal, Input, Select, DatePicker,message
 } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -35,15 +35,33 @@ export const Expense = () => {
         setExpCategory(category)
     };
     const handleOkExpense = () => {
-        setIsExpenseOpen(false);
-        dispatch(updateExpense({ "username": localStorage.getItem("username"), "expId": expId, "amount": expAmount, "date": (expDate).slice(0, 19).replace('T', ' '), "description": expDescription, "payment_mode": expPayment_Mode, "category": expCategory }))
-        dispatch(getAllExpense(localStorage.getItem("username")))
-        setExpAmount(0)
-        setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
-        setExpDescription("")
-        setExpPayment_Mode("")
-        setExpCategory("")
-        dispatch(getAllExpense(localStorage.getItem("username")))
+        if (expAmount === 0 && expAmount === "") {
+            message.warning("Please enter amount")
+        } 
+        else if(expDescription === "")
+        {
+            message.warning("Please enter description")
+        }
+        else if(expPayment_Mode === "")
+        {
+            message.warning("Please select payment mode")
+        }
+        else if(expCategory === "")
+        {
+            message.warning("Please select category")
+        }
+        else {
+            setIsExpenseOpen(false);
+            dispatch(updateExpense({ "username": localStorage.getItem("username"), "expId": expId, "amount": expAmount, "date": (expDate).slice(0, 19).replace('T', ' '), "description": expDescription, "payment_mode": expPayment_Mode, "category": expCategory }))
+            dispatch(getAllExpense(localStorage.getItem("username")))
+            setExpAmount(0)
+            setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+            setExpDescription("")
+            setExpPayment_Mode("")
+            setExpCategory("")
+            dispatch(getAllExpense(localStorage.getItem("username")))
+            message.success("Expense successfully updated")
+        }
     };
     const handleCancelExpense = () => {
         setIsExpenseOpen(false);

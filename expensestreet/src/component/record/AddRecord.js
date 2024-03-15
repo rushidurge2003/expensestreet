@@ -4,13 +4,8 @@ import { useDispatch } from 'react-redux';
 import { addExpense, getAllExpense, addIncome, getAllIncome } from '../../slice/RecordSlice';
 import dayjs from 'dayjs'
 import {
-    Form,
-    FloatButton,
-    Modal,
-    Input,
-    Select,
-    DatePicker,
-    Button, Tooltip
+    Form, FloatButton, Modal, Input, Select,
+    DatePicker, Tooltip, message
 } from 'antd'
 import {
     PlusOutlined,
@@ -32,13 +27,22 @@ export const AddRecord = () => {
         setIsIncomeOpen(true);
     };
     const handleOkIncome = () => {
-        setIsIncomeOpen(false);
-        dispatch(addIncome({ "username": localStorage.getItem("username"), "amount": incAmount, "date": incDate + ` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": incDescription }))
-        dispatch(getAllIncome(localStorage.getItem("username")))
-        setIncAmount(0)
-        setIncDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
-        setIncDescription("")
-        dispatch(getAllIncome(localStorage.getItem("username")))
+        if (incAmount <= 0) {
+            message.warning("please enter amount")
+        }
+        else if (incDescription === "") {
+            message.warning("Please enter description")
+        }
+        else {
+            setIsIncomeOpen(false);
+            dispatch(addIncome({ "username": localStorage.getItem("username"), "amount": incAmount, "date": incDate + ` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": incDescription }))
+            dispatch(getAllIncome(localStorage.getItem("username")))
+            setIncAmount(0)
+            setIncDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+            setIncDescription("")
+            dispatch(getAllIncome(localStorage.getItem("username")))
+            message.success("Income add successfully")
+        }
     };
     const handleCancelIncome = () => {
         setIsIncomeOpen(false);
@@ -60,15 +64,30 @@ export const AddRecord = () => {
         setIsExpenseOpen(true);
     };
     const handleOkExpense = () => {
-        setIsExpenseOpen(false);
-        dispatch(addExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate + ` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": expDescription, "payment_mode": expPayment_Mode, "category": expCategory }))
-        dispatch(getAllExpense(localStorage.getItem("username")))
-        setExpAmount(0)
-        setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
-        setExpDescription("")
-        setExpPayment_Mode("")
-        setExpCategory("")
-        dispatch(getAllExpense(localStorage.getItem("username")))
+        if (expAmount <= 0) {
+            message.warning("please enter amount")
+        }
+        else if (expDescription === "") {
+            message.warning("Please enter description")
+        }
+        else if (expPayment_Mode === "") {
+            message.warning("Please select payment mode")
+        }
+        else if (expCategory === "") {
+            message.warning("Please select category")
+        }
+        else {
+            setIsExpenseOpen(false);
+            dispatch(addExpense({ "username": localStorage.getItem("username"), "amount": expAmount, "date": expDate + ` ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`, "description": expDescription, "payment_mode": expPayment_Mode, "category": expCategory }))
+            dispatch(getAllExpense(localStorage.getItem("username")))
+            setExpAmount(0)
+            setExpDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+            setExpDescription("")
+            setExpPayment_Mode("")
+            setExpCategory("")
+            dispatch(getAllExpense(localStorage.getItem("username")))
+            message.success("Expense add successfully")
+        }
     };
     const handleCancelExpense = () => {
         setIsExpenseOpen(false);
@@ -94,7 +113,7 @@ export const AddRecord = () => {
                     <FloatButton icon={<CommentOutlined />} onClick={showModalIncome} />
                 </Tooltip>
                 <Tooltip title="Add Expense" open placement='left'>
-                    <FloatButton icon={<CommentOutlined />} onClick={showModalIncome} />
+                    <FloatButton icon={<CommentOutlined />} onClick={showModalExpense} />
                 </Tooltip>
                 {/* <FloatButton tooltip={<><div>Income</div></>} icon={<CommentOutlined />} onClick={showModalIncome} />
                 <FloatButton tooltip={<><div>Expense</div></>} icon={<CommentOutlined />} onClick={showModalExpense} /> */}

@@ -30,7 +30,8 @@ const conn = mysql.createConnection({
     user: "root",
     password: "India@2003",
     database: "expensestreet",
-    multipleStatements: true
+    multipleStatements: true,
+    timezone:"Z"
 })
 
 if (conn) {

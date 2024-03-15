@@ -8,14 +8,17 @@ import { Income } from './sidebarFun/Income';
 import { AllTransaction } from './sidebarFun/AllTransaction';
 import { DeletedTransaction } from './sidebarFun/DeletedTransaction';
 import Graph from './graph/Graph';
+import { News } from './news/News';
+import { StockMarket } from './stockmarket/StockMarket';
+import { Investment } from './invetsment/Investment';
 
 import {
-  FileAddOutlined,
-  PieChartOutlined,
-  UserAddOutlined,
+  FileAddFilled,
+  PieChartFilled,
+  GoldFilled,
   LineChartOutlined,
-  ReadOutlined,
-  DeleteOutlined
+  ReadFilled,
+  DeleteFilled
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 
@@ -60,21 +63,21 @@ const DisplayData = ({ contentNum }) => {
   if (contentNum === 6) {
     return (
       <>
-        <h1>News</h1>
+        <Investment />
       </>
     )
   }
   if (contentNum === 7) {
     return (
       <>
-        <h1>Stock Market</h1>
+        <News />
       </>
     )
   }
   if (contentNum === 8) {
     return (
       <>
-        <h1>Friend</h1>
+        <StockMarket />
       </>
     )
   }
@@ -92,7 +95,7 @@ const DisplayData = ({ contentNum }) => {
 export const Home = () => {
   usePreventZoom()
 
-  const [contentNum, setContentNum] = useState(1)
+  const [contentNum, setContentNum] = useState(3)
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -111,33 +114,33 @@ export const Home = () => {
           }}
         >
           <div className="demo-logo-vertical" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']} items={[
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={[
             {
               key: '1',
-              icon: <FileAddOutlined />,
+              icon: <FileAddFilled />,
               label: 'Record',
               children: [
                 {
                   key: '2',
-                  icon: <FileAddOutlined />,
+                  icon: <FileAddFilled />,
                   label: 'Expense',
                   onClick: () => { setContentNum(1) }
                 },
                 {
                   key: '3',
-                  icon: <FileAddOutlined />,
+                  icon: <FileAddFilled />,
                   label: 'Income',
                   onClick: () => { setContentNum(2) }
                 },
                 {
                   key: '4',
-                  icon: <FileAddOutlined />,
+                  icon: <FileAddFilled />,
                   label: 'All Transaction',
                   onClick: () => { setContentNum(3) }
                 },
                 {
                   key: '5',
-                  icon: <DeleteOutlined />,
+                  icon: <DeleteFilled />,
                   label: 'Deleted Transaction',
                   onClick: () => { setContentNum(4) }
                 }
@@ -145,26 +148,26 @@ export const Home = () => {
             },
             {
               key: '6',
-              icon: <PieChartOutlined />,
+              icon: <PieChartFilled />,
               label: 'Analysis',
               onClick: () => { setContentNum(5) }
             },
             {
               key: '7',
-              icon: <ReadOutlined />,
-              label: 'News',
+              icon: <GoldFilled />,
+              label: 'Investment',
               onClick: () => { setContentNum(6) }
             },
             {
               key: '8',
-              icon: <LineChartOutlined />,
-              label: 'Stock Market',
+              icon: <ReadFilled />,
+              label: 'News',
               onClick: () => { setContentNum(7) }
             },
             {
               key: '9',
-              icon: <UserAddOutlined />,
-              label: 'Friend',
+              icon: <LineChartOutlined />,
+              label: 'Stock Market',
               onClick: () => { setContentNum(8) }
             }
           ]} />
