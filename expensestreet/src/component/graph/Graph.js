@@ -3,6 +3,7 @@ import { CategoryScale, elements } from "chart.js"
 import { ExpenseChart } from "./ExpenseChart";
 import { IncomeChart } from "./IncomeChart";
 import PaymentModeGraph from "./PaymentModeGraph"
+import CategoryPieChart from "./CategoryPieChart";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Select } from "antd";
@@ -39,19 +40,42 @@ const Graph = () => {
   const IncomeGraphData = []
   const PaymentModeData = {
     Cash: {
-      Payment_Mode: "Cash",
+      y: 0,
+      label: "Cash",
       amount: 0,
-      percent: 0
     },
     Online: {
-      Payment_Mode: "Online",
+      y: 0,
+      label: "Online",
       amount: 0,
-      percent: 0
     },
     Card: {
-      Payment_Mode: "Card",
+      y: 0,
+      label: "Card",
       amount: 0,
-      percent: 0
+    }
+  }
+
+  const CategoryDataObj = {
+    Utilities: {
+      y: 0,
+      label: "Utilities",
+      amount: 0,
+    },
+    Food: {
+      y: 0,
+      label: "Food",
+      amount: 0,
+    },
+    Entertainment: {
+      y: 0,
+      label: "Entertainment",
+      amount: 0,
+    },
+    Tax: {
+      y: 0,
+      label: "Tax",
+      amount: 0,
     }
   }
 
@@ -76,24 +100,41 @@ const Graph = () => {
   }
 
   for (let i = 0; i < state1.length; i++) {
-    if(state1[i].payment_mode === "Cash")
-    {
+    if (state1[i].payment_mode === "Cash") {
       PaymentModeData.Cash.amount += Number(state1[i].amount)
-      PaymentModeData.Cash.percent = Math.round(((PaymentModeData.Cash.amount/totalExpAmt)*100))
+      PaymentModeData.Cash.y = Math.round(((PaymentModeData.Cash.amount / totalExpAmt) * 100))
     }
-    if(state1[i].payment_mode === "Online")
-    {
+    if (state1[i].payment_mode === "Online") {
       PaymentModeData.Online.amount += Number(state1[i].amount)
-      PaymentModeData.Online.percent = Math.round(((PaymentModeData.Online.amount/totalExpAmt)*100))
+      PaymentModeData.Online.y = Math.round(((PaymentModeData.Online.amount / totalExpAmt) * 100))
     }
-    if(state1[i].payment_mode === "Card")
-    {
+    if (state1[i].payment_mode === "Card") {
       PaymentModeData.Card.amount += Number(state1[i].amount)
-      PaymentModeData.Card.percent = Math.round(((PaymentModeData.Card.amount/totalExpAmt)*100))
+      PaymentModeData.Card.y = Math.round(((PaymentModeData.Card.amount / totalExpAmt) * 100))
+    }
+  }
+  const PaymentModeGraphData = Object.values(PaymentModeData)
+
+  for (let i = 0; i < state1.length; i++) {
+    if (state1[i].category === "Utilities") {
+      CategoryDataObj.Utilities.amount += Number(state1[i].amount)
+      CategoryDataObj.Utilities.y = Math.round(((CategoryDataObj.Utilities.amount / totalExpAmt) * 100))
+    }
+    if (state1[i].category === "Food") {
+      CategoryDataObj.Food.amount += Number(state1[i].amount)
+      CategoryDataObj.Food.y = Math.round(((CategoryDataObj.Food.amount / totalExpAmt) * 100))
+    }
+    if (state1[i].category === "Entertainment") {
+      CategoryDataObj.Entertainment.amount += Number(state1[i].amount)
+      CategoryDataObj.Entertainment.y = Math.round(((CategoryDataObj.Entertainment.amount / totalExpAmt) * 100))
+    }
+    if (state1[i].category === "Tax") {
+      CategoryDataObj.Tax.amount += Number(state1[i].amount)
+      CategoryDataObj.Tax.y = Math.round(((CategoryDataObj.Tax.amount / totalExpAmt) * 100))
     }
   }
 
-  console.log("Payment Mde Data : ",PaymentModeData);
+  const CategoryData = Object.values(CategoryDataObj)
 
 
 
@@ -110,7 +151,12 @@ const Graph = () => {
     }
     if (contentNum === "Payment Mode") {
       return (
-        <PaymentModeGraph PaymentModeData={PaymentModeData} />
+        <PaymentModeGraph PaymentModeData={PaymentModeGraphData} />
+      )
+    }
+    if (contentNum === "Category") {
+      return (
+        <CategoryPieChart CategoryData={CategoryData} />
       )
     }
   }
@@ -122,6 +168,7 @@ const Graph = () => {
           <Select.Option value="Expense Chart">Expense Chart</Select.Option>
           <Select.Option value="Income Chart">Income Chart</Select.Option>
           <Select.Option value="Payment Mode">Payment Mode</Select.Option>
+          <Select.Option value="Category">Category</Select.Option>
         </Select>
       </div>
       <DisplayGraph contentNum={contentNum} />

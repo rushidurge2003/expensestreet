@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Badge, Avatar, Drawer } from 'antd'
-import { UserOutlined,LogoutOutlined } from '@ant-design/icons';
+import { Button, Badge, Avatar, Drawer, Tag } from 'antd'
+import { UserOutlined, LogoutOutlined, MessageFilled, TwitterOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { getUserDetails } from '../slice/ProfileDetailSlice';
 
@@ -34,7 +34,8 @@ export const Navbar = () => {
                         <b>ExpenseStreet</b>
                     </Link>
                     <div style={{ marginRight: "10px" }}>
-                        <Button title='Logout' style={{ marginRight: "10px" }} type='primary' icon={<LogoutOutlined />} onClick={logOut}/>
+                        <Button icon={<MessageFilled />} style={{ marginRight: "10px" }} type='primary' />
+                        <Button title='Logout' style={{ marginRight: "10px" }} type='primary' icon={<LogoutOutlined />} onClick={logOut} />
                         <Badge count={10}><Avatar icon={<UserOutlined />} onClick={showDrawer} /></Badge>
                         <Drawer title={localStorage.getItem("username")} onClose={onClose} open={open}>
                             <div className='text-center'><Avatar icon={<UserOutlined />} size={50} onClick={showDrawer} /></div>

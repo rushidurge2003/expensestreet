@@ -5,7 +5,7 @@ import CanvasJSReact from '@canvasjs/react-charts';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-const PaymentModeGraph = ({ PaymentModeData }) => {
+const CategoryPieChart = ({ CategoryData }) => {
 
     const options = {
         animationEnabled: true,
@@ -19,7 +19,7 @@ const PaymentModeGraph = ({ PaymentModeData }) => {
             legendText: "{label}",
             indexLabel: "{label} - {y}%",
             toolTipContent: "<b>{label}</b>: {y}%<br>{amount} ₹",
-            dataPoints: PaymentModeData,
+            dataPoints: CategoryData,
         }]
     }
 
@@ -30,4 +30,4 @@ const PaymentModeGraph = ({ PaymentModeData }) => {
     )
 }
 
-export default PaymentModeGraph
+export default CategoryPieChart
