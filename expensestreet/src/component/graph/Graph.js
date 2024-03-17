@@ -151,7 +151,12 @@ const Graph = () => {
     }
     if (contentNum === "Payment Mode") {
       return (
-        <PaymentModeGraph PaymentModeData={PaymentModeData} />
+        <PaymentModeGraph PaymentModeData={PaymentModeGraphData} />
+      )
+    }
+    if (contentNum === "Category") {
+      return (
+        <CategoryPieChart CategoryData={CategoryData} />
       )
     }
   }
