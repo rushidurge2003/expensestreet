@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
 import usePreventZoom from './usePreventZoom'
-import { Chatbot } from './chat/Chatbot'
 import { AddRecord } from './record/AddRecord';
 import { Expense } from './sidebarFun/Expense';
 import { Income } from './sidebarFun/Income';
@@ -11,14 +10,11 @@ import Graph from './graph/Graph';
 import { News } from './news/News';
 import { StockMarket } from './stockmarket/StockMarket';
 import { Investment } from './invetsment/Investment';
+import { Reminder } from './reminder/Reminder';
 
 import {
-  FileAddFilled,
-  PieChartFilled,
-  GoldFilled,
-  LineChartOutlined,
-  ReadFilled,
-  DeleteFilled
+  FileAddFilled, PieChartFilled, GoldFilled, LineChartOutlined,
+  ReadFilled, DeleteFilled, BellFilled
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 
@@ -78,6 +74,13 @@ const DisplayData = ({ contentNum }) => {
     return (
       <>
         <StockMarket />
+      </>
+    )
+  }
+  if (contentNum === 9) {
+    return (
+      <>
+        <Reminder />
       </>
     )
   }
@@ -169,6 +172,12 @@ export const Home = () => {
               icon: <LineChartOutlined />,
               label: 'Stock Market',
               onClick: () => { setContentNum(8) }
+            },
+            {
+              key: '10',
+              icon: <BellFilled />,
+              label: 'Reminder',
+              onClick: () => { setContentNum(9) }
             }
           ]} />
         </Sider>
@@ -213,7 +222,6 @@ export const Home = () => {
           </Footer> */}
         </Layout>
       </Layout>
-      <Chatbot />
       <AddRecord />
     </>
   );

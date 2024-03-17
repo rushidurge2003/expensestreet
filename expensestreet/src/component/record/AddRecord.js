@@ -103,7 +103,7 @@ export const AddRecord = () => {
             <FloatButton.Group
                 trigger="click"
                 type="primary"
-                style={{ right: 40, bottom: 100 }}
+                style={{ right: 20, bottom: 50 }}
                 icon={<PlusOutlined />}
                 tooltip={<><div>Record your Expense/Income</div></>}
             >

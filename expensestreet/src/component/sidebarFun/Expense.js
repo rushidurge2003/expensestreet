@@ -5,7 +5,7 @@ import { getAllExpense, updateExpense, deleteExpense } from '../../slice/RecordS
 import dayjs from 'dayjs'
 import {
     Empty, Card, Statistic, Button, Tooltip,
-    Form, Modal, Input, Select, DatePicker,message
+    Form, Modal, Input, Select, DatePicker, message, FloatButton
 } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -37,17 +37,14 @@ export const Expense = () => {
     const handleOkExpense = () => {
         if (expAmount === 0 && expAmount === "") {
             message.warning("Please enter amount")
-        } 
-        else if(expDescription === "")
-        {
+        }
+        else if (expDescription === "") {
             message.warning("Please enter description")
         }
-        else if(expPayment_Mode === "")
-        {
+        else if (expPayment_Mode === "") {
             message.warning("Please select payment mode")
         }
-        else if(expCategory === "")
-        {
+        else if (expCategory === "") {
             message.warning("Please select category")
         }
         else {
@@ -226,7 +223,7 @@ export const Expense = () => {
                     </Form.Item>
                 </Form>
             </Modal>
-
+            <FloatButton.BackTop visibilityHeight={250} style={{ right: 20, bottom: 100 }} />
         </>
     )
 }

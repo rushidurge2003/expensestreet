@@ -31,7 +31,7 @@ const conn = mysql.createConnection({
     password: "India@2003",
     database: "expensestreet",
     multipleStatements: true,
-    timezone:"Z"
+    timezone: "Z"
 })
 
 if (conn) {
@@ -236,6 +236,15 @@ app.post("/creatDataBase", (req, res) => {
         category VARCHAR(45),
         type VARCHAR(45) NOT NULL,
         PRIMARY KEY (deletePermantID));
+
+    CREATE TABLE ${username}.reminder (
+        reminderId INT NOT NULL AUTO_INCREMENT,
+        reminderDesc VARCHAR(100) NOT NULL,
+        reminderDateTime DATETIME NOT NULL,
+        reminderComplete VARCHAR(10) NOT NULL,
+        amount VARCHAR(45) NOT NULL,
+        type VARCHAR(45) NOT NULL,
+        PRIMARY KEY (reminderId));
     `;
 
     conn.query(sql, (err, result) => {
@@ -559,6 +568,48 @@ app.post("/deleteRestoreIncome", (req, res) => {
             else {
                 res.send(result)
                 console.log("\tSuccess income restore");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+
+// ================
+// 
+//  Reminder 
+// 
+// ================
+
+app.post("/addReminder", (req, res) => {
+    try {
+        const { username, desc, datetime, amount, type } = req.body
+        const sql = `INSERT INTO ${username}.reminder(reminderDesc, reminderDateTime, amount,reminderComplete,type) values("${desc}", "${datetime}", "${amount}", "false", "${type}")`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(result)
+                console.log("\tReminder add successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.get("/getReminderData/:username", (req, res) => {
+    try {
+        const username = req.params.username
+        const sql = `SELECT * FROM ${username}.reminder`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            }
+            else {
+                res.send(result)
+                console.log("\tAll reminder data get successfully");
             }
         })
     } catch (error) {

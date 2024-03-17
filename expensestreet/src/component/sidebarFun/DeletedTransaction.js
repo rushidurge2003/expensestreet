@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react';
 import {
-    Empty, Button, Tooltip, Badge
+    Empty, Button, Tooltip, Badge,FloatButton
 } from 'antd';
 import { ReloadOutlined, DeleteOutlined } from '@ant-design/icons';
 import {
@@ -143,6 +143,7 @@ export const DeletedTransaction = () => {
             {
                 delData.length === 0 ? <div style={{ marginTop: 50 }}>< Empty /></div> : dataTable()
             }
+            <FloatButton.BackTop visibilityHeight={250} style={{ right: 20, bottom: 100 }} />
         </>
     )
 }
