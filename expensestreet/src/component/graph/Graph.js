@@ -109,9 +109,9 @@ const Graph = () => {
       )
     }
     if (contentNum === "Payment Mode") {
-      return (
-        <PaymentModeGraph PaymentModeData={PaymentModeData} />
-      )
+      // return (
+      //   <PaymentModeGraph PaymentModeData={PaymentModeData} />
+      // )
     }
   }
 
