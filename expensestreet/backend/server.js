@@ -616,3 +616,19 @@ app.get("/getReminderData/:username", (req, res) => {
 
     }
 })
+
+app.post("/remStatusUpdate", (req, res) => {
+    try {
+        const { username, id } = req.body
+        const sql = `UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId=${id}`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(result)
+            }
+        })
+    } catch (error) {
+
+    }
+})

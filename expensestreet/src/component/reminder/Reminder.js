@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs'
 import {
     Form, TimePicker, Modal, Input, Select,
-    DatePicker, message, Button, Empty
+    DatePicker, message, Button, Empty, FloatButton
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux'
-import { addReminder, getReminderData } from '../../slice/ReminderSlice';
+import { addReminder, getReminderData, remStatusUpdate } from '../../slice/ReminderSlice';
 import success from './images/success.png'
+import proccessing from './images/proccessing.png'
 
 export const Reminder = () => {
     const date = new Date()
-    const [remData, setRemData] = useState([])
+    const [currentTime, setCurrentTime] = useState(`0${date.getHours()}:0${date.getMinutes()}`)
 
     useEffect(() => {
         getData()
@@ -51,8 +52,9 @@ export const Reminder = () => {
         }
     })
 
+
     console.log("Display Data : ", displayData);
-    console.log("Display Data Length : ", displayData.length);
+    console.log("Display Data Length : ", displayData?.length);
 
     return (
         <>
@@ -61,7 +63,7 @@ export const Reminder = () => {
                 <DatePicker minDate={dayjs("2023/12")} defaultValue={dayjs(dateRange, "YYYY/MM")} format={"YYYY/MM"} onChange={(_, strDate) => setDateRange(strDate)} picker="month" />
                 <Button onClick={showModal} icon={<PlusOutlined />} />
             </div>
-            <div>
+            <div style={{ marginTop: 35 }}>
                 {
                     displayData?.length > 0 ?
                         <table className="table table-hover">
@@ -84,18 +86,18 @@ export const Reminder = () => {
                                             <tr>
                                                 <td>{index + 1}</td>
                                                 <td>{(x.reminderDateTime).slice(0, 10)}</td>
-                                                <td>{(x.reminderDateTime).slice(11, 19)}</td>
+                                                <td>{(x.reminderDateTime).slice(11, 16)}</td>
                                                 <td>{x.reminderDesc}</td>
                                                 <td>{x.type}</td>
                                                 <td>{x.amount}</td>
-                                                <td><img src={success} width={20} /></td>
+                                                <td><img src={x.reminderComplete === "true" ? success : proccessing} width={30} /></td>
                                             </tr>
                                         )
                                     })
                                 }
                             </tbody>
                         </table> :
-                        <Empty/>
+                        <Empty style={{ position: "relative", top: 120 }} />
                 }
 
             </div>
@@ -126,6 +128,7 @@ export const Reminder = () => {
                     </Form.Item>
                 </Form>
             </Modal>
+            <FloatButton.BackTop visibilityHeight={250} style={{ right: 20, bottom: 100 }} />
         </>
     )
 }

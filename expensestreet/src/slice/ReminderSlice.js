@@ -46,4 +46,15 @@ export const getReminderData = createAsyncThunk(
     }
 )
 
+export const remStatusUpdate = createAsyncThunk(
+    "remStatusUpdate",
+    async (data) => {
+        try {
+            await axios.post("http://localhost:9000/remStatusUpdate", { ...data });
+        } catch (error) {
+
+        }
+    }
+)
+
 export default ReminderSlice.reducer
