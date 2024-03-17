@@ -5,7 +5,7 @@ import { deleteIncome, getAllIncome, updateIncome } from '../../slice/RecordSlic
 import dayjs from 'dayjs'
 import {
     Empty, Card, Statistic, Button, Tooltip,
-    Form, Modal, Input, DatePicker,
+    Form, Modal, Input, DatePicker, FloatButton
 } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -174,7 +174,7 @@ export const Income = () => {
                     </Form.Item>
                 </Form>
             </Modal>
-
+            <FloatButton.BackTop visibilityHeight={250} style={{ right: 20, bottom: 100 }} />
         </>
     )
 }

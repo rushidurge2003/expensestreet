@@ -5,7 +5,7 @@ import { deleteIncome, getAllIncome, updateIncome, deleteExpense, getAllExpense,
 import dayjs from 'dayjs'
 import {
     Empty, Card, Statistic, Button, Tooltip,
-    Form, Modal, Input, DatePicker, Select, Badge
+    Form, Modal, Input, DatePicker, Select, Badge, FloatButton
 } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -275,6 +275,27 @@ export const AllTransaction = () => {
         )
     }
 
+    const displayBalance = () => {
+        return (
+            <>
+                <Card bordered={false}>
+                    <Statistic
+                        title="Balance"
+                        value={
+                            incSum() - expSum()
+                        }
+                        precision={2}
+                        valueStyle={{
+                            color: 'black',
+                        }}
+                        // prefix={<ArrowUpOutlined />}
+                        suffix="₹"
+                    />
+                </Card>
+            </>
+        )
+    }
+
     return (
         <>
             <div className='d-flex justify-content-between'>
@@ -282,6 +303,7 @@ export const AllTransaction = () => {
                 <div className='d-flex'>
                     <div>{displayAllIncome()}</div>
                     <div>{displayAllExpense()}</div>
+                    <div>{displayBalance()}</div>
                 </div>
             </div>
             {
@@ -341,6 +363,7 @@ export const AllTransaction = () => {
                     </Form.Item>
                 </Form>
             </Modal>
+            <FloatButton.BackTop visibilityHeight={250} style={{ right: 20, bottom: 100 }} />
         </>
     )
 }

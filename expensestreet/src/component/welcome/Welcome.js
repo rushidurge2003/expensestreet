@@ -3,6 +3,7 @@ import './welcome.css'
 import Typewriter from 'typewriter-effect'
 import { useNavigate } from 'react-router-dom'
 import { Footer } from './Footer'
+import { Chatbot } from '../chat/Chatbot'
 import usePreventZomm from '../usePreventZoom'
 import fimg from './images/first.gif'
 import applogo from './images/ExpenseStreet.png'
@@ -74,6 +75,7 @@ export const Welcome = () => {
       <div>
         <Footer />
       </div>
+      <Chatbot/>
     </>
   )
 }
