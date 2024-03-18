@@ -5,6 +5,12 @@ const bodyParser = require('body-parser');
 const multer = require("multer")
 var nodemailer = require('nodemailer')
 const schedule = require('node-schedule');
+const cron = require('node-cron')
+
+// cron.schedule('* * * * *', () => {
+//     console.log('running a task every minute');
+//     console.log("Username : ",localStorage.getItem("username"));
+// });
 
 
 const app = express()
@@ -170,15 +176,16 @@ app.post("/sendReminderEmail", function (req, res) {
                 });
             } else {
                 console.log("email sent");
-                res.json({
-                    status: "success",
-                });
+                // res.json({
+                //     status: "success",
+                // });
                 try {
                     const sql = `UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId=${id}`
-                    conn.query(sql, (err, result) => {
+                    conn.query(sql, (err1, result) => {
                         if (err) {
-                            res.send(err)
+                            res.send(err1)
                         } else {
+                            console.log("Message agter mail sent");
                             res.send(result)
                         }
                     })
@@ -188,8 +195,6 @@ app.post("/sendReminderEmail", function (req, res) {
             }
         });
     })
-
-
 });
 
 

@@ -41,14 +41,7 @@ export const Reminder = () => {
         setIsModalOpen(false);
         const username = localStorage.getItem("username")
         dispatch(addReminder({ "username": username, "desc": remDesc, "datetime": remDate + " " + remTime, "amount": amount, "type": type }))
-        const email = await axios.get("http://localhost:9000/getUserEmail/" + username)
-        const result = await axios.get("http://localhost:9000/getSingleReminderData/" + username)
-        console.log("email : ", email.data.mail);
-        console.log("Last Row : ", result?.data[0].reminderId);
-        console.log("Date : ", remDate);
-        console.log("Time : ", remTime);z
         dispatch(getReminderData(localStorage.getItem("username")))
-        await axios.post("http://localhost:9000/sendReminderEmail", { "username": username, "id": result?.data[0].reminderId, "email": email.data.mail, "date": remDate, "time": remTime + ":00" })
         dispatch(getReminderData(localStorage.getItem("username")))
     };
     const handleCancel = () => {
