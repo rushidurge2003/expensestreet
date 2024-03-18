@@ -3,11 +3,11 @@ import dayjs from 'dayjs'
 import axios from 'axios';
 import {
     Form, TimePicker, Modal, Input, Select,
-    DatePicker, message, Button, Empty, FloatButton
+    DatePicker, message, Button, Empty, FloatButton, Tooltip
 } from 'antd'
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, DeleteOutlined, EditOutlined, CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux'
-import { addReminder, getReminderData, sendReminderEmail } from '../../slice/ReminderSlice';
+import { addReminder, getReminderData, sendReminderEmail, deleteReminder, statusTrueReminder } from '../../slice/ReminderSlice';
 import success from './images/success.png'
 import proccessing from './images/proccessing.png'
 
@@ -27,7 +27,7 @@ export const Reminder = () => {
     }
 
     const [remDesc, setRemDesc] = useState("")
-    const [remTime, setRemTime] = useState("")
+    const [remTime, setRemTime] = useState("00:00")
     const [remDate, setRemDate] = useState(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     const [amount, setAmount] = useState(0)
     const [type, setType] = useState("")
@@ -41,7 +41,14 @@ export const Reminder = () => {
         setIsModalOpen(false);
         const username = localStorage.getItem("username")
         dispatch(addReminder({ "username": username, "desc": remDesc, "datetime": remDate + " " + remTime, "amount": amount, "type": type }))
-        // const result = await axios.get("")
+        const email = await axios.get("http://localhost:9000/getUserEmail/" + username)
+        const result = await axios.get("http://localhost:9000/getSingleReminderData/" + username)
+        console.log("email : ", email.data.mail);
+        console.log("Last Row : ", result?.data[0].reminderId);
+        console.log("Date : ", remDate);
+        console.log("Time : ", remTime);z
+        dispatch(getReminderData(localStorage.getItem("username")))
+        await axios.post("http://localhost:9000/sendReminderEmail", { "username": username, "id": result?.data[0].reminderId, "email": email.data.mail, "date": remDate, "time": remTime + ":00" })
         dispatch(getReminderData(localStorage.getItem("username")))
     };
     const handleCancel = () => {
@@ -54,9 +61,17 @@ export const Reminder = () => {
         }
     })
 
+    const delteRem = (id) => {
+        dispatch(deleteReminder({ "username": localStorage.getItem("username"), "id": id }))
+        dispatch(getReminderData(localStorage.getItem("username")))
+        dispatch(getReminderData(localStorage.getItem("username")))
+    }
 
-    console.log("Display Data : ", displayData);
-    console.log("Display Data Length : ", displayData?.length);
+    const statusTrueRem = (id) => {
+        dispatch(statusTrueReminder({ "username": localStorage.getItem("username"), "id": id }))
+        dispatch(getReminderData(localStorage.getItem("username")))
+        dispatch(getReminderData(localStorage.getItem("username")))
+    }
 
     return (
         <>
@@ -72,12 +87,12 @@ export const Reminder = () => {
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Time</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Type</th>
                                     <th scope="col">Amount</th>
-                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -87,12 +102,32 @@ export const Reminder = () => {
                                         return (
                                             <tr>
                                                 <td>{index + 1}</td>
+                                                <td><img src={x.reminderComplete === "true" ? success : proccessing} title={x.reminderComplete === "true" ? "Complete" : "Not Cpmlete"} width={30} /></td>
                                                 <td>{(x.reminderDateTime).slice(0, 10)}</td>
                                                 <td>{(x.reminderDateTime).slice(11, 16)}</td>
                                                 <td>{x.reminderDesc}</td>
                                                 <td>{x.type}</td>
                                                 <td>{x.amount}</td>
-                                                <td><img src={x.reminderComplete === "true" ? success : proccessing} width={30} /></td>
+                                                <td className='d-flex justify-content-evenly'>
+                                                    <Tooltip title="Edit">
+                                                        <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                            onClick={() => {
+                                                                // showModalIncome(d.amount, d.date, d.description)
+                                                                // setIncId(d.id)
+                                                            }}
+                                                        />
+                                                    </Tooltip>
+                                                    <Tooltip title="Complete">
+                                                        <Button type="primary" success shape="circle" icon={<CheckOutlined />}
+                                                            onClick={() => { statusTrueRem(x.reminderId) }}
+                                                        />
+                                                    </Tooltip>
+                                                    <Tooltip title="Delete">
+                                                        <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                            onClick={() => { delteRem(x.reminderId) }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
                                             </tr>
                                         )
                                     })
@@ -102,7 +137,7 @@ export const Reminder = () => {
                         <Empty style={{ position: "relative", top: 120 }} />
                 }
 
-            </div>
+            </div >
 
             <Modal title="Add Reminder" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <Form
@@ -114,7 +149,7 @@ export const Reminder = () => {
                         <DatePicker minDate={dayjs(remDate)} defaultValue={dayjs(remDate)} onChange={(_, strDate) => setRemDate(strDate)} />
                     </Form.Item>
                     <Form.Item label="Time">
-                        <TimePicker defaultValue={dayjs('00:00', "HH:mm")} format="HH:mm" onChange={(time, timestr) => { setRemTime(timestr) }} />
+                        <TimePicker defaultValue={dayjs(remTime, "HH:mm")} format="HH:mm" onChange={(time, timestr) => { setRemTime(timestr) }} />
                     </Form.Item>
                     <Form.Item label="Description">
                         <Input value={remDesc} onChange={(e) => setRemDesc(e.target.value)} />

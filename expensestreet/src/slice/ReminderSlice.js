@@ -59,4 +59,26 @@ export const sendReminderEmail = createAsyncThunk(
     }
 )
 
+export const deleteReminder = createAsyncThunk(
+    "deleteReminder",
+    async (data) => {
+        try {
+            await axios.post("http://localhost:9000/deleteReminder", { ...data });
+        } catch (error) {
+
+        }
+    }
+)
+
+export const statusTrueReminder = createAsyncThunk(
+    "statusTrueReminder",
+    async (data) => {
+        try {
+            await axios.post("http://localhost:9000/statusTrueReminder", { ...data });
+        } catch (error) {
+
+        }
+    }
+)
+
 export default ReminderSlice.reducer

@@ -173,14 +173,18 @@ app.post("/sendReminderEmail", function (req, res) {
                 res.json({
                     status: "success",
                 });
-                const sql = `UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId=${id}`
-                conn.query(sql, (err, result) => {
-                    if (err) {
-                        res.send(err)
-                    } else {
-                        res.send(result)
-                    }
-                })
+                try {
+                    const sql = `UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId=${id}`
+                    conn.query(sql, (err, result) => {
+                        if (err) {
+                            res.send(err)
+                        } else {
+                            res.send(result)
+                        }
+                    })
+                } catch (error) {
+
+                }
             }
         });
     })
@@ -662,21 +666,57 @@ app.get("/getReminderData/:username", (req, res) => {
     }
 })
 
-// app.get("/getSingleReminderData/:username", (req, res) => {
-//     // const sql = `SELECT * FROM ${username}.reminder`
-//     const sql = 'SELECT * FROM ${username}.reminder ORDER BY  your_auto_increment_field DESC LIMIT 1'
-//     conn.query(sql, (err, result) => {
-//         if (err) {
-//             res.send(err)
-//         }
-//         else {
-//             res.send(result)
-//             console.log("\tAll reminder data get successfully");
-//         }
-//     })
-//     } catch (error) {
-    
-//     }
-//     })
-    // try {
-    //     const username = req.params.username
+app.get("/getSingleReminderData/:username", (req, res) => {
+    try {
+        const username = req.params.username
+        const sql = `select * from ${username}.reminder ORDER BY reminderId DESC LIMIT 1`;
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError Last Reminder Sent");
+            }
+            else {
+                res.send(result)
+                console.log("\tLast Reminder Sent Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/deleteReminder", (req, res) => {
+    try {
+        const { username, id } = req.body
+        const sql = `DELETE FROM ${username}.reminder WHERE reminderId = ${id}`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("Error in delete Reminder");
+            } else {
+                res.send(result)
+                console.log("\tReminder delete successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/statusTrueReminder", (req, res) => {
+    try {
+        const { username, id } = req.body
+        const sql = `UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId = ${id}`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("Error in Status True Reminder");
+            } else {
+                res.send(result)
+                console.log("\tReminder True successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
