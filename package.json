@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "nanoid": "^5.0.6",
+    "node-schedule": "^2.1.1"
+  }
+}

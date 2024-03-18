@@ -4,6 +4,7 @@ const mysql = require('mysql')
 const bodyParser = require('body-parser');
 const multer = require("multer")
 var nodemailer = require('nodemailer')
+const schedule = require('node-schedule');
 
 
 const app = express()
@@ -143,6 +144,49 @@ app.post("/resetPassword", (req, res) => {
 
     }
 })
+
+// ========================
+// 
+//  Send Reminder Email
+// 
+// ========================
+
+app.post("/sendReminderEmail", function (req, res) {
+    const { username, id, email, date, time } = req.body
+    let mailOptions = {
+        from: 'ExpensStreet <rushikeshdurge7794@gmail.com>',
+        to: `${email}`,
+        subject: 'Reminder',
+        // html: `${req.body.vals.date} ${req.body.vals.time} ${req.body.vals.info}`,
+    };
+
+    const dateParsed = new Date(`${date}T${time}Z`)
+
+    schedule.scheduleJob(dateParsed, function () {
+        transporter.sendMail(mailOptions, function (err, data) {
+            if (err) {
+                res.json({
+                    status: "fail",
+                });
+            } else {
+                console.log("email sent");
+                res.json({
+                    status: "success",
+                });
+                const sql = `UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId=${id}`
+                conn.query(sql, (err, result) => {
+                    if (err) {
+                        res.send(err)
+                    } else {
+                        res.send(result)
+                    }
+                })
+            }
+        });
+    })
+
+
+});
 
 
 // =========================
@@ -589,6 +633,7 @@ app.post("/addReminder", (req, res) => {
         conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
+                console.log("Error in add Reminder");
             } else {
                 res.send(result)
                 console.log("\tReminder add successfully");
@@ -617,18 +662,21 @@ app.get("/getReminderData/:username", (req, res) => {
     }
 })
 
-app.post("/remStatusUpdate", (req, res) => {
-    try {
-        const { username, id } = req.body
-        const sql = `UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId=${id}`
-        conn.query(sql, (err, result) => {
-            if (err) {
-                res.send(err)
-            } else {
-                res.send(result)
-            }
-        })
-    } catch (error) {
-
-    }
-})
+// app.get("/getSingleReminderData/:username", (req, res) => {
+//     // const sql = `SELECT * FROM ${username}.reminder`
+//     const sql = 'SELECT * FROM ${username}.reminder ORDER BY  your_auto_increment_field DESC LIMIT 1'
+//     conn.query(sql, (err, result) => {
+//         if (err) {
+//             res.send(err)
+//         }
+//         else {
+//             res.send(result)
+//             console.log("\tAll reminder data get successfully");
+//         }
+//     })
+//     } catch (error) {
+    
+//     }
+//     })
+    // try {
+    //     const username = req.params.username

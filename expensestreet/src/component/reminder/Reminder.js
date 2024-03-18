@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs'
+import axios from 'axios';
 import {
     Form, TimePicker, Modal, Input, Select,
     DatePicker, message, Button, Empty, FloatButton
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux'
-import { addReminder, getReminderData, remStatusUpdate } from '../../slice/ReminderSlice';
+import { addReminder, getReminderData, sendReminderEmail } from '../../slice/ReminderSlice';
 import success from './images/success.png'
 import proccessing from './images/proccessing.png'
 
@@ -36,10 +37,11 @@ export const Reminder = () => {
     const showModal = () => {
         setIsModalOpen(true);
     };
-    const handleOk = () => {
+    const handleOk = async () => {
         setIsModalOpen(false);
         const username = localStorage.getItem("username")
         dispatch(addReminder({ "username": username, "desc": remDesc, "datetime": remDate + " " + remTime, "amount": amount, "type": type }))
+        // const result = await axios.get("")
         dispatch(getReminderData(localStorage.getItem("username")))
     };
     const handleCancel = () => {

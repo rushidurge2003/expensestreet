@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { nanoid } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
@@ -27,7 +28,8 @@ export const addReminder = createAsyncThunk(
     "addReminder",
     async (data) => {
         try {
-            await axios.post("http://localhost:9000/addReminder", { ...data });
+            await axios.post("http://localhost:9000/addReminder", { ...data});
+            // await axios.post("http://localhost:9000/addReminder", { ...data,"nanoid":nanoid() });
         } catch (error) {
 
         }
@@ -46,11 +48,11 @@ export const getReminderData = createAsyncThunk(
     }
 )
 
-export const remStatusUpdate = createAsyncThunk(
-    "remStatusUpdate",
+export const sendReminderEmail = createAsyncThunk(
+    "sendReminderEmail",
     async (data) => {
         try {
-            await axios.post("http://localhost:9000/remStatusUpdate", { ...data });
+            await axios.post("http://localhost:9000/sendReminderEmail", { ...data });
         } catch (error) {
 
         }
