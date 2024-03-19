@@ -298,6 +298,16 @@ app.post("/creatDataBase", (req, res) => {
         amount VARCHAR(45) NOT NULL,
         type VARCHAR(45) NOT NULL,
         PRIMARY KEY (reminderId));
+
+    CREATE TABLE ${username}.notification (
+        notificationId INT NOT NULL AUTO_INCREMENT,
+        title VARCHAR(45) NOT NULL,
+        description VARCHAR(100) NOT NULL,
+        type VARCHAR(45) NOT NULL,
+        amount VARCHAR(45) NOT NULL,
+        date DATETIME NOT NULL,
+        active VARCHAR(10) NOT NULL,
+        PRIMARY KEY (notificationId));
     `;
 
     conn.query(sql, (err, result) => {

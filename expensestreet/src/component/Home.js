@@ -73,13 +73,6 @@ const DisplayData = ({ contentNum }) => {
   if (contentNum === 8) {
     return (
       <>
-        <StockMarket />
-      </>
-    )
-  }
-  if (contentNum === 9) {
-    return (
-      <>
         <Reminder />
       </>
     )
@@ -169,15 +162,9 @@ export const Home = () => {
             },
             {
               key: '9',
-              icon: <LineChartOutlined />,
-              label: 'Stock Market',
-              onClick: () => { setContentNum(8) }
-            },
-            {
-              key: '10',
               icon: <BellFilled />,
               label: 'Reminder',
-              onClick: () => { setContentNum(9) }
+              onClick: () => { setContentNum(8) }
             }
           ]} />
         </Sider>

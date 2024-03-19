@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Badge, Avatar, Drawer, Tag } from 'antd'
-import { UserOutlined, LogoutOutlined, MessageFilled, TwitterOutlined } from '@ant-design/icons';
+import { Button, Badge, Avatar, Drawer, Card } from 'antd'
+import { UserOutlined, LogoutOutlined, MessageFilled } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { getUserDetails } from '../slice/ProfileDetailSlice';
 
@@ -11,12 +11,20 @@ export const Navbar = () => {
     const dispatch = useDispatch()
 
     const [open, setOpen] = useState(false);
+    const [notiOpen, setNotiOpen] = useState(false);
 
     const showDrawer = () => {
         setOpen(true);
     };
     const onClose = () => {
         setOpen(false);
+    };
+
+    const showNotiDrawer = () => {
+        setNotiOpen(true);
+    };
+    const onNotiClose = () => {
+        setNotiOpen(false);
     };
 
     const logOut = () => {
@@ -34,18 +42,23 @@ export const Navbar = () => {
                         <b>ExpenseStreet</b>
                     </Link>
                     <div style={{ marginRight: "10px" }}>
-                        <Button icon={<MessageFilled />} style={{ marginRight: "10px" }} type='primary' />
+                        <Badge count={10} style={{ marginRight: 12 }}><Button icon={<MessageFilled />} onClick={showNotiDrawer} style={{ marginRight: 14 }} type='primary' /></Badge>
                         <Button title='Logout' style={{ marginRight: "10px" }} type='primary' icon={<LogoutOutlined />} onClick={logOut} />
-                        <Badge count={10}><Avatar icon={<UserOutlined />} onClick={showDrawer} /></Badge>
+                        <Avatar icon={<UserOutlined />} onClick={showDrawer} />
                         <Drawer title={localStorage.getItem("username")} onClose={onClose} open={open}>
                             <div className='text-center'><Avatar icon={<UserOutlined />} size={50} onClick={showDrawer} /></div>
                             <b className='text-center'><p>{localStorage.getItem("username")}</p></b>
                             <h6><Link style={{ color: "black", textDecoration: "none" }} to="/profile" onClick={() => { dispatch(getUserDetails(localStorage.getItem("username"))) }}>Profile</Link><br /></h6>
-                            <h6><Link style={{ color: "black", textDecoration: "none" }} to="/notification">Notification</Link><Badge count={10} showZero color='primary' style={{ marginLeft: "5px" }} /></h6>
+                        </Drawer>
+
+                        <Drawer title={"Messages"} onClose={onNotiClose} open={notiOpen}>
+                            {
+                                
+                            }
                         </Drawer>
                     </div>
                 </div>
-            </nav>
+            </nav >
         </>
     )
 }

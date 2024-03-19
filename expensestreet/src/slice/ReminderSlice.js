@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { nanoid } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
