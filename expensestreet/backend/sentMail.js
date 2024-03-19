@@ -47,17 +47,38 @@ cron.schedule('2,4,6 * * * * *', () => {
                 const username = element.username;
                 const email = element.email
 
-                const remSql = `SELECT * FROM ${username}.reminder WHERE reminderDateTime CONVERT(NOW(), CHAR) and reminderComplete="false";`
+                const remSql = `SELECT * FROM ${username}.reminder WHERE reminderDateTime <= NOW() and reminderComplete="false";`
                 conn.query(remSql, (remErr, remResult) => {
                     if (remErr) {
                         console.log(remErr);
                     } else {
                         remResult.forEach(x => {
-                            // const curDate = `${date.getFullYear()}-0${date.getMonth(y) + 1}-${date.getDate()}T${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}0Z`
-                            // const remDate = x.reminderDateTime
-                            // console.log(curDate);
-                            // console.log("\t", remDate);
-                            console.log(typeof(x.reminderDateTime));
+                            let mailOptions = {
+                                from: 'ExpensStreet <rushikeshdurge7794@gmail.com>',
+                                to: `${email}`,
+                                subject: 'Reminder',
+                                // html: `${req.body.vals.date} ${req.body.vals.time} ${req.body.vals.info}`,
+                            };
+
+                            transporter.sendMail(mailOptions, function (mailerr, data) {
+                                if (err) {
+                                    console.log(mailerr);
+                                } else {
+                                    console.log("email sent");
+                                    try {
+                                        const sql = `UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId=${x.reminderId}`
+                                        conn.query(sql, (err1, result1) => {
+                                            if (err) {
+                                                console.log(err1);
+                                            } else {
+                                                console.log("Message after mail sent");
+                                            }
+                                        })
+                                    } catch (error) {
+
+                                    }
+                                }
+                            });
                         });
                     }
                 })
