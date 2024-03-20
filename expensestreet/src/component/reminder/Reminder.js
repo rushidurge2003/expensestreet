@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs'
-import axios from 'axios';
 import {
     Form, TimePicker, Modal, Input, Select,
     DatePicker, message, Button, Empty, FloatButton, Tooltip
 } from 'antd'
 import { PlusOutlined, DeleteOutlined, EditOutlined, CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux'
-import { addReminder, getReminderData, sendReminderEmail, deleteReminder, statusTrueReminder } from '../../slice/ReminderSlice';
+import { addReminder, getReminderData, deleteReminder, statusTrueReminder } from '../../slice/ReminderSlice';
 import success from './images/success.png'
 import proccessing from './images/proccessing.png'
 

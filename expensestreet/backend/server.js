@@ -735,3 +735,37 @@ app.post("/statusTrueReminder", (req, res) => {
 
     }
 })
+
+app.get("/getNotification/:username",(req,res)=>{
+    try {
+        const username = req.params.username
+        const sql = `SELECT * FROM ${username}.notification;`
+        conn.query(sql,(err,result)=>{
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(result)
+                console.log("\tNotification data get successfully");
+            }
+        })
+    } catch (error) {
+        
+    }
+})
+
+app.get("/getNotificationCount/:username",(req,res)=>{
+    try {
+        const username = req.params.username
+        const sql = `SELECT COUNT(notificationId) AS notificationCount FROM ${username}.notification where active="true"`
+        conn.query(sql,(err,result)=>{
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(result)
+                console.log("\tNotification Count get successfully");
+            }
+        })
+    } catch (error) {
+        
+    }
+})

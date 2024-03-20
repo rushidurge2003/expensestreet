@@ -5,6 +5,7 @@ import ProfileDetailSliceReducer from "../slice/ProfileDetailSlice";
 import RecordSliceReducer from "../slice/RecordSlice";
 import ReminderSliceReducer from "../slice/ReminderSlice";
 import InvestmentSliceReducer from "../slice/InvestmentSlice";
+import NotificationSliceReducer from "../slice/NotificationSlice";
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
         ProfileDetailSliceReducer,
         RecordSliceReducer,
         ReminderSliceReducer,
-        InvestmentSliceReducer
+        InvestmentSliceReducer,
+        NotificationSliceReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({

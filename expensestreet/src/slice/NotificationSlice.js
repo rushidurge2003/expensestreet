@@ -1,7 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios'
 
 const initialState = {
-
+    notificationData: [],
+    notificationCount : 0
 }
 
 const NotificationSlice = createSlice({
@@ -11,13 +13,46 @@ const NotificationSlice = createSlice({
 
     },
     extraReducers: (builder) => {
-        builder.addCase(getReminderData.pending, (state, action) => {
+        builder.addCase(getNotification.pending, (state, action) => {
         });
-        builder.addCase(getReminderData.fulfilled, (state, action) => {
-            // state.isAuthenticated = action.payload.data.isAuthenticated
-            state.reminderData = action.payload
+        builder.addCase(getNotification.fulfilled, (state, action) => {
+            state.notificationData = action.payload
         });
-        builder.addCase(getReminderData.rejected, (state, action) => {
+        builder.addCase(getNotification.rejected, (state, action) => {
+        });
+
+        builder.addCase(getNotificationCount.pending, (state, action) => {
+        });
+        builder.addCase(getNotificationCount.fulfilled, (state, action) => {
+            state.notificationCount = action.payload
+        });
+        builder.addCase(getNotificationCount.rejected, (state, action) => {
         });
     }
 })
+
+export const getNotification = createAsyncThunk(
+    "getNotification",
+    async (username) => {
+        try {
+            const result = await axios.get("http://localhost:9000/getNotification/" + username)
+            return result
+        } catch (error) {
+
+        }
+    }
+)
+
+export const getNotificationCount = createAsyncThunk(
+    "getNotificationCount",
+    async (username) => {
+        try {
+            const result = await axios.get("http://localhost:9000/getNotificationCount/" + username)
+            return result.data[0].notificationCount
+        } catch (error) {
+
+        }
+    }
+)
+
+export default NotificationSlice.reducer
