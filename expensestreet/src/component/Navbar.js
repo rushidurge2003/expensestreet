@@ -9,6 +9,8 @@ import { getNotification, getNotificationCount } from '../slice/NotificationSlic
 
 export const Navbar = () => {
 
+    const [nData,setNData] = useState([])
+
     const dispatch = useDispatch()
     const state = useSelector((state) => state.NotificationSliceReducer.notificationData.data)
     const notificationCount = useSelector((state) => state.NotificationSliceReducer.notificationCount)
@@ -16,7 +18,8 @@ export const Navbar = () => {
     useEffect(() => {
         dispatch(getNotification(localStorage.getItem("username")))
         dispatch(getNotificationCount(localStorage.getItem("username")))
-    }, [])
+        setNData(state)
+    }, [nData])
 
     console.log("Notification : ", state);
     console.log("Notification Count : ", notificationCount);
@@ -44,6 +47,12 @@ export const Navbar = () => {
         window.location.replace("http://localhost:3000")
     }
 
+    const notiData = state?.map((x) => { return ({ ...x }) })
+
+    console.log("Noti Data : ",notiData);
+
+    notiData?.sort((a, b) => (new Date(b.notificationId) - new Date(a.notificationId)))
+
     return (
         <>
             <nav className="navbar bg-body-tertiary" style={{ boxShadow: "0px 15px 10px -15px #111", position: "fixed", width: "100%", zIndex: 1000, backgroundColor: "white" }}>
@@ -64,29 +73,26 @@ export const Navbar = () => {
 
                         <Drawer title={"Messages"} onClose={onNotiClose} open={notiOpen}>
                             {
-                                state?.map((x) => {
+                                notiData?.map((x) => {
                                     return (
                                         <>
-                                            <Card style={{
-                                                width: 330,
-                                                border: "1px solid gray",
-                                                marginBottom: 3,
-                                            }}
-                                                hoverable
-                                            >
-                                                <b><h6 className='text-center'>{x.title}</h6></b>
-                                                <div style={{ margin: 0, padding: 0 }}>
-                                                    <strong>{x.type} {x.amount}</strong>
-                                                    <p>Due Date : {(x.date).slice(0, 19).replace("T", ' ')}<br />{x.description}</p>
+                                            <div class="card mb-2">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{x.title} - {x.type} {x.amount} ₹</h5>
+                                                    <div class="mb-2">
+                                                        <p class="card-text"></p>{x.description}
+                                                        <p class="card-text">Due Date : {(x.date).slice(0, 10)}</p>
+                                                    </div>
+                                                    <button className='btn btn-primary btn-sm'>Read</button>
+                                                    <button className='btn btn-danger btn-sm mx-2'>Delete</button>
+                                                    <button className='btn btn-success btn-sm'>Done</button>
                                                 </div>
-                                                <div>
-                                                    <Button shape='circle' danger icon={<DeleteFilled />} />
-                                                </div>
-                                            </Card>
+                                            </div>
                                         </>
                                     )
                                 })
                             }
+
                         </Drawer>
                     </div>
                 </div>

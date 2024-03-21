@@ -1,5 +1,3 @@
-const cron = require('node-cron')
+const date = new Date()
 
-cron.schedule('* * * * *', () => {
-    console.log('running a task every minute');
-});
+console.log(date.getMonth());

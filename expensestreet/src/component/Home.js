@@ -70,7 +70,7 @@ const DisplayData = ({ contentNum }) => {
       </>
     )
   }
-  if (contentNum === 8) {
+  if (contentNum === 9) {
     return (
       <>
         <Reminder />
@@ -163,8 +163,14 @@ export const Home = () => {
             {
               key: '9',
               icon: <BellFilled />,
-              label: 'Reminder',
+              label: 'EMI/LOAN/SIP',
               onClick: () => { setContentNum(8) }
+            },
+            {
+              key: '10',
+              icon: <BellFilled />,
+              label: 'Reminder',
+              onClick: () => { setContentNum(9) }
             }
           ]} />
         </Sider>

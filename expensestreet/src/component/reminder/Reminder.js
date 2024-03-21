@@ -26,7 +26,7 @@ export const Reminder = () => {
     }
 
     const [remDesc, setRemDesc] = useState("")
-    const [remTime, setRemTime] = useState("00:00")
+    const [remTime, setRemTime] = useState(`${date.getHours()}:${date.getMinutes()}`)
     const [remDate, setRemDate] = useState(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     const [amount, setAmount] = useState(0)
     const [type, setType] = useState("")
@@ -107,6 +107,7 @@ export const Reminder = () => {
                                                                 // showModalIncome(d.amount, d.date, d.description)
                                                                 // setIncId(d.id)
                                                             }}
+                                                            disabled={x.reminderComplete === "true" ? true : false}
                                                         />
                                                     </Tooltip>
                                                     <Tooltip title="Complete">

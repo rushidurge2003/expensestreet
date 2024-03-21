@@ -37,7 +37,61 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-cron.schedule('2,4,6 * * * * *', () => {
+// cron.schedule('* * * * * *', () => {
+//     const sql = "select * from user"
+//     conn.query(sql, (err, result) => {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             result.forEach(element => {
+//                 const username = element.username;
+//                 const email = element.email
+
+//                 const remSql = `SELECT * FROM ${username}.reminder WHERE reminderDateTime <= NOW() and reminderComplete="false";`
+//                 conn.query(remSql, (remErr, remResult) => {
+//                     if (remErr) {
+//                         console.log(remErr);
+//                     } else {
+//                         remResult.forEach(x => {
+//                             let mailOptions = {
+//                                 from: 'ExpenseStreet <rushikeshdurge7794@gmail.com>',
+//                                 to: `${email}`,
+//                                 subject: 'Reminder',
+//                                 // html: `${req.body.vals.date} ${req.body.vals.time} ${req.body.vals.info}`,
+//                             };
+
+//                             transporter.sendMail(mailOptions, function (mailerr, data) {
+//                                 if (err) {
+//                                     console.log(mailerr);
+//                                 } else {
+//                                     console.log("email sent");
+//                                     try {
+//                                         const d = JSON.stringify(x.reminderDateTime)
+//                                         const da = (d).slice(1, 20).replace("T", ' ');
+//                                         const sql = `INSERT INTO ${username}.notification(title, description, type, amount, date, active) VALUES('REMINDER', "${x.reminderDesc}", "${x.type}", "${x.amount}", "${da}", 'true');
+//                                                     UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId=${x.reminderId}`
+//                                         conn.query(sql, (err1, result1) => {
+//                                             if (err1) {
+//                                                 console.log(err1);
+//                                             } else {
+//                                                 console.log("Add notification successfully");
+//                                             }
+//                                         })
+//                                     } catch (error) {
+
+//                                     }
+//                                 }
+//                             });
+//                         });
+//                     }
+//                 })
+//             });
+//         }
+//     })
+// });
+
+setInterval(() => {
+    console.log("\t\tInterval hit");
     const sql = "select * from user"
     conn.query(sql, (err, result) => {
         if (err) {
@@ -54,7 +108,7 @@ cron.schedule('2,4,6 * * * * *', () => {
                     } else {
                         remResult.forEach(x => {
                             let mailOptions = {
-                                from: 'ExpensStreet <rushikeshdurge7794@gmail.com>',
+                                from: 'ExpenseStreet <rushikeshdurge7794@gmail.com>',
                                 to: `${email}`,
                                 subject: 'Reminder',
                                 // html: `${req.body.vals.date} ${req.body.vals.time} ${req.body.vals.info}`,
@@ -66,12 +120,15 @@ cron.schedule('2,4,6 * * * * *', () => {
                                 } else {
                                     console.log("email sent");
                                     try {
-                                        const sql = `UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId=${x.reminderId}`
+                                        const d = JSON.stringify(x.reminderDateTime)
+                                        const da = (d).slice(1, 20).replace("T", ' ');
+                                        const sql = `INSERT INTO ${username}.notification(title, description, type, amount, date, active) VALUES('REMINDER', "${x.reminderDesc}", "${x.type}", "${x.amount}", "${da}", 'true');
+                                                    UPDATE ${username}.reminder SET reminderComplete="true" WHERE reminderId=${x.reminderId}`
                                         conn.query(sql, (err1, result1) => {
-                                            if (err) {
+                                            if (err1) {
                                                 console.log(err1);
                                             } else {
-                                                console.log("Message after mail sent");
+                                                console.log("Add notification successfully");
                                             }
                                         })
                                     } catch (error) {
@@ -85,4 +142,4 @@ cron.schedule('2,4,6 * * * * *', () => {
             });
         }
     })
-});
+}, 30000)
