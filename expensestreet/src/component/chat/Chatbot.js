@@ -20,7 +20,7 @@ export const Chatbot = () => {
   const steps = [
     {
       id: '0',
-      message: `Welcome ${localStorage.getItem("username")}`,
+      message: `Welcome`,
       trigger: '1',
     },
     {

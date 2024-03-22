@@ -19,7 +19,7 @@ export const DisplayInvestList = () => {
                 <div style={{ margin: "20px" }}><h5>Investment</h5></div>
                 <Card bordered={false}>
                     <Statistic
-                        title="Total Invested"
+                        title="Total Investment"
                         value={0}
                         precision={2}
                         valueStyle={{ color: 'black' }}
