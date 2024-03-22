@@ -8,7 +8,6 @@ import { AllTransaction } from './sidebarFun/AllTransaction';
 import { DeletedTransaction } from './sidebarFun/DeletedTransaction';
 import Graph from './graph/Graph';
 import { News } from './news/News';
-import { StockMarket } from './stockmarket/StockMarket';
 import { Investment } from './invetsment/Investment';
 import { Reminder } from './reminder/Reminder';
 

@@ -5,7 +5,7 @@ import { GithubOutlined, LinkedinOutlined, InstagramOutlined, TwitterOutlined, F
 export const Footer = () => {
   return (
     <>
-      <div style={{  marginTop: 30, marginBottom: 0, padding: 10, boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.16),0px 3px 6px 0px rgba(0,0,0,0.23)" }}>
+      <div style={{ marginTop: 30, marginBottom: 0, padding: 10, boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.16),0px 3px 6px 0px rgba(0,0,0,0.23)" }}>
         <div className='d-flex justify-content-between' style={{ paddingLeft: 40, paddingRight: 40 }}>
           <div>
             Get connected with us on social networks:
@@ -20,6 +20,7 @@ export const Footer = () => {
         </div>
         <hr />
         <div>
+          <h6 className='text-center'>ExpenseStreet ©{new Date().getFullYear()} Created by Rushikesh Durge,Atharva Jori,Niraj Kate</h6>
 
         </div>
       </div>
