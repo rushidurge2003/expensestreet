@@ -1,6 +1,8 @@
 import React from 'react'
+import usePreventZoom from '../usePreventZoom'
 
 export const About = () => {
+  usePreventZoom()
   return (
     <>
       <div style={{ position: "relative", top: 70 }}>

@@ -308,6 +308,37 @@ app.post("/creatDataBase", (req, res) => {
         date DATETIME NOT NULL,
         active VARCHAR(10) NOT NULL,
         PRIMARY KEY (notificationId));
+
+    CREATE TABLE ${username}.stockmarket (
+        smid INT NOT NULL AUTO_INCREMENT,
+        smdate DATETIME NOT NULL,
+        smname VARCHAR(45) NOT NULL,
+        price DECIMAL(8,2) NULL,
+        quantity INT NOT NULL,
+        total DECIMAL(10,2) NOT NULL,
+        PRIMARY KEY (smid));
+
+    CREATE TABLE ${username}.mutualfund (
+        mfid INT NOT NULL AUTO_INCREMENT,
+        mfdate DATETIME NOT NULL,
+        mfname VARCHAR(45) NOT NULL,
+        amount INT NOT NULL,
+        PRIMARY KEY (mfid));
+
+    CREATE TABLE ${username}.fixeddeposit (
+        fid INT NOT NULL AUTO_INCREMENT,
+        fdate DATETIME NOT NULL,
+        bankname VARCHAR(45) NOT NULL,
+        amount INT NOT NULL,
+        PRIMARY KEY (fid));
+
+    CREATE TABLE ${username}.realestate (
+        rid INT NOT NULL AUTO_INCREMENT,
+        rdate DATETIME NOT NULL,
+        rname VARCHAR(45) NOT NULL,
+        amount INT NOT NULL,
+        PRIMARY KEY (rid));
+          
     `;
 
     conn.query(sql, (err, result) => {
@@ -736,11 +767,17 @@ app.post("/statusTrueReminder", (req, res) => {
     }
 })
 
-app.get("/getNotification/:username",(req,res)=>{
+// ===================
+// 
+//  Notification
+// 
+// ===================
+
+app.get("/getNotification/:username", (req, res) => {
     try {
         const username = req.params.username
         const sql = `SELECT * FROM ${username}.notification;`
-        conn.query(sql,(err,result)=>{
+        conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
             } else {
@@ -749,15 +786,15 @@ app.get("/getNotification/:username",(req,res)=>{
             }
         })
     } catch (error) {
-        
+
     }
 })
 
-app.get("/getNotificationCount/:username",(req,res)=>{
+app.get("/getNotificationCount/:username", (req, res) => {
     try {
         const username = req.params.username
         const sql = `SELECT COUNT(notificationId) AS notificationCount FROM ${username}.notification where active="true"`
-        conn.query(sql,(err,result)=>{
+        conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
             } else {
@@ -766,6 +803,303 @@ app.get("/getNotificationCount/:username",(req,res)=>{
             }
         })
     } catch (error) {
-        
+
+    }
+})
+
+// =====================
+// 
+//  Investment
+// 
+// =====================
+
+// 1) Stock Investment
+app.post("/addStockInvest", (req, res) => {
+    try {
+        const { username, date, name, price, quantitiy, total } = req.body
+        const sql = `INSERT INTO ${username}.stockmarket (smdate,smname, price, quantity,total) VALUES("${date}","${name}",${price},${quantitiy},${total})`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in add stock market investment");
+            } else {
+                res.send(result)
+                console.log("\tStock market investment add successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.get("/getStockInvest/:username", (req, res) => {
+    try {
+        const username = req.params.username
+        const sql = `SELECT * FROM ${username}.stockmarket`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.json(result)
+                console.log("\tGet Stock Investment Successfullt");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/updateStockInvest", (req, res) => {
+    try {
+        const { username, id, date, name, price, quantity, total } = req.body
+        const sql = `UPDATE ${username}.stockmarket SET smdate = "${date}",smname = "${name}",price = ${price},quantity = ${quantity},total = ${total} WHERE smid = ${id};`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in update stock market investment");
+            } else {
+                res.send(result)
+                console.log("\tStock market investment update successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/deleteStockInvest", (req, res) => {
+    try {
+        const { username, id} = req.body
+        const sql = `DELETE FROM ${username}.stockmarket where smid = ${id};`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in delete stock market investment");
+            } else {
+                res.send(result)
+                console.log("\tStock market investment delete successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+
+// 2) Mutual Fund Investment
+app.post("/addMutualFundInvest", (req, res) => {
+    try {
+        const { username, date, name, amount } = req.body
+        const sql = `INSERT INTO ${username}.mutualfund (mfdate,mfname,amount) VALUES("${date}","${name}",${amount})`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in add Mutual Fund investment");
+            } else {
+                res.send(result)
+                console.log("\tMutual Fund investment add successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.get("/getMutualFundInvest/:username", (req, res) => {
+    try {
+        const username = req.params.username
+        const sql = `SELECT * FROM ${username}.mutualfund`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.json(result)
+                console.log("Get Mutual Fund Investment Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/updateMutualFundInvest", (req, res) => {
+    try {
+        const { username, id, date, name, amount } = req.body
+        const sql = `UPDATE ${username}.mutualfund SET mfdate = "${date}",mfname = "${name}",amount = ${amount} WHERE mfid = ${id};`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in update mutula fund investment");
+            } else {
+                res.send(result)
+                console.log("\tMutula fund investment update successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/deleteMutualFundInvest", (req, res) => {
+    try {
+        const { username, id} = req.body
+        const sql = `DELETE FROM ${username}.mutualfund where mfid = ${id};`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in delete mutula fund investment");
+            } else {
+                res.send(result)
+                console.log("\tMutula fund investment delete successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+
+
+// 3) Real Estate
+app.post("/addRealEstateInvest", (req, res) => {
+    try {
+        const { username, date, name, amount } = req.body
+        const sql = `INSERT INTO ${username}.realestate (rdate,rname,amount) VALUES("${date}","${name}",${amount})`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in add Real Estate investment");
+            } else {
+                res.send(result)
+                console.log("\tReal Estate investment add successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.get("/getRealEstateInvest/:username", (req, res) => {
+    try {
+        const username = req.params.username
+        const sql = `SELECT * FROM ${username}.realestate`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.json(result)
+                console.log("Get Real Estate Investment Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/updateRealEstateInvest", (req, res) => {
+    try {
+        const { username, id, date, name, amount } = req.body
+        const sql = `UPDATE ${username}.realestate SET rdate = "${date}",rname = "${name}",amount = ${amount} WHERE rid = ${id};`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in update real estate investment");
+            } else {
+                res.send(result)
+                console.log("\tReal estate investment update successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/deleteRealEstateInvest", (req, res) => {
+    try {
+        const { username, id} = req.body
+        const sql = `DELETE FROM ${username}.realestate where rid = ${id};`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in delete real estate investment");
+            } else {
+                res.send(result)
+                console.log("\tReal estate investment delete successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+// Fixed Deposite
+app.post("/addFixedDepositInvest", (req, res) => {
+    try {
+        const { username, date, name, amount } = req.body
+        const sql = `INSERT INTO ${username}.fixeddeposit (fdate,bankname,amount) VALUES("${date}","${name}",${amount})`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in add Fixed Deposit investment");
+            } else {
+                res.send(result)
+                console.log("\tFixed Deposit investment add successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.get("/getFixedDepositInvest/:username", (req, res) => {
+    try {
+        const username = req.params.username
+        const sql = `SELECT * FROM ${username}.fixeddeposit`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.json(result)
+                console.log("Get Fixed Deposit Investment Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/updateFixedDepositInvest", (req, res) => {
+    try {
+        const { username, id, date, name, amount } = req.body
+        const sql = `UPDATE ${username}.fixeddeposit SET fdate = "${date}",bankname = "${name}",amount = ${amount} WHERE fid = ${id};`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in update fixed deposit investment");
+            } else {
+                res.send(result)
+                console.log("\tFixed deposit investment update successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+app.post("/deleteFixedDepositInvest", (req, res) => {
+    try {
+        const { username, id} = req.body
+        const sql = `DELETE FROM ${username}.fixeddeposit where fid = ${id};`
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log("\tError in delete fixed deposit investment");
+            } else {
+                res.send(result)
+                console.log("\tFixed deposit investment delete successfully");
+            }
+        })
+    } catch (error) {
+
     }
 })

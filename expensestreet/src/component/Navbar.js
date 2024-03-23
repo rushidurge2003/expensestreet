@@ -6,10 +6,11 @@ import { UserOutlined, LogoutOutlined, MessageFilled, DeleteFilled } from '@ant-
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from '../slice/ProfileDetailSlice';
 import { getNotification, getNotificationCount } from '../slice/NotificationSlice';
+import { Feedback } from './feedback/Feedback';
 
 export const Navbar = () => {
 
-    const [nData,setNData] = useState([])
+    const [nData, setNData] = useState([])
 
     const dispatch = useDispatch()
     const state = useSelector((state) => state.NotificationSliceReducer.notificationData.data)
@@ -20,6 +21,11 @@ export const Navbar = () => {
         dispatch(getNotificationCount(localStorage.getItem("username")))
         setNData(state)
     }, [nData])
+
+    // setInterval(() => {
+    //     dispatch(getNotification(localStorage.getItem("username")))
+    //     dispatch(getNotificationCount(localStorage.getItem("username")))
+    // }, 20000)
 
     console.log("Notification : ", state);
     console.log("Notification Count : ", notificationCount);
@@ -49,7 +55,7 @@ export const Navbar = () => {
 
     const notiData = state?.map((x) => { return ({ ...x }) })
 
-    console.log("Noti Data : ",notiData);
+    console.log("Noti Data : ", notiData);
 
     notiData?.sort((a, b) => (new Date(b.notificationId) - new Date(a.notificationId)))
 
@@ -68,7 +74,8 @@ export const Navbar = () => {
                         <Drawer title={localStorage.getItem("username")} onClose={onClose} open={open}>
                             <div className='text-center'><Avatar icon={<UserOutlined />} size={50} onClick={showDrawer} /></div>
                             <b className='text-center'><p>{localStorage.getItem("username")}</p></b>
-                            <h6><Link style={{ color: "black", textDecoration: "none" }} to="/profile" onClick={() => { dispatch(getUserDetails(localStorage.getItem("username"))) }}>Profile</Link><br /></h6>
+                            <h6><Link style={{ color: "black", textDecoration: "none" }} to="/profile" onClick={() => { dispatch(getUserDetails(localStorage.getItem("username"))); onClose() }}>Profile</Link><br /></h6>
+                            <h6><Link style={{ color: "black", textDecoration: "none" }} to="/feedback" onClick={onClose}>Feedback</Link></h6>
                         </Drawer>
 
                         <Drawer title={"Messages"} onClose={onNotiClose} open={notiOpen}>

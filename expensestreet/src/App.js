@@ -10,6 +10,7 @@ import { Profile } from "./component/profile/Profile";
 import { WelcomeNavbar } from "./component/welcome/WelcomeNavbar";
 import { About } from "./component/welcome/About";
 import ForgetPassword from "./component/forgetPassword/ForgetPassword";
+import { Feedback } from "./component/feedback/Feedback";
 
 function App() {
   const state = useSelector((state) => state)
@@ -25,6 +26,7 @@ function App() {
             <Routes>
               <Route path="/" Component={Home} />
               <Route path="/profile" Component={Profile} />
+              <Route path="/feedback" Component={Feedback} />
               <Route path="*" Component={ErrorPage} />
             </Routes>
           </>

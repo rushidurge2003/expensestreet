@@ -18,10 +18,13 @@ export const WelcomeNavbar = () => {
               <img src={icon} alt="Logo" width="30" height="24" className="d-inline-block align-text-top" />
               <b>ExpenseStreet</b>
             </Link>
-            <Button type='text' style={{paddingTop:8}} onClick={() => { navigate("/about") }}><strong style={{ color: "black" }}>About</strong></Button>
-            <Button type='text' block><GithubOutlined size={10}/></Button>
+            <Button type='text' style={{ paddingTop: 8 }} onClick={() => { navigate("/about") }}><strong style={{ color: "black" }}>About</strong></Button>
+            {/* <Button type='text' block><GithubOutlined size={10} /></Button> */}
+            <Link className='btn btn-light btn-sm mx-2 my-1' target='blank' to="https://github.com/rushidurge2003"><GithubOutlined size={10} /></Link>
           </div>
           <div className='d-flex'>
+            <Link className='btn btn-dark btn-sm mx-2' to="/login">Login</Link>
+            <Link className='btn btn-dark btn-sm' to="/signup">Sign Up</Link>
           </div>
         </div>
       </nav>
