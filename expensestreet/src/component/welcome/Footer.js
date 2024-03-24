@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from 'antd'
+import { Link } from 'react-router-dom';
 import { GithubOutlined, LinkedinOutlined, InstagramOutlined, TwitterOutlined, FacebookOutlined } from '@ant-design/icons';
 
 export const Footer = () => {
@@ -11,11 +12,11 @@ export const Footer = () => {
             Get connected with us on social networks:
           </div>
           <div>
-            <Button type="text" shape="circle" size='large' icon={<GithubOutlined />} />
-            <Button type="text" shape="circle" size='large' icon={<LinkedinOutlined />} />
-            <Button type="text" shape="circle" size='large' icon={<InstagramOutlined />} />
-            <Button type="text" shape="circle" size='large' icon={<TwitterOutlined />} />
-            <Button type="text" shape="circle" size='large' icon={<FacebookOutlined />} />
+            <Link className='btn btn-light btn-md mx-2 my-1' target='blank' to="https://github.com/rushidurge2003"><GithubOutlined size={10} /></Link>
+            <Link className='btn btn-light btn-md mx-2 my-1' target='blank' to="https://in.linkedin.com"><LinkedinOutlined size={10} /></Link>
+            <Link className='btn btn-light btn-md mx-2 my-1' target='blank' to="https://www.instagram.com"><InstagramOutlined size={10} /></Link>
+            <Link className='btn btn-light btn-md mx-2 my-1' target='blank' to="https://twitter.com/?lang=en"><TwitterOutlined size={10} /></Link>
+            <Link className='btn btn-light btn-md mx-2 my-1' target='blank' to="https://www.facebook.com"><FacebookOutlined size={10} /></Link>
           </div>
         </div>
         <hr />

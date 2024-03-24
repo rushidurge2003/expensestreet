@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom'
 import { Footer } from './Footer'
 import { Chatbot } from '../chat/Chatbot'
 import usePreventZomm from '../usePreventZoom'
-import fimg from './images/first.gif'
 import applogo from './images/ExpenseStreet.png'
-import sdata from './images/secure-data.png'
-// import bvid from './images/back-video.mp4'
+import exp1 from './images/exp1.gif'
+import exp2 from './images/exp2.png'
+import exp3 from './images/exp3.png'
+import exp4 from './images/exp4.png'
 
 export const Welcome = () => {
   usePreventZomm()
@@ -25,6 +26,7 @@ export const Welcome = () => {
   return (
     <>
       <div style={{ width: "100%", height: "60vh", backgroundColor: "gray", position: "absolute", zIndex: -1 }}>
+
       </div>
       {/* <div className='welcome' style={{ display: "flex", justifyContent: "center" }}> */}
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -63,10 +65,16 @@ export const Welcome = () => {
             </div>
             <div>
               <div>
-                <img src={fimg} alt="" draggable="false" style={{ width: 400 }} />
+                <img src={exp1} alt="" draggable="false" style={{ width: 350 }} />
               </div>
               <div>
-                <img src={sdata} alt="" draggable="false" style={{ width: 400 }} />
+                <img src={exp2} alt="" draggable="false" style={{ width: 350 }} />
+              </div>
+              <div>
+                <img src={exp3} alt="" draggable="false" style={{ width: 350 }} />
+              </div>
+              <div>
+                <img src={exp4} alt="" draggable="false" style={{ width: 350 }} />
               </div>
             </div>
           </div>
@@ -75,7 +83,7 @@ export const Welcome = () => {
       <div>
         <Footer />
       </div>
-      <Chatbot/>
+      <Chatbot />
     </>
   )
 }

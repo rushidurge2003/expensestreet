@@ -4,6 +4,7 @@ import { message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import usePreventZoom from './usePreventZoom'
+import { Loading } from './loading/Loading'
 
 export const Login = () => {
   usePreventZoom()
@@ -13,6 +14,7 @@ export const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [viewpassword, setViewPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
 
 
   const LoginProceed = async (e) => {
@@ -29,6 +31,7 @@ export const Login = () => {
       }
       else {
         // dispatch(LoginUser({ username: username, password: password }))
+        setLoading(true)
         console.log("Username : ", username);
         console.log("Password : ", password);
         const result = await axios.post("http://localhost:9000/login", { "username": username, "password": password })
@@ -45,10 +48,15 @@ export const Login = () => {
         else {
           message.error("Failed to Login")
         }
+        setLoading(false)
       }
     } catch (error) {
 
     }
+  }
+
+  if (loading) {
+    return (<Loading />)
   }
 
 

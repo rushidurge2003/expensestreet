@@ -197,6 +197,30 @@ app.post("/sendReminderEmail", function (req, res) {
     })
 });
 
+// ========================
+// 
+// Feedback
+// 
+// ========================
+
+app.post("/feedback", (req, res) => {
+    try {
+        const { username, email, subject, fback, date } = req.body
+        const sql = `INSERT INTO feedback(username,email, subject, fback, date) VALUES("${username}","${email}","${subject}","${fback}","${date}")`
+        conn.query(sql,(err,result)=>{
+            if (err) {
+                res.send(err)
+                console.log("\tError in submit feedback");
+            } else {
+                res.send(result)
+                console.log("\tFeedback Submit Successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
 
 // =========================
 // 
@@ -869,7 +893,7 @@ app.post("/updateStockInvest", (req, res) => {
 
 app.post("/deleteStockInvest", (req, res) => {
     try {
-        const { username, id} = req.body
+        const { username, id } = req.body
         const sql = `DELETE FROM ${username}.stockmarket where smid = ${id};`
         conn.query(sql, (err, result) => {
             if (err) {
@@ -942,7 +966,7 @@ app.post("/updateMutualFundInvest", (req, res) => {
 
 app.post("/deleteMutualFundInvest", (req, res) => {
     try {
-        const { username, id} = req.body
+        const { username, id } = req.body
         const sql = `DELETE FROM ${username}.mutualfund where mfid = ${id};`
         conn.query(sql, (err, result) => {
             if (err) {
@@ -1016,7 +1040,7 @@ app.post("/updateRealEstateInvest", (req, res) => {
 
 app.post("/deleteRealEstateInvest", (req, res) => {
     try {
-        const { username, id} = req.body
+        const { username, id } = req.body
         const sql = `DELETE FROM ${username}.realestate where rid = ${id};`
         conn.query(sql, (err, result) => {
             if (err) {
@@ -1088,7 +1112,7 @@ app.post("/updateFixedDepositInvest", (req, res) => {
 
 app.post("/deleteFixedDepositInvest", (req, res) => {
     try {
-        const { username, id} = req.body
+        const { username, id } = req.body
         const sql = `DELETE FROM ${username}.fixeddeposit where fid = ${id};`
         conn.query(sql, (err, result) => {
             if (err) {
