@@ -72,7 +72,7 @@ export const Welcome = () => {
                   <img src={exp1} alt="" draggable="false" style={{ width: 350 }} />
                 </div>
                 <div className='col-6'>
-                  <h4 className='text-center' style={{ marginTop: 55 }}>Data Presentation</h4>
+                  <h4 className='text-center' style={{ marginTop: 55 }}>Data visualization</h4>
                   <p className='px-3'>
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos, ex aperiam corrupti quisquam totam amet aut earum suscipit distinctio cupiditate ducimus aliquid autem facere voluptas error beatae laudantium neque voluptate sint sequi explicabo natus hic odit? Modi nobis dolores doloribus culpa magnam sequi cupiditate ex error, quibusdam, quidem non molestias.
                   </p>

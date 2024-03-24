@@ -1,1 +1,2 @@
 Stock Market API Key -  54BJDGW3OEI3OBEK
+NEWS API Key - 880616c94fbb434f9a32afe90ccc70b9

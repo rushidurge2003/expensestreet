@@ -15,7 +15,7 @@ export const WelcomeNavbar = () => {
         <div className="container-fluid">
           <div className='d-flex'>
             <Link className="navbar-brand" to="/" style={{ color: "black" }}>
-              <img src={icon} alt="Logo" width="30" height="24" className="d-inline-block align-text-top" />
+              {/* <img src={icon} alt="Logo" width="30" height="24" className="d-inline-block align-text-top" /> */}
               <b>ExpenseStreet</b>
             </Link>
             <Button type='text' style={{ paddingTop: 8 }} onClick={() => { navigate("/about") }}><strong style={{ color: "black" }}>About</strong></Button>

@@ -10,9 +10,10 @@ import Graph from './graph/Graph';
 import { News } from './news/News';
 import { Investment } from './invetsment/Investment';
 import { Reminder } from './reminder/Reminder';
+import { Budget } from './budget/Budget';
 
 import {
-  FileAddFilled, PieChartFilled, GoldFilled, LineChartOutlined,
+  FileAddFilled, PieChartFilled, GoldFilled, MailFilled,
   ReadFilled, DeleteFilled, BellFilled
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
@@ -66,6 +67,13 @@ const DisplayData = ({ contentNum }) => {
     return (
       <>
         <News />
+      </>
+    )
+  }
+  if (contentNum === 8) {
+    return (
+      <>
+        <Budget />
       </>
     )
   }
@@ -161,8 +169,8 @@ export const Home = () => {
             },
             {
               key: '9',
-              icon: <BellFilled />,
-              label: 'EMI/LOAN/SIP',
+              icon: <MailFilled />,
+              label: 'Budget',
               onClick: () => { setContentNum(8) }
             },
             {

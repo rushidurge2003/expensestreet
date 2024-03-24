@@ -1,19 +1,16 @@
 import React from 'react'
-import { Result } from 'antd'
+import {useSelector } from 'react-redux'
 
 export const News = () => {
+
+    const state = useSelector((state)=>state.NewsSliceReducer.screenDisplay)
+
     return (
         <>
-            <div className='d-flex justify-content-between'>
+            <div className='d-flex justify-content-center'>
                 <div><h5>News</h5></div>
             </div>
-            <div>
-                <Result
-                    status="403"
-                    title="News features update in soon"
-                    // subTitle="Sorry, you are not authorized to access this page."
-                />
-            </div>
+            {state}
         </>
     )
 }
