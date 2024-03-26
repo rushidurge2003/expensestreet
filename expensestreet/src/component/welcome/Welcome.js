@@ -10,6 +10,8 @@ import exp1 from './images/exp1.gif'
 import exp2 from './images/exp2.png'
 import exp3 from './images/exp3.png'
 import exp4 from './images/exp4.png'
+import exp5 from './images/exp5.gif'
+import exp6 from './images/exp6.png'
 import vid from './images/back.mp4'
 
 export const Welcome = () => {
@@ -74,7 +76,7 @@ export const Welcome = () => {
                 <div className='col-6'>
                   <h4 className='text-center' style={{ marginTop: 55 }}>Data visualization</h4>
                   <p className='px-3'>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos, ex aperiam corrupti quisquam totam amet aut earum suscipit distinctio cupiditate ducimus aliquid autem facere voluptas error beatae laudantium neque voluptate sint sequi explicabo natus hic odit? Modi nobis dolores doloribus culpa magnam sequi cupiditate ex error, quibusdam, quidem non molestias.
+                    It aims to communicate insights and patterns in data through visual elements such as charts, graphs, maps, and infographics. By presenting data visually, complex information becomes more accessible, allowing viewers to understand trends, correlations, and outliers more easily.
                   </p>
                 </div>
               </div>
@@ -82,7 +84,7 @@ export const Welcome = () => {
                 <div className='col-6'>
                   <h4 className='text-center' style={{ marginTop: 55 }}>Authentication</h4>
                   <p className='px-3'>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi dolores libero necessitatibus sunt voluptatibus repellat aspernatur quas incidunt nam eveniet facilis quia quasi tempora alias reiciendis, optio voluptatem rerum similique ducimus laboriosam ea? Corrupti corporis doloremque repudiandae omnis? Blanditiis optio dolor qui obcaecati rem, dicta aut id distinctio tempora placeat?
+                    authentication stands as the guardian of our digital fortresses. Our authentication method represents the pinnacle of security and user experience, setting a new standard in safeguarding sensitive information while ensuring seamless access.
                   </p>
                 </div>
                 <div className='col-6'>
@@ -96,7 +98,8 @@ export const Welcome = () => {
                 <div className="col-6">
                   <h4 className="text-center" style={{ marginTop: 55 }}>Reminder</h4>
                   <p className="px-3">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit amet, atque iure eos molestias soluta eaque necessitatibus maiores provident sapiente. Itaque totam temporibus ullam. In repellendus rerum quaerat enim qui quis amet quidem, provident ut veniam eveniet modi reiciendis est, hic ea nam commodi quo totam magni, inventore atque explicabo!
+                    Our application is designed to provide gentle reminders, ensuring you stay on track with your commitments and deadlines effortlessly. With our intuitive interface and customizable settings, you can easily schedule reminders for important events, tasks, or appointments.
+                    Whether it's a deadline for a project, a meeting with a client, or a personal task, our application allows you to set reminders at your preferred frequency and time.You can receive notifications via <strong>Email</strong>, ensuring you never miss an important deadline again.
                   </p>
                 </div>
               </div>
@@ -104,11 +107,33 @@ export const Welcome = () => {
                 <div className="col-6">
                   <h4 className="text-center" style={{ marginTop: 55 }}>News</h4>
                   <p className="px-3">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure ratione vero, soluta facilis ullam perferendis porro ea magni modi id optio, quae cum, iusto dolor. Aliquid aut, fugiat ab laborum magnam soluta officiis ex possimus nobis quaerat obcaecati enim suscipit temporibus tempora distinctio! A voluptate pariatur ipsam nihil ex cumque!
+                    Our curated selection of business news sources ensures that you receive relevant and high-quality content tailored to your interests. Whether you're interested in finance, technology, entrepreneurship, or global markets, our application provides a comprehensive overview of the latest headlines and analysis from trusted sources.
                   </p>
                 </div>
                 <div className='col-6'>
                   <img src={exp4} alt="" draggable="false" style={{ width: 300 }} />
+                </div>
+              </div>
+              <div className='row'>
+                <div className='col-6'>
+                  <img src={exp5} alt="" draggable="false" style={{ width: 330 }} />
+                </div>
+                <div className="col-6">
+                  <h4 className="text-center" style={{ marginTop: 55 }}>Budget</h4>
+                  <p className="px-3">
+                    Allow users to set financial goals such as saving for a vacation, buying a house, paying off debt, etc. The application can help track progress towards these goals and provide recommendations on how to achieve them faster.
+                  </p>
+                </div>
+              </div>
+              <div className='row'>
+                <div className="col-6">
+                  <h4 className="text-center" style={{ marginTop: 55 }}>Updates</h4>
+                  <p className="px-3">
+                    Frequent updates and bug fixes are essential for maintaining a high-quality user experience and ensuring the security and stability of the application.
+                  </p>
+                </div>
+                <div className='col-6'>
+                  <img src={exp6} alt="" draggable="false" style={{ width: 260 }} />
                 </div>
               </div>
             </div>

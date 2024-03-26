@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { GithubOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import icon from './images/webicon.png'
 
 export const WelcomeNavbar = () => {
 

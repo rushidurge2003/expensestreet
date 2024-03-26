@@ -31,15 +31,32 @@ export const Chatbot = () => {
     {
       id: '2',
       options: [
-        { value: 2, label: 'Number 2', trigger: '3' },
-        { value: 3, label: 'Number 3', trigger: '3' },
+        { value: 1, label: 'Expense', trigger: '3' },
+        { value: 2, label: 'Income', trigger: '4' },
+        { value: 3, label: 'Investment', trigger: '5' },
       ],
     },
     {
       id: '3',
-      message: 'Bye!',
+      message: 'Expense',
       end: true,
     },
+    {
+      id: '4',
+      message: 'Income',
+      end: true,
+    },
+    {
+      id: '5',
+      options: [
+        { value: 1, label: 'Types Of Investment', trigger: '6' },
+      ],
+    },
+    {
+      id:'6',
+      message : "1)Stocks 2)Bonds 3)Mutual Funds 4)Real Estate 5)Commodities",
+      trigger : '1'
+    }
   ];
 
   return (

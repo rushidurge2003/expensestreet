@@ -11,6 +11,7 @@ import { WelcomeNavbar } from "./component/welcome/WelcomeNavbar";
 import { About } from "./component/welcome/About";
 import ForgetPassword from "./component/forgetPassword/ForgetPassword";
 import { Feedback } from "./component/feedback/Feedback";
+// import ExportToExcel from "./component/dataToexcel/ExportToExcel";
 
 function App() {
   const state = useSelector((state) => state)
@@ -27,6 +28,7 @@ function App() {
               <Route path="/" Component={Home} />
               <Route path="/profile" Component={Profile} />
               <Route path="/feedback" Component={Feedback} />
+              {/* <Route path="/excel" Component={ExportToExcel} /> */}
               <Route path="*" Component={ErrorPage} />
             </Routes>
           </>

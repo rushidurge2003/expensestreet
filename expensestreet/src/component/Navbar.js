@@ -1,12 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Badge, Avatar, Drawer, Card } from 'antd'
-import { UserOutlined, LogoutOutlined, MessageFilled, DeleteFilled } from '@ant-design/icons';
+import { Button, Badge, Avatar, Drawer, Modal, Popconfirm, message } from 'antd'
+import { UserOutlined, LogoutOutlined, MessageFilled, CalculatorOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from '../slice/ProfileDetailSlice';
 import { getNotification, getNotificationCount } from '../slice/NotificationSlice';
-import { Feedback } from './feedback/Feedback';
 
 export const Navbar = () => {
 
@@ -22,13 +21,27 @@ export const Navbar = () => {
         setNData(state)
     }, [nData])
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     // setInterval(() => {
     //     dispatch(getNotification(localStorage.getItem("username")))
     //     dispatch(getNotificationCount(localStorage.getItem("username")))
     // }, 20000)
 
-    console.log("Notification : ", state);
-    console.log("Notification Count : ", notificationCount);
+    // console.log("Notification : ", state);
+    // console.log("Notification Count : ", notificationCount);
 
     const [open, setOpen] = useState(false);
     const [notiOpen, setNotiOpen] = useState(false);
@@ -53,6 +66,14 @@ export const Navbar = () => {
         window.location.replace("http://localhost:3000")
     }
 
+    const confirm = (e) => {
+        message.success('Click on Yes');
+        logOut()
+    };
+    const cancel = (e) => {
+        message.error('Cancel to Logout');
+    };
+
     const notiData = state?.map((x) => { return ({ ...x }) })
 
     console.log("Noti Data : ", notiData);
@@ -68,8 +89,19 @@ export const Navbar = () => {
                         <b>ExpenseStreet</b>
                     </Link>
                     <div style={{ marginRight: "10px" }}>
+                        <Button title='Calculator' style={{ marginRight: "10px" }} type='primary' icon={<CalculatorOutlined />} onClick={showModal} />
                         <Badge count={notificationCount} style={{ marginRight: 12 }}><Button icon={<MessageFilled />} onClick={showNotiDrawer} style={{ marginRight: 14 }} type='primary' /></Badge>
-                        <Button title='Logout' style={{ marginRight: "10px" }} type='primary' icon={<LogoutOutlined />} onClick={logOut} />
+                        {/* <Button title='Logout' style={{ marginRight: "10px" }} type='primary' icon={<LogoutOutlined />} onClick={logOut} /> */}
+                        <Popconfirm
+                            title="Logout"
+                            description="Are you sure to logout?"
+                            onConfirm={confirm}
+                            onCancel={cancel}
+                            okText="Yes"
+                            cancelText="Cancel"
+                        >
+                            <Button title='Logout' style={{ marginRight: "10px" }} type='primary' icon={<LogoutOutlined />} />
+                        </Popconfirm>
                         <Avatar icon={<UserOutlined />} onClick={showDrawer} />
                         <Drawer title={localStorage.getItem("username")} onClose={onClose} open={open}>
                             <div className='text-center'><Avatar icon={<UserOutlined />} size={50} onClick={showDrawer} /></div>
@@ -102,6 +134,9 @@ export const Navbar = () => {
 
                         </Drawer>
                     </div>
+                    <Modal title="Calculator" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                        <strong>Calculaor add in next update</strong>
+                    </Modal>
                 </div>
             </nav >
         </>
