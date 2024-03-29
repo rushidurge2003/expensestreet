@@ -67,7 +67,7 @@ export const Navbar = () => {
     }
 
     const confirm = (e) => {
-        message.success('Click on Yes');
+        message.success('Logout');
         logOut()
     };
     const cancel = (e) => {

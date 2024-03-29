@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { message } from 'antd';
+import { message, Badge } from 'antd';
 import { signupUser } from '../slice/SignUpSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -46,6 +46,9 @@ export const Signup = () => {
             else if (password === "") {
                 message.warning("Please enter Password")
             }
+            else if (password.length < 8) {
+                message.warning("Password length should more thana 8 characters")
+            }
             else {
                 const result = await axios.get("http://localhost:9000/userexist/" + username)
                 if (result.data.exist) {
@@ -58,7 +61,7 @@ export const Signup = () => {
                     navigate("/login")
                     message.success("Successfully Signup")
                     await axios.post("http://localhost:9000/creatDataBase", { "name": name, "email": email, "username": username, "contact": contact })
-                    await axios.post("http://localhost:9000/sendMail",{"email":email})
+                    await axios.post("http://localhost:9000/sendMail", { "email": email })
                     setName("")
                     setUsername("")
                     setPassword("")
@@ -67,6 +70,29 @@ export const Signup = () => {
             }
         } catch (error) {
 
+        }
+    }
+
+    const displayPassInfo = () => {
+        if (password.length < 5) {
+            return (
+                <Badge />
+            )
+        }
+        else if (password.length >= 5 && password.length <= 8) {
+            return (
+                <Badge count={"Weak"} color='red' />
+            )
+        }
+        else if (password.length >= 8 && (password.includes("@") || password.includes("#"))) {
+            return (
+                <Badge count={"Strong"} color='green' />
+            )
+        }
+        else if (password.length >= 8 || password.includes("@")) {
+            return (
+                <Badge count={"Medium"} color='yellow' />
+            )
         }
     }
 
@@ -99,6 +125,8 @@ export const Signup = () => {
                     <div className="mb-3">
                         <label for="exampleInputPassword1" className="form-label">Password</label>
                         <input type={viewpassword ? "text" : "password"} value={password} className="form-control" id="exampleInputPassword1" onChange={(e) => { setPassword(e.target.value) }} />
+                        <small style={{marginRight:20}}>Password length min 8 characters</small>
+                        {displayPassInfo()}
                         <div><input type="checkbox" checked={viewpassword} onClick={() => { setViewPassword(!viewpassword) }} /> <small>Show Password</small></div>
                     </div>
                     <div className="mb-3 d-flex">

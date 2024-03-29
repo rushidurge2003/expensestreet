@@ -10,7 +10,6 @@ const { Meta } = Card;
 export const Allnews = () => {
     const dispatch = useDispatch()
 
-
     const [isLoading, setIsLoading] = useState(false)
     const [newsData, setNewsData] = useState([])
     const [page, setPage] = useState(1)

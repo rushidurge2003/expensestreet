@@ -5,12 +5,7 @@ const bodyParser = require('body-parser');
 const multer = require("multer")
 var nodemailer = require('nodemailer')
 const schedule = require('node-schedule');
-const cron = require('node-cron')
-
-// cron.schedule('* * * * *', () => {
-//     console.log('running a task every minute');
-//     console.log("Username : ",localStorage.getItem("username"));
-// });
+// const cron = require('node-cron')
 
 
 const app = express()

@@ -46,12 +46,12 @@ export const Welcome = () => {
               <div className='d-flex justify-content-center'>
                 <div className='d-flex py-3'>
                   <span>
-                    <h1><pre style={{ fontFamily: 'Protest Revolution, sans-serif', color: "black" }}>ExpenseStreet </pre></h1>
+                    <h1><pre style={{ fontFamily: 'Lora, serif', color: "black" }}> <b>ExpenseStreet</b> </pre></h1>
                   </span>
                   <h1 style={{ fontFamily: 'Lora, serif', color: "black" }}>
                     <Typewriter
                       options={{
-                        strings: ['Manage your Expenses',
+                        strings: ['<b>Manage your Expenses</b>',
                           'Manage your Income',
                           'Manage your Budget',
                           'Analysis your Data'],
