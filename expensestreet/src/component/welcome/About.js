@@ -30,11 +30,11 @@ export const About = () => {
               </video>
             </div>
           </div>
-          <div style={{ width: 600, position: "absolute", color: "white", left: 268, top: 40, backgroundColor: "rgb(0, 0, 0,0.8)", padding: 65, borderRadius: 20 }}>
+          <div id="about-box" style={{ width: 600, position: "absolute", color: "white", left: 268, top: 40, backgroundColor: "rgb(0, 0, 0,0.8)", padding: 65, borderRadius: 20 }}>
             <h1 className='text-center' style={{ marginBottom: 30 }}><strong>ExpenseStreet</strong></h1>
-            <h6>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam asperiores qui optio praesentium impedit voluptatum quaerat corporis explicabo architecto facere incidunt totam quas, nulla debitis repudiandae fuga, minus aut fugit. Eligendi minima temporibus, quo harum corporis dolore eos? Corporis sequi libero necessitatibus, delectus recusandae minima excepturi placeat sunt exercitationem illum! Commodi impedit ab dolor alias officiis illum iusto laboriosam aspernatur corrupti? Explicabo, laboriosam! Sequi incidunt quo asperiores alias assumenda illo cupiditate totam aliquid consequuntur fugiat, illum corporis cumque nemo vel.
-            </h6>
+            <h5>
+              ExpenseStreet is a digital expense management system designed to streamline and simplify the process of tracking, managing, and analyzing expenses for individuals and organizations. The project aims to address the challenges associated with traditional expense tracking methods by providing a user-friendly platform accessible via web and mobile devices.
+            </h5>
           </div>
         </div>
         <div style={{ margin: 50, marginBottom: 100 }}>
@@ -82,7 +82,7 @@ export const About = () => {
           </div>
         </div>
       </div>
-      <div style={{marginTop:100}}>
+      <div style={{ marginTop: 100 }}>
         <Footer />
       </div>
     </>

@@ -42,6 +42,7 @@ export const Reminder = () => {
         dispatch(addReminder({ "username": username, "desc": remDesc, "datetime": remDate + " " + remTime, "amount": amount, "type": type }))
         dispatch(getReminderData(localStorage.getItem("username")))
         dispatch(getReminderData(localStorage.getItem("username")))
+        message.success("Reminder add successfully")
     };
     const handleCancel = () => {
         setIsModalOpen(false);
