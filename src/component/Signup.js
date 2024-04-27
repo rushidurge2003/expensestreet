@@ -16,6 +16,7 @@ export const Signup = () => {
     const [email, seteMail] = useState("")
     const [contact, setContact] = useState("")
     const [viewpassword, setViewPassword] = useState(false)
+    const [btndsbl,setBtnDsbl] = useState(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -50,11 +51,13 @@ export const Signup = () => {
                 message.warning("Password length should more thana 8 characters")
             }
             else {
+                setBtnDsbl(true)
                 const result = await axios.get("https://expbackend.onrender.com/userexist/" + username)
                 if (result.data.exist) {
                     message.error("Username Already Exist")
                     setUsername("")
                     setPassword("")
+                    setBtnDsbl(false)
                 }
                 else {
                     dispatch(signupUser({ "name": name, "email": email, "username": username, "password": password, "contact": contact }))
@@ -67,6 +70,7 @@ export const Signup = () => {
                     setPassword("")
                     seteMail("")
                 }
+                setBtnDsbl(false)
             }
         } catch (error) {
 
@@ -131,7 +135,7 @@ export const Signup = () => {
                     </div>
                     <div className="mb-3 d-flex">
                         <div style={{ margin: "auto" }}>
-                            <button type="submit" className="btn btn-primary" onClick={setUser}>Sign up</button>
+                            <button type="submit" className="btn btn-primary" disabled={btndsbl} onClick={setUser}>Sign up</button>
                         </div>
                     </div>
                 </form>
