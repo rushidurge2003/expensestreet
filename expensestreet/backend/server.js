@@ -27,13 +27,23 @@ const upload = multer({ storage: storage });
 
 // Mysql Connection
 const conn = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "India@2003",
+    host: "mydb.cbsyuiukeu5i.eu-north-1.rds.amazonaws.com",
+    user: "admin",
+    password: "India2003",
     database: "expensestreet",
     multipleStatements: true,
     timezone: "Z"
 })
+
+// local host connection
+// const conn = mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "India@2003",
+//     database: "expensestreet",
+//     multipleStatements: true,
+//     timezone: "Z"
+// })
 
 if (conn) {
     console.log("Database Connected Successfully...!!")
