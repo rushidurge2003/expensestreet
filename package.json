@@ -28,7 +28,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "nodemon backend/server.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -b master -d build",
     "build": "react-scripts build",
