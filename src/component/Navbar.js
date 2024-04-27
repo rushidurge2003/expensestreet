@@ -63,7 +63,7 @@ export const Navbar = () => {
     const logOut = () => {
         localStorage.setItem("isAuthenticated", "false")
         localStorage.setItem("username", "")
-        window.location.replace("http://localhost:3000")
+        window.location.replace("https://dynamic-pavlova-266300.netlify.app")
     }
 
     const confirm = (e) => {
