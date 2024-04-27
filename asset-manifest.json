@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/expensestreet/static/css/main.2e252fe6.css",
+    "main.js": "/expensestreet/static/js/main.9359b124.js",
+    "static/media/back.mp4": "/expensestreet/static/media/back.b70809811eb58458df14.mp4",
+    "static/media/exp5.gif": "/expensestreet/static/media/exp5.72e192721bebee8e5bce.gif",
+    "static/media/exp1.gif": "/expensestreet/static/media/exp1.95d908ea71088129493a.gif",
+    "static/media/creator.gif": "/expensestreet/static/media/creator.dbf5d0a1077c0e4f472a.gif",
+    "static/media/aboutvid.mp4": "/expensestreet/static/media/aboutvid.f0961ff65c0cb15c110d.mp4",
+    "static/media/nullNews.jpg": "/expensestreet/static/media/nullNews.46b8d549a43720a13f6d.jpg",
+    "static/media/exp4.png": "/expensestreet/static/media/exp4.3a2b392678504ec9dfcd.png",
+    "static/media/statistics.png": "/expensestreet/static/media/statistics.08839fc63337f897b272.png",
+    "static/media/exp2.png": "/expensestreet/static/media/exp2.d74df0bb705f3260afbb.png",
+    "static/media/investment.png": "/expensestreet/static/media/investment.7abea62b3419afe1578b.png",
+    "static/media/bull-market.png": "/expensestreet/static/media/bull-market.ff5c2864bdd00ccf90ef.png",
+    "static/media/exp6.png": "/expensestreet/static/media/exp6.1ffa603415283fd9fe63.png",
+    "static/media/deposit.png": "/expensestreet/static/media/deposit.ade62674a5d89444b3f7.png",
+    "static/media/reactjs.png": "/expensestreet/static/media/reactjs.57c4a49f6803d191097e.png",
+    "static/media/exp3.png": "/expensestreet/static/media/exp3.40bc6580d3d0b41a2463.png",
+    "static/media/css.png": "/expensestreet/static/media/css.8aaf7833370a6845139c.png",
+    "static/media/html.png": "/expensestreet/static/media/html.be50d4568ab0cb01edb8.png",
+    "static/media/ExpenseStreet.png": "/expensestreet/static/media/ExpenseStreet.48f349ca41e6c94ec73f.png",
+    "index.html": "/expensestreet/index.html",
+    "main.2e252fe6.css.map": "/expensestreet/static/css/main.2e252fe6.css.map",
+    "main.9359b124.js.map": "/expensestreet/static/js/main.9359b124.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2e252fe6.css",
+    "static/js/main.9359b124.js"
+  ]
+}
