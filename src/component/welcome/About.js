@@ -62,7 +62,7 @@ export const About = () => {
               <Meta title="Rushikesh Durge" description="" />
             </Card>
           </div>
-          <div className=''>
+          {/* <div className=''>
             <Card
               hoverable
               style={{ width: 240 }}
@@ -79,7 +79,7 @@ export const About = () => {
             >
               <Meta title="Niraj Kate" description="" />
             </Card>
-          </div>
+          </div> */}
         </div>
       </div>
       <div style={{ marginTop: 100 }}>
