@@ -23,8 +23,8 @@ export const Feedback = () => {
             message.warning("Please enter feedback")
         }
         else {
-            const result = await axios.get("http://localhost:9000/getUserEmail/" + localStorage.getItem("username"))
-            await axios.post("http://localhost:9000/feedback", {
+            const result = await axios.get("https://expbackend.onrender.com/getUserEmail/" + localStorage.getItem("username"))
+            await axios.post("https://expbackend.onrender.com/feedback", {
                 "username": localStorage.getItem("username"),
                 "email": result.data.mail,
                 "subject": subject,

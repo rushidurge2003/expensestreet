@@ -27,8 +27,8 @@ export const addReminder = createAsyncThunk(
     "addReminder",
     async (data) => {
         try {
-            await axios.post("http://localhost:9000/addReminder", { ...data});
-            // await axios.post("http://localhost:9000/addReminder", { ...data,"nanoid":nanoid() });
+            await axios.post("https://expbackend.onrender.com/addReminder", { ...data});
+            // await axios.post("https://expbackend.onrender.com/addReminder", { ...data,"nanoid":nanoid() });
         } catch (error) {
 
         }
@@ -39,7 +39,7 @@ export const getReminderData = createAsyncThunk(
     "getReminderData",
     async (username) => {
         try {
-            const result = await axios.get("http://localhost:9000/getReminderData/" + username);
+            const result = await axios.get("https://expbackend.onrender.com/getReminderData/" + username);
             return result
         } catch (error) {
 
@@ -51,7 +51,7 @@ export const sendReminderEmail = createAsyncThunk(
     "sendReminderEmail",
     async (data) => {
         try {
-            await axios.post("http://localhost:9000/sendReminderEmail", { ...data });
+            await axios.post("https://expbackend.onrender.com/sendReminderEmail", { ...data });
         } catch (error) {
 
         }
@@ -62,7 +62,7 @@ export const deleteReminder = createAsyncThunk(
     "deleteReminder",
     async (data) => {
         try {
-            await axios.post("http://localhost:9000/deleteReminder", { ...data });
+            await axios.post("https://expbackend.onrender.com/deleteReminder", { ...data });
         } catch (error) {
 
         }
@@ -73,7 +73,7 @@ export const statusTrueReminder = createAsyncThunk(
     "statusTrueReminder",
     async (data) => {
         try {
-            await axios.post("http://localhost:9000/statusTrueReminder", { ...data });
+            await axios.post("https://expbackend.onrender.com/statusTrueReminder", { ...data });
         } catch (error) {
 
         }

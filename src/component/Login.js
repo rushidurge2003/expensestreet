@@ -34,7 +34,7 @@ export const Login = () => {
         setLoading(true)
         console.log("Username : ", username);
         console.log("Password : ", password);
-        const result = await axios.post("http://localhost:9000/login", { "username": username, "password": password })
+        const result = await axios.post("https://expbackend.onrender.com/login", { "username": username, "password": password })
         console.log("Login Status : ", result)
         setUsername("")
         setPassword("")

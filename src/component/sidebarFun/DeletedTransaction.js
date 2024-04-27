@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import {
-    Empty, Button, Tooltip, Badge,FloatButton
+    Empty, Button, Tooltip, Badge, FloatButton
 } from 'antd';
 import { ReloadOutlined, DeleteOutlined } from '@ant-design/icons';
 import {
@@ -16,23 +16,24 @@ export const DeletedTransaction = () => {
     useEffect(() => {
         dispatch(getdeleteTransData(localStorage.getItem("username")))
     })
-
     const delState = useSelector((state) => state.RecordSliceReducer.deleteTransData)
-
-
-    const delData = delState.map((x) => {
-        return ({
-            delid: x.deletePermantID,
-            id: x.deleteId,
-            // date: (x.date).slice(0, 19).replace('T', ' '),
-            date: x.date,
-            amount: x.amount,
-            description: x.description,
-            payment_mode: x.payment_mode,
-            category: x.category,
-            type: x.type
+    
+    const delData = []
+    if (delState.length > 0) {
+        const delData = delState.map((x) => {
+            return ({
+                delid: x.deletePermantID,
+                id: x.deleteId,
+                // date: (x.date).slice(0, 19).replace('T', ' '),
+                date: x.date,
+                amount: x.amount,
+                description: x.description,
+                payment_mode: x.payment_mode,
+                category: x.category,
+                type: x.type
+            })
         })
-    })
+    }
 
     const DeleteTrans = (delId) => {
         dispatch(deleteDeletedTrans({ "username": localStorage.getItem("username"), "delId": delId }))

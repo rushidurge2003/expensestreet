@@ -30,7 +30,7 @@ export const LoginUser = createAsyncThunk(
     "LoginUser",
     async (d) => {
         try {
-            const result = await axios.get("http://localhost:9000/login", { ...d });
+            const result = await axios.get("https://expbackend.onrender.com/login", { ...d });
             return result;
         } catch (error) {
 

@@ -27,13 +27,13 @@ const ForgetPassword = () => {
             message.warning("Please enter username")
         }
         else {
-            const result = await axios.get("http://localhost:9000/userexist/" + username)
+            const result = await axios.get("https://expbackend.onrender.com/userexist/" + username)
             if (result.data.exist) {
                 setGenerateBtnDisable(true)
-                const result1 = await axios.get("http://localhost:9000/getUserEmail/" + username)
+                const result1 = await axios.get("https://expbackend.onrender.com/getUserEmail/" + username)
                 const OTP = randn(6)
                 setOtp(OTP)
-                await axios.post("http://localhost:9000/sendOtpMail", { "email": result1.data.mail, "otp": OTP })
+                await axios.post("https://expbackend.onrender.com/sendOtpMail", { "email": result1.data.mail, "otp": OTP })
             }
             else {
                 message.error("username no exist")
@@ -57,7 +57,7 @@ const ForgetPassword = () => {
         e.preventDefault()
         if(resetPassword === resetConfirmPassword)
         {
-          await axios.post("http://localhost:9000/resetPassword",{"password":resetConfirmPassword,"username":username})
+          await axios.post("https://expbackend.onrender.com/resetPassword",{"password":resetConfirmPassword,"username":username})
           message.success("Password reset successfully")
           navigate("/login")
         }
