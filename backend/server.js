@@ -4,7 +4,7 @@ const mysql = require('mysql')
 const bodyParser = require('body-parser');
 const multer = require("multer")
 var nodemailer = require('nodemailer')
-// const cron = require('node-cron')\
+// const cron = require('node-cron')
 
 
 const app = express()
