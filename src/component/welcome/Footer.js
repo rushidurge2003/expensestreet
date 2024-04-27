@@ -22,7 +22,7 @@ export const Footer = () => {
         </div>
         <hr />
         <div style={{ marginBottom: 20 }}>
-          <h6 className='text-center'>ExpenseStreet ©{new Date().getFullYear()} Created by : Rushikesh Durge | Atharva Jori | Niraj Kate</h6>
+          <h6 className='text-center'>ExpenseStreet ©{new Date().getFullYear()} Created by : Rushikesh Durge</h6>
         </div>
       </div>
     </>
