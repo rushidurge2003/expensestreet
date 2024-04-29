@@ -53,17 +53,19 @@ export const Chatbot = () => {
       ],
     },
     {
-      id:'6',
-      message : "1)Stocks 2)Bonds 3)Mutual Funds 4)Real Estate 5)Commodities",
-      trigger : '1'
+      id: '6',
+      message: "1)Stocks 2)Bonds 3)Mutual Funds 4)Real Estate 5)Commodities",
+      trigger: '1'
     }
   ];
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <ChatBot steps={steps} headerTitle="ExpenseStreet" floating={true} />
-      </ThemeProvider>
+      <div>
+        <ThemeProvider theme={theme}>
+          <ChatBot steps={steps} headerTitle="ExpenseStreet" floating={true} />
+        </ThemeProvider>
+      </div>
     </>
   )
 }

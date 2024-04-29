@@ -7,7 +7,7 @@ import usePreventZoom from './usePreventZoom'
 import { Loading } from './loading/Loading'
 
 export const Login = () => {
-  usePreventZoom()
+  // usePreventZoom()
 
   const navigate = useNavigate()
 
@@ -61,8 +61,8 @@ export const Login = () => {
 
 
   return (
-    <div style={{ position: "absolute", top: 80, left: "30%" }}>
-      <div style={{ width: "500px" }}>
+    <div>
+      <div style={{ width: "500px",position: "absolute", left: 0, right: 0, top: 80, marginRight: "auto", marginLeft: "auto",padding:40 }}>
         <h2 className='text-center'>Login</h2>
         <form>
           <div className="mb-3">

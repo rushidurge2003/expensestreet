@@ -16,7 +16,7 @@ export const Signup = () => {
     const [email, seteMail] = useState("")
     const [contact, setContact] = useState("")
     const [viewpassword, setViewPassword] = useState(false)
-    const [btndsbl,setBtnDsbl] = useState(false)
+    const [btndsbl, setBtnDsbl] = useState(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -101,12 +101,8 @@ export const Signup = () => {
     }
 
     return (
-        <div style={{ position: "absolute", top: 70, left: "30%" }}>
-            <div
-                style={{
-                    width: "500px"
-                }}
-            >
+        <div>
+            <div style={{ width: "500px", position: "absolute", left: 0, right: 0, top: 80, marginRight: "auto", marginLeft: "auto", padding: 20 }}  >
                 <h2 className='text-center'>Signup</h2>
                 <form>
                     <div className="mb-3">
@@ -129,7 +125,7 @@ export const Signup = () => {
                     <div className="mb-3">
                         <label for="exampleInputPassword1" className="form-label">Password</label>
                         <input type={viewpassword ? "text" : "password"} value={password} className="form-control" id="exampleInputPassword1" onChange={(e) => { setPassword(e.target.value) }} />
-                        <small style={{marginRight:20}}>Password length min 8 characters</small>
+                        <small style={{ marginRight: 20 }}>Password length min 8 characters</small>
                         {displayPassInfo()}
                         <div><input type="checkbox" checked={viewpassword} onClick={() => { setViewPassword(!viewpassword) }} /> <small>Show Password</small></div>
                     </div>

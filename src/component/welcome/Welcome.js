@@ -151,7 +151,7 @@ export const Welcome = () => {
       <div>
         <Footer />
       </div>
-      {/* <Chatbot /> */}
+      <Chatbot />
     </>
   )
 }
