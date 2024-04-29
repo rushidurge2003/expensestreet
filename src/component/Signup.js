@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { message, Badge } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { signupUser } from '../slice/SignUpSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -105,7 +106,7 @@ export const Signup = () => {
 
     return (
         <div>
-            <div style={{ width:isMobile ? "300px" : "500px", position: "absolute", left: 0, right: 0, top: 80, marginRight: "auto", marginLeft: "auto", padding: 20 }}  >
+            <div style={{ width: isMobile ? "300px" : "500px", position: "absolute", left: 0, right: 0, top: 80, marginRight: "auto", marginLeft: "auto", padding: 20 }}  >
                 <h2 className='text-center'>Signup</h2>
                 <form>
                     <div className="mb-3">
@@ -134,7 +135,7 @@ export const Signup = () => {
                     </div>
                     <div className="mb-3 d-flex">
                         <div style={{ margin: "auto" }}>
-                            <button type="submit" className="btn btn-primary" disabled={btndsbl} onClick={setUser}>Sign up</button>
+                            <button type="submit" className="btn btn-primary" disabled={btndsbl} onClick={setUser}>Sign up {btndsbl ? <LoadingOutlined /> : ""}</button>
                         </div>
                     </div>
                 </form>

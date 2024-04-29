@@ -96,7 +96,9 @@ const DisplayData = ({ contentNum }) => {
 // ===============
 
 export const Home = () => {
-  usePreventZoom()
+  // usePreventZoom()
+
+  const [collapsed, setCollapsed] = useState(false);
 
   const [contentNum, setContentNum] = useState(3)
 
@@ -115,6 +117,8 @@ export const Home = () => {
             top: 56,
             bottom: 0,
           }}
+          collapsible
+          onCollapse={()=>{setCollapsed(!collapsed)}}
         >
           <div className="demo-logo-vertical" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={[
@@ -183,7 +187,7 @@ export const Home = () => {
         </Sider>
         <Layout
           style={{
-            marginLeft: 200,
+            marginLeft: collapsed ? 80 : 200,
           }}
         >
           <Header
@@ -200,7 +204,7 @@ export const Home = () => {
           >
             <div
               style={{
-                padding: 24,
+                padding: 14,
                 textAlign: 'center',
                 background: colorBgContainer,
                 borderRadius: borderRadiusLG,
@@ -209,17 +213,6 @@ export const Home = () => {
               <DisplayData contentNum={contentNum} />
             </div>
           </Content>
-          {/* <Footer
-            style={{
-              textAlign: 'center',
-              position: "fixed",
-              bottom: 0,
-              width: "87%",
-              padding: 10
-            }}
-          >
-            ExpenseStreet ©{new Date().getFullYear()} Created by Rushikesh Durge,Atharva Jori,Niraj Kate
-          </Footer> */}
         </Layout>
       </Layout>
       <AddRecord />
