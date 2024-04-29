@@ -7,8 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import usePreventZoom from './usePreventZoom';
+import { useMediaQuery } from 'react-responsive';
 
 export const Signup = () => {
+
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
     const [name, setName] = useState("")
     const [username, setUsername] = useState("")
@@ -102,7 +105,7 @@ export const Signup = () => {
 
     return (
         <div>
-            <div style={{ width: "500px", position: "absolute", left: 0, right: 0, top: 80, marginRight: "auto", marginLeft: "auto", padding: 20 }}  >
+            <div style={{ width:isMobile ? "300px" : "500px", position: "absolute", left: 0, right: 0, top: 80, marginRight: "auto", marginLeft: "auto", padding: 20 }}  >
                 <h2 className='text-center'>Signup</h2>
                 <form>
                     <div className="mb-3">

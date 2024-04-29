@@ -5,10 +5,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import usePreventZoom from './usePreventZoom'
 import { Loading } from './loading/Loading'
+import { useMediaQuery } from 'react-responsive'
 
 export const Login = () => {
   // usePreventZoom()
-
+  const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
   const navigate = useNavigate()
 
   const [username, setUsername] = useState("")
@@ -62,7 +63,7 @@ export const Login = () => {
 
   return (
     <div>
-      <div style={{ width: "500px",position: "absolute", left: 0, right: 0, top: 80, marginRight: "auto", marginLeft: "auto",padding:40 }}>
+      <div style={{ width: isMobile ? "300px" : "500px", position: "absolute", left: 0, right: 0, top: 80, marginRight: "auto", marginLeft: "auto", padding: 0 }}>
         <h2 className='text-center'>Login</h2>
         <form>
           <div className="mb-3">
