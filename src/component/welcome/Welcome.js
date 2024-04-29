@@ -19,7 +19,7 @@ export const Welcome = () => {
 
   const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
-  usePreventZomm()
+  // usePreventZomm()
 
   const navigation = useNavigate()
 
@@ -149,7 +149,7 @@ export const Welcome = () => {
         </div>
       </div>
       <div>
-        {/* <Footer /> */}
+        <Footer />
       </div>
       {/* <Chatbot /> */}
     </>
