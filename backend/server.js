@@ -629,7 +629,7 @@ app.post("/deleteIncome", (req, res) => {
 app.get("/getdeleteTransData/:username", (req, res) => {
     try {
         const username = req.params.username
-        const sql = `SELECT * FROM ${username}.deletetransaction`
+        const sql = `SELECT * FROM ${username}.deleteTransaction`
         conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
@@ -646,7 +646,7 @@ app.get("/getdeleteTransData/:username", (req, res) => {
 app.post("/deleteDeletedTrans", (req, res) => {
     try {
         const { username, delId } = req.body
-        const sql = `DELETE FROM ${username}.deletetransaction WHERE deletePermantID = ${delId}`
+        const sql = `DELETE FROM ${username}.deleteTransaction WHERE deletePermantID = ${delId}`
         conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
