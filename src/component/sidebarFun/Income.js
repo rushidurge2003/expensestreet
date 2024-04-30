@@ -8,8 +8,11 @@ import {
     Form, Modal, Input, DatePicker, FloatButton
 } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useMediaQuery } from 'react-responsive'
 
 export const Income = () => {
+
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
     const date = new Date()
 
@@ -133,7 +136,7 @@ export const Income = () => {
                                                 />
                                             </Tooltip>
                                             <Tooltip title="Delete">
-                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
                                                     onClick={() => { DeleteInc(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.type) }}
                                                 />
                                             </Tooltip>

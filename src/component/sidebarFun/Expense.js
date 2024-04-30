@@ -8,8 +8,11 @@ import {
     Form, Modal, Input, Select, DatePicker, message, FloatButton
 } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useMediaQuery } from 'react-responsive'
 
 export const Expense = () => {
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
+
     const date = new Date()
     const [result, setResult] = useState([])
     const [expId, setExpId] = useState(null)
@@ -135,9 +138,9 @@ export const Expense = () => {
                             <th scope="col">#</th>
                             <th scope="col">Date</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Payment Mode</th>
-                            <th scope="col">Category</th>
+                            <th style={{ display: isMobile ? "none" : "" }} scope="col">Description</th>
+                            <th style={{ display: isMobile ? "none" : "" }} scope="col">Payment Mode</th>
+                            <th style={{ display: isMobile ? "none" : "" }} scope="col">Category</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -149,9 +152,9 @@ export const Expense = () => {
                                         <td>{index + 1}</td>
                                         <td>{(d.date).slice(0, 10)}</td>
                                         <td>{d.amount}</td>
-                                        <td>{d.description}</td>
-                                        <td>{d.payment_mode}</td>
-                                        <td>{d.category}</td>
+                                        <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
+                                        <td style={{ display: isMobile ? "none" : "" }}>{d.payment_mode}</td>
+                                        <td style={{ display: isMobile ? "none" : "" }}>{d.category}</td>
                                         <td className='d-flex justify-content-evenly'>
                                             <Tooltip title="Edit">
                                                 <Button type="primary" shape="circle" icon={<EditOutlined />}
@@ -162,7 +165,7 @@ export const Expense = () => {
                                                 />
                                             </Tooltip>
                                             <Tooltip title="Delete">
-                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
                                                     onClick={() => { DeleteExp(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.payment_mode, d.category, d.type) }}
                                                 />
                                             </Tooltip>

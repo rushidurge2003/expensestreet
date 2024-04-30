@@ -147,13 +147,13 @@ export const AllTransaction = () => {
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th >#</th>
+                            <th style={{display:isMobile?"none":""}}>#</th>
                             <th >Type</th>
                             <th >Date</th>
                             <th >Amount</th>
-                            <th style={{display:isMobile?"none":""}}>Description</th>
-                            <th style={{display:isMobile?"none":""}}>Payment Mode</th>
-                            <th style={{display:isMobile?"none":""}}>Category</th>
+                            <th style={{ display: isMobile ? "none" : "" }}>Description</th>
+                            <th style={{ display: isMobile ? "none" : "" }}>Payment Mode</th>
+                            <th style={{ display: isMobile ? "none" : "" }}>Category</th>
                             <th >Action</th>
                         </tr>
                     </thead>
@@ -163,13 +163,13 @@ export const AllTransaction = () => {
                                 if (d.type === "expense") {
                                     return (
                                         <tr key={index}>
-                                            <td>{index + 1}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{index + 1}</td>
                                             <td><Badge.Ribbon text="Income" color='red'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
                                             <td>{d.amount}</td>
-                                            <td style={{display:isMobile?"none":""}}>{d.description}</td>
-                                            <td style={{display:isMobile?"none":""}}>{d.payment_mode}</td>
-                                            <td style={{display:isMobile?"none":""}}>{d.category}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{d.payment_mode}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{d.category}</td>
                                             <td className='d-flex justify-content-evenly'>
                                                 <Tooltip title="Edit">
                                                     <Button type="primary" shape="circle" icon={<EditOutlined />}
@@ -180,7 +180,7 @@ export const AllTransaction = () => {
                                                     />
                                                 </Tooltip>
                                                 <Tooltip title="Delete">
-                                                    <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                    <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
                                                         onClick={() => { DeleteExp(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.payment_mode, d.category, d.type) }}
                                                     />
                                                 </Tooltip>
@@ -191,13 +191,13 @@ export const AllTransaction = () => {
                                 if (d.type === "income") {
                                     return (
                                         <tr>
-                                            <td>{index + 1}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{index + 1}</td>
                                             <td><Badge.Ribbon text="Income" color='green'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
                                             <td>{d.amount}</td>
-                                            <td style={{display:isMobile?"none":""}}>{d.description}</td>
-                                            <td style={{display:isMobile?"none":""}}>-</td>
-                                            <td style={{display:isMobile?"none":""}}>-</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>-</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>-</td>
                                             <td className='d-flex justify-content-evenly'>
                                                 <Tooltip title="Edit">
                                                     <Button type="primary" shape="circle" icon={<EditOutlined />}
@@ -208,7 +208,7 @@ export const AllTransaction = () => {
                                                     />
                                                 </Tooltip>
                                                 <Tooltip title="Delete">
-                                                    <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                    <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
                                                         onClick={() => { DeleteInc(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.type) }}
                                                     />
                                                 </Tooltip>
@@ -305,7 +305,7 @@ export const AllTransaction = () => {
                 <div className='d-flex'>
                     <div>{displayAllIncome()}</div>
                     <div>{displayAllExpense()}</div>
-                    <div style={{display:isMobile?"none":""}}>{displayBalance()}</div>
+                    <div style={{ display: isMobile ? "none" : "" }}>{displayBalance()}</div>
                 </div>
             </div>
             {

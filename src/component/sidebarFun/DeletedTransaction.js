@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Empty, Button, Tooltip, Badge, FloatButton
 } from 'antd';
@@ -9,15 +9,17 @@ import {
     getdeleteTransData, deleteDeletedTrans, deletRestoreExpense, deleteRestoreIncome, getAllExpense,
     getAllIncome
 } from '../../slice/RecordSlice';
+import { useMediaQuery } from 'react-responsive'
 
 export const DeletedTransaction = () => {
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getdeleteTransData(localStorage.getItem("username")))
     })
     const delState = useSelector((state) => state.RecordSliceReducer.deleteTransData)
-    
+
     const delData = []
     if (delState.length > 0) {
         const delData = delState.map((x) => {
