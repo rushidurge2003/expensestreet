@@ -20,22 +20,19 @@ export const DeletedTransaction = () => {
     })
     const delState = useSelector((state) => state.RecordSliceReducer.deleteTransData)
 
-    const delData = []
-    if (delState.length > 0) {
-        const delData = delState.map((x) => {
-            return ({
-                delid: x.deletePermantID,
-                id: x.deleteId,
-                // date: (x.date).slice(0, 19).replace('T', ' '),
-                date: x.date,
-                amount: x.amount,
-                description: x.description,
-                payment_mode: x.payment_mode,
-                category: x.category,
-                type: x.type
-            })
+    const delData = delState.map((x) => {
+        return ({
+            delid: x.deletePermantID,
+            id: x.deleteId,
+            // date: (x.date).slice(0, 19).replace('T', ' '),
+            date: x.date,
+            amount: x.amount,
+            description: x.description,
+            payment_mode: x.payment_mode,
+            category: x.category,
+            type: x.type
         })
-    }
+    })
 
     const DeleteTrans = (delId) => {
         dispatch(deleteDeletedTrans({ "username": localStorage.getItem("username"), "delId": delId }))
@@ -61,13 +58,13 @@ export const DeletedTransaction = () => {
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th style={{ display: isMobile ? "none" : "" }} scope="col">#</th>
                             <th scope="col">Type</th>
                             <th scope="col">Date</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Payment Mode</th>
-                            <th scope="col">Category</th>
+                            <th style={{ display: isMobile ? "none" : "" }} scope="col">Description</th>
+                            <th style={{ display: isMobile ? "none" : "" }} scope="col">Payment Mode</th>
+                            <th style={{ display: isMobile ? "none" : "" }} scope="col">Category</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -77,13 +74,13 @@ export const DeletedTransaction = () => {
                                 if (d.type === "expense") {
                                     return (
                                         <tr key={index}>
-                                            <td>{index + 1}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{index + 1}</td>
                                             <td><Badge.Ribbon text="Income" color='red'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
                                             <td>{d.amount}</td>
-                                            <td>{d.description}</td>
-                                            <td>{d.payment_mode}</td>
-                                            <td>{d.category}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{d.payment_mode}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{d.category}</td>
                                             <td className='d-flex justify-content-evenly'>
                                                 <Tooltip title="Restore">
                                                     <Button type="primary" shape="circle" icon={<ReloadOutlined />}
@@ -94,7 +91,7 @@ export const DeletedTransaction = () => {
                                                     />
                                                 </Tooltip>
                                                 <Tooltip title="Delete">
-                                                    <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                    <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
                                                         onClick={() => { DeleteTrans(d.delid) }}
                                                     />
                                                 </Tooltip>
@@ -105,13 +102,13 @@ export const DeletedTransaction = () => {
                                 if (d.type === "income") {
                                     return (
                                         <tr>
-                                            <td>{index + 1}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{index + 1}</td>
                                             <td><Badge.Ribbon text="Income" color='green'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
                                             <td>{d.amount}</td>
-                                            <td>{d.description}</td>
-                                            <td>-</td>
-                                            <td>-</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>-</td>
+                                            <td style={{ display: isMobile ? "none" : "" }}>-</td>
                                             <td className='d-flex justify-content-evenly'>
                                                 <Tooltip title="Restore">
                                                     <Button type="primary" shape="circle" icon={<ReloadOutlined />}
@@ -122,7 +119,7 @@ export const DeletedTransaction = () => {
                                                     />
                                                 </Tooltip>
                                                 <Tooltip title="Delete">
-                                                    <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                    <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
                                                         onClick={() => { DeleteTrans(d.delid) }}
                                                     />
                                                 </Tooltip>

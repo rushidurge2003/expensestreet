@@ -15,7 +15,6 @@ import { Feedback } from "./component/feedback/Feedback";
 
 function App() {
   const state = useSelector((state) => state)
-  console.log("Home state : ", state.LoginSliceReducer.isAuthenticated);
 
   return (
     <BrowserRouter>

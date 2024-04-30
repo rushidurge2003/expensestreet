@@ -76,8 +76,6 @@ export const Navbar = () => {
 
     const notiData = state?.map((x) => { return ({ ...x }) })
 
-    console.log("Noti Data : ", notiData);
-
     notiData?.sort((a, b) => (new Date(b.notificationId) - new Date(a.notificationId)))
 
     return (
