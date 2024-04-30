@@ -8,8 +8,10 @@ import {
     Form, Modal, Input, DatePicker, Select, Badge, FloatButton
 } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useMediaQuery } from 'react-responsive'
 
 export const AllTransaction = () => {
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
     const date = new Date()
 
@@ -145,14 +147,14 @@ export const AllTransaction = () => {
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Payment Mode</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Action</th>
+                            <th >#</th>
+                            <th >Type</th>
+                            <th >Date</th>
+                            <th >Amount</th>
+                            <th style={{display:isMobile?"none":""}}>Description</th>
+                            <th style={{display:isMobile?"none":""}}>Payment Mode</th>
+                            <th style={{display:isMobile?"none":""}}>Category</th>
+                            <th >Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -165,9 +167,9 @@ export const AllTransaction = () => {
                                             <td><Badge.Ribbon text="Income" color='red'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
                                             <td>{d.amount}</td>
-                                            <td>{d.description}</td>
-                                            <td>{d.payment_mode}</td>
-                                            <td>{d.category}</td>
+                                            <td style={{display:isMobile?"none":""}}>{d.description}</td>
+                                            <td style={{display:isMobile?"none":""}}>{d.payment_mode}</td>
+                                            <td style={{display:isMobile?"none":""}}>{d.category}</td>
                                             <td className='d-flex justify-content-evenly'>
                                                 <Tooltip title="Edit">
                                                     <Button type="primary" shape="circle" icon={<EditOutlined />}
@@ -193,9 +195,9 @@ export const AllTransaction = () => {
                                             <td><Badge.Ribbon text="Income" color='green'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
                                             <td>{d.amount}</td>
-                                            <td>{d.description}</td>
-                                            <td>-</td>
-                                            <td>-</td>
+                                            <td style={{display:isMobile?"none":""}}>{d.description}</td>
+                                            <td style={{display:isMobile?"none":""}}>-</td>
+                                            <td style={{display:isMobile?"none":""}}>-</td>
                                             <td className='d-flex justify-content-evenly'>
                                                 <Tooltip title="Edit">
                                                     <Button type="primary" shape="circle" icon={<EditOutlined />}
@@ -299,11 +301,11 @@ export const AllTransaction = () => {
     return (
         <>
             <div className='d-flex justify-content-between'>
-                <div><h5 style={{ marginTop: "40%" }}>AllTransaction</h5></div>
+                <div><h5 style={{ marginTop: "40%", display: isMobile ? "none" : "" }}>AllTransaction</h5></div>
                 <div className='d-flex'>
                     <div>{displayAllIncome()}</div>
                     <div>{displayAllExpense()}</div>
-                    <div>{displayBalance()}</div>
+                    <div style={{display:isMobile?"none":""}}>{displayBalance()}</div>
                 </div>
             </div>
             {

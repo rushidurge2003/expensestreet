@@ -5,10 +5,12 @@ import axios from 'axios'
 import randn from 'randn'
 import { useNavigate } from 'react-router-dom'
 import usePreventZoom from '../usePreventZoom'
+import { useMediaQuery } from 'react-responsive'
 
 const ForgetPassword = () => {
-    
-    usePreventZoom()
+
+    // usePreventZoom()
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
     const navigate = useNavigate()
 
     const [username, setUsername] = useState("")
@@ -53,32 +55,30 @@ const ForgetPassword = () => {
         }
     }
 
-    const resetPasswordFun = async(e)=>{
+    const resetPasswordFun = async (e) => {
         e.preventDefault()
-        if(resetPassword === resetConfirmPassword)
-        {
-          await axios.post("https://expbackend.onrender.com/resetPassword",{"password":resetConfirmPassword,"username":username})
-          message.success("Password reset successfully")
-          navigate("/login")
+        if (resetPassword === resetConfirmPassword) {
+            await axios.post("https://expbackend.onrender.com/resetPassword", { "password": resetConfirmPassword, "username": username })
+            message.success("Password reset successfully")
+            navigate("/login")
         }
-        else
-        {
+        else {
             message.error("Password and Confirm Password doesn't match")
         }
     }
 
     return (
         <>
-            <div style={{ position: "absolute", top: "10%", left: "30%" }}>
-                <div style={{ width: "500px" }}>
+            <div>
+                <div style={{ width: isMobile ? "300px" : "500px", position: "absolute", left: 0, right: 0, top: 80, marginRight: "auto", marginLeft: "auto", padding: 0 }}>
                     <h2 className='text-center'>Reset Password</h2>
                     <form>
                         <div className="mb-3 row">
                             <label htmlForfor="exampleInputEmail1" className="form-label">Username</label>
-                            <div className='col-8'>
+                            <div className='col-md-8'>
                                 <input type="username" value={username} className="form-control" id="exampleInputEmail1" onChange={(e) => { setUsername(e.target.value) }} />
                             </div>
-                            <div className='col-4'>
+                            <div className='col-md-4' style={{marginTop:isMobile?10:0}}>
                                 <button type="submit" disabled={generateBtnDisable} className="btn btn-primary" onClick={generateOtp}>Generate Otp</button>
                             </div>
                         </div>
@@ -87,10 +87,10 @@ const ForgetPassword = () => {
                                 "" :
                                 <div className="mb-3 row">
                                     <label htmlForfor="exampleInputPassword1" className="form-label">Enter OTP</label>
-                                    <div className='col-8'>
+                                    <div className='col-md-8'>
                                         <input type="text" value={userEnterOtp} className="form-control" id="exampleInputPassword1" onChange={(e) => { setUserEnterOtp(e.target.value) }} />
                                     </div>
-                                    <div className='col-4'>
+                                    <div className='col-md-4' style={{marginTop:isMobile?10:0}}>
                                         <button type="submit" disabled={validateBtnDisable} className="btn btn-primary" onClick={validateOtp}>Validate Otp</button>
                                     </div>
                                 </div>

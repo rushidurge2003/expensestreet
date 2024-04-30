@@ -8,10 +8,12 @@ import { stockInvestment, mutualFundInvestment, realEstateInvestment, fixedDepos
 import { useDispatch, useSelector } from 'react-redux';
 import { getStockInvest, getMutualFundInvest, getFixedDepositInvest, getRealEstateInvest } from '../../slice/InvestmentSlice';
 import { InvestmentPie } from '../graph/InvestmentPie';
+import { useMediaQuery } from 'react-responsive'
 
 const { Meta } = Card;
 
 export const DisplayInvestList = () => {
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
     const dispatch = useDispatch()
 
@@ -70,7 +72,7 @@ export const DisplayInvestList = () => {
     return (
         <>
             <div className='d-flex justify-content-between'>
-                <div style={{ margin: "20px" }}><h5>Investment</h5></div>
+                <div style={{ margin: "20px",display:isMobile?"none":"" }}><h5>Investment</h5></div>
                 <Card bordered={false}>
                     <Statistic
                         title="Total Investment"

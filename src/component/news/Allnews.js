@@ -46,7 +46,7 @@ export const Allnews = () => {
                                             src={(x.urlToImage) === null ? nullNews : x.urlToImage}
                                         />
                                     }
-                                    className='col-3 my-3'
+                                    className='col-lg-3 col-md-4 my-3'
                                     hoverable
                                     onClick={() => {
                                         dispatch(goDetailedNews())
