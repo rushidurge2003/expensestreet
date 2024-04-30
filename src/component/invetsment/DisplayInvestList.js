@@ -71,9 +71,9 @@ export const DisplayInvestList = () => {
 
     return (
         <>
-            <div className='d-flex justify-content-between'>
-                <div style={{ margin: "20px",display:isMobile?"none":"" }}><h5>Investment</h5></div>
-                <Card bordered={false}>
+            <div style={{ display: "flex", justifyContent: isMobile ? "center" : "space-between" }}>
+                <div style={{ margin: "20px", display: isMobile ? "none" : "" }}><h5>Investment</h5></div>
+                <Card bordered={true}>
                     <Statistic
                         title="Total Investment"
                         value={stockSum() + mutualFundSum() + realEstateSum() + fixedDepositSum()}
@@ -84,7 +84,7 @@ export const DisplayInvestList = () => {
                 </Card>
             </div>
             <div className='row'>
-                <div className='col-md-3 col-sm-6 my-2'>
+                <div className='col-md-3 col-sm-6 my-2 d-flex justify-content-center text-center'>
                     <Card
                         hoverable
                         style={{
@@ -96,7 +96,7 @@ export const DisplayInvestList = () => {
                         <Meta title="Stock Market" description={<b style={{ color: "black" }}>{stockSum()} ₹</b>} />
                     </Card>
                 </div>
-                <div className='col-md-3 col-sm-6 my-2'>
+                <div className='col-md-3 col-sm-6 my-2 d-flex justify-content-center text-center'>
                     <Card
                         hoverable
                         style={{
@@ -108,7 +108,7 @@ export const DisplayInvestList = () => {
                         <Meta title="Mutual Fund" description={<b style={{ color: "black" }}>{mutualFundSum()} ₹</b>} />
                     </Card>
                 </div>
-                <div className='col-md-3 col-sm-6 my-2'>
+                <div className='col-md-3 col-sm-6 my-2 d-flex justify-content-center text-center'>
                     <Card
                         hoverable
                         style={{
@@ -120,7 +120,7 @@ export const DisplayInvestList = () => {
                         <Meta title="Real Estate" description={<b style={{ color: "black" }}>{realEstateSum()} ₹</b>} />
                     </Card>
                 </div>
-                <div className='col-md-3 col-sm-6 my-2'>
+                <div className='col-md-3 col-sm-6 my-2 d-flex justify-content-center text-center'>
                     <Card
                         hoverable
                         style={{

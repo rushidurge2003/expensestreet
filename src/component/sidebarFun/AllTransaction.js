@@ -5,10 +5,12 @@ import { deleteIncome, getAllIncome, updateIncome, deleteExpense, getAllExpense,
 import dayjs from 'dayjs'
 import {
     Empty, Card, Statistic, Button, Tooltip,
-    Form, Modal, Input, DatePicker, Select, Badge, FloatButton
+    Form, Modal, Input, DatePicker, Select, Badge, FloatButton,
+    Flex
 } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive'
+import { color } from 'chart.js/helpers'
 
 export const AllTransaction = () => {
     const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
@@ -147,7 +149,7 @@ export const AllTransaction = () => {
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th style={{display:isMobile?"none":""}}>#</th>
+                            <th style={{ display: isMobile ? "none" : "" }}>#</th>
                             <th >Type</th>
                             <th >Date</th>
                             <th >Amount</th>
@@ -237,7 +239,7 @@ export const AllTransaction = () => {
     const displayAllIncome = () => {
         return (
             <>
-                <Card bordered={false}>
+                <Card bordered={true} style={{ width: isMobile ? 150 : "", height: 100 }}>
                     <Statistic
                         title="Total Income"
                         value={
@@ -248,7 +250,7 @@ export const AllTransaction = () => {
                             color: 'green',
                         }}
                         // prefix={<ArrowUpOutlined />}
-                        suffix="₹"
+                        suffix={isMobile ? "" : "₹"}
                     />
                 </Card>
             </>
@@ -259,7 +261,7 @@ export const AllTransaction = () => {
     const displayAllExpense = () => {
         return (
             <>
-                <Card bordered={false}>
+                <Card bordered={true} style={{ width: isMobile ? 150 : "", height: 100 }}>
                     <Statistic
                         title="Total Expense"
                         value={
@@ -270,7 +272,7 @@ export const AllTransaction = () => {
                             color: 'red',
                         }}
                         // prefix={<ArrowUpOutlined />}
-                        suffix="₹"
+                        suffix={isMobile ? "" : "₹"}
                     />
                 </Card>
             </>
@@ -280,7 +282,7 @@ export const AllTransaction = () => {
     const displayBalance = () => {
         return (
             <>
-                <Card bordered={false}>
+                <Card bordered={true} style={{ width: isMobile ? 150 : "", height: 100 }}>
                     <Statistic
                         title="Balance"
                         value={
@@ -291,7 +293,7 @@ export const AllTransaction = () => {
                             color: 'black',
                         }}
                         // prefix={<ArrowUpOutlined />}
-                        suffix="₹"
+                        suffix={isMobile ? "" : "₹"}
                     />
                 </Card>
             </>
@@ -300,12 +302,17 @@ export const AllTransaction = () => {
 
     return (
         <>
-            <div className='d-flex justify-content-between'>
+            <div style={{ display: "flex", justifyContent: isMobile ? "space-evenly" : "space-between" }}>
                 <div><h5 style={{ marginTop: "40%", display: isMobile ? "none" : "" }}>AllTransaction</h5></div>
-                <div className='d-flex'>
-                    <div>{displayAllIncome()}</div>
-                    <div>{displayAllExpense()}</div>
-                    <div style={{ display: isMobile ? "none" : "" }}>{displayBalance()}</div>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: isMobile ? "" : "none" }}>
+                        <h6>Balance : <b style={{ color: incSum() - expSum() > 0 ? "green" : "red" }}>{incSum() - expSum()}</b></h6>
+                    </div>
+                    <div style={{ display: "flex" }}>
+                        <div>{displayAllIncome()}</div>
+                        <div>{displayAllExpense()}</div>
+                        <div style={{ display: isMobile ? "none" : "" }}>{displayBalance()}</div>
+                    </div>
                 </div>
             </div>
             {

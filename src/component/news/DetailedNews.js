@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { backAllNews } from '../../slice/NewsSlice';
 import { Link } from 'react-router-dom'
 import nullNews from './images/nullNews.jpg'
+import { useMediaQuery } from 'react-responsive'
 
 export const DetailedNews = () => {
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
     const dispatch = useDispatch()
     const state = useSelector((state) => state.NewsSliceReducer.setData)
     console.log("Detailed News", state);
@@ -20,10 +22,10 @@ export const DetailedNews = () => {
             </div>
             <div>
                 <div className='row'>
-                    <div className='col-6'>
-                        <img src={(state.urlToImage) === null ? nullNews : state.urlToImage} style={{ width: 500 }} />
+                    <div className='col-lg-6'>
+                        <img src={(state.urlToImage) === null ? nullNews : state.urlToImage} style={{ width: isMobile ? 300 : 500 }} />
                     </div>
-                    <div className='col-6'>
+                    <div className='col-lg-6'>
                         Date : {(state.publishedAt).slice(0, 10)} <br />
                         Source : <b>{state.source.name}</b> <br />
                         Author : <b>{state.author}</b><br /><br /><br />

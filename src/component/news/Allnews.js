@@ -32,7 +32,7 @@ export const Allnews = () => {
 
     return (
         <>
-            <div className='row'>
+            <div className='row d-flex justify-content-center text-center'>
                 {
                     newsData?.map((x, index) => {
                         return (
@@ -46,7 +46,7 @@ export const Allnews = () => {
                                             src={(x.urlToImage) === null ? nullNews : x.urlToImage}
                                         />
                                     }
-                                    className='col-lg-3 col-md-4 my-3'
+                                    className='col-xl-2 col-lg-4 my-3 mx-3'
                                     hoverable
                                     onClick={() => {
                                         dispatch(goDetailedNews())

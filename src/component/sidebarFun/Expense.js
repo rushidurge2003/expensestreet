@@ -105,7 +105,7 @@ export const Expense = () => {
     const displayAllExpense = () => {
         return (
             <>
-                <Card bordered={false}>
+                <Card bordered={true} style={{ width: isMobile ? 150 : "", height: 100 }}>
                     <Statistic
                         title="Total Expense"
                         value={
@@ -116,7 +116,7 @@ export const Expense = () => {
                             color: 'red',
                         }}
                         // prefix={<ArrowUpOutlined />}
-                        suffix="₹"
+                        suffix={isMobile ? "" : "₹"}
                     />
                 </Card>
             </>
@@ -183,7 +183,7 @@ export const Expense = () => {
     return (
         <>
             <div className='d-flex justify-content-between'>
-                <div><h5 style={{ marginTop: "50%" }}>Expenses</h5></div>
+                <div><h5 style={{ marginTop: isMobile ? "10%" : "50%" }}>Expenses</h5></div>
                 <div>{displayAllExpense()}</div>
             </div>
             {

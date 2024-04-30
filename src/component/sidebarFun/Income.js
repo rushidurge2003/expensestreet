@@ -80,7 +80,7 @@ export const Income = () => {
     const displayAllIncome = () => {
         return (
             <>
-                <Card bordered={false}>
+                <Card bordered={true} style={{ width: isMobile ? 150 : "", height: 100 }}>
                     <Statistic
                         title="Total Income"
                         value={
@@ -91,7 +91,7 @@ export const Income = () => {
                             color: 'green',
                         }}
                         // prefix={<ArrowUpOutlined />}
-                        suffix="₹"
+                        suffix={isMobile ? "" : "₹"}
                     />
                 </Card>
             </>
@@ -113,7 +113,7 @@ export const Income = () => {
                             <th scope="col">#</th>
                             <th scope="col">Date</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Description</th>
+                            <th style={{ display: isMobile ? "none" : "" }} scope="col">Description</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -125,7 +125,7 @@ export const Income = () => {
                                         <td>{index + 1}</td>
                                         <td>{(d.date).slice(0, 10)}</td>
                                         <td>{d.amount}</td>
-                                        <td>{d.description}</td>
+                                        <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
                                         <td className='d-flex justify-content-evenly'>
                                             <Tooltip title="Edit">
                                                 <Button type="primary" shape="circle" icon={<EditOutlined />}
@@ -154,7 +154,7 @@ export const Income = () => {
     return (
         <>
             <div className='d-flex justify-content-between'>
-                <div><h5 style={{ marginTop: "50%" }}>Income</h5></div>
+                <div><h5 style={{ marginTop: isMobile ? "10%" : "50%" }}>Income</h5></div>
                 <div>{displayAllIncome()}</div>
             </div>
             {

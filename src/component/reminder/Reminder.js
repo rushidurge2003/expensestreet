@@ -9,8 +9,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addReminder, getReminderData, deleteReminder, statusTrueReminder } from '../../slice/ReminderSlice';
 import success from './images/success.png'
 import proccessing from './images/proccessing.png'
+import { useMediaQuery } from 'react-responsive'
+
 
 export const Reminder = () => {
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
+
     const date = new Date()
     const [currentTime, setCurrentTime] = useState(`0${date.getHours()}:0${date.getMinutes()}`)
 
@@ -68,10 +72,15 @@ export const Reminder = () => {
 
     return (
         <>
-            <div className='d-flex justify-content-between'>
-                <div><h5>Reminder</h5></div>
-                <DatePicker minDate={dayjs("2023/12")} defaultValue={dayjs(dateRange, "YYYY/MM")} format={"YYYY/MM"} onChange={(_, strDate) => setDateRange(strDate)} picker="month" />
-                <Button onClick={showModal} icon={<PlusOutlined />} />
+            <div style={{ dispatch: "flex" }}>
+                <div className='d-flex justify-content-between'>
+                    <div><h5>Reminder</h5></div>
+                    <DatePicker style={{ display: isMobile ? "none" : "" }} minDate={dayjs("2023/12")} defaultValue={dayjs(dateRange, "YYYY/MM")} format={"YYYY/MM"} onChange={(_, strDate) => setDateRange(strDate)} picker="month" />
+                    <Button onClick={showModal} icon={<PlusOutlined />} />
+                </div>
+                <div>
+                    <DatePicker style={{ display: isMobile ? "" : "none" }} minDate={dayjs("2023/12")} defaultValue={dayjs(dateRange, "YYYY/MM")} format={"YYYY/MM"} onChange={(_, strDate) => setDateRange(strDate)} picker="month" />
+                </div>
             </div>
             <div style={{ marginTop: 35 }}>
                 {

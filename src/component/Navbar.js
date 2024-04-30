@@ -109,6 +109,7 @@ export const Navbar = () => {
                         </Drawer>
 
                         <Drawer title={"Messages"} onClose={onNotiClose} open={notiOpen}>
+                            <b>Messaging service is temporarily stop</b>
                             {
                                 notiData?.map((x) => {
                                     return (
