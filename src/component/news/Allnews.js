@@ -17,9 +17,11 @@ export const Allnews = () => {
     useEffect(() => {
         const setData = async () => {
             setIsLoading(true)
-            const result = await axios.get(`https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=880616c94fbb434f9a32afe90ccc70b9&page=${page}`)
-            setNewsData(result.data.articles)
+            // const result = await axios.get(`https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=880616c94fbb434f9a32afe90ccc70b9&page=${page}`)
+            const result = await axios.get(`https://newsdata.io/api/1/news?apikey=pub_328032e8980e4d865f28751b6098f3d5527a7&category=business&country=in&size=10`)
+            setNewsData(result.data.results)
             setIsLoading(false)
+            console.log("News : ", result.data.results);
         };
         setData()
     }, [page])
@@ -32,7 +34,7 @@ export const Allnews = () => {
 
     return (
         <>
-            <div className='row d-flex justify-content-center text-center'>
+            {/* <div className='row d-flex justify-content-center text-center'>
                 {
                     newsData?.map((x, index) => {
                         return (
@@ -56,6 +58,42 @@ export const Allnews = () => {
                                 >
                                     {(x.publishedAt).slice(0, 10)} <br />
                                     {x.source.name}
+
+                                    <Meta
+                                        key={index}
+                                        title={x.title}
+                                        description={(x.description) === null ? "" : (x.description).slice(0, 90)}
+                                    />
+                                </Card>
+                            </>
+                        )
+                    })
+                }
+            </div> */}
+            <div className='row d-flex justify-content-center text-center'>
+                {
+                    newsData?.map((x, index) => {
+                        return (
+                            <>
+                                <Card
+                                    key={index}
+                                    style={{ width: 272 }}
+                                    cover={
+                                        <img
+                                            key={index}
+                                            alt="example"
+                                            src={(x.image_url) === null ? nullNews : x.image_url}
+                                        />
+                                    }
+                                    className='col-xl-2 col-lg-4 my-3 mx-3'
+                                    hoverable
+                                    // onClick={() => {
+                                    //     dispatch(goDetailedNews())
+                                    //     dispatch(setDNews(x))
+                                    // }}
+                                >
+                                    {(x.pubDate).slice(0, 10)} <br />
+                                    {x.source_id}
 
                                     <Meta
                                         key={index}
