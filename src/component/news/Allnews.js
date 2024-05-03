@@ -42,6 +42,7 @@ export const Allnews = () => {
                                     style={{ width: 272 }}
                                     cover={
                                         <img
+                                            key={index}
                                             alt="example"
                                             src={(x.urlToImage) === null ? nullNews : x.urlToImage}
                                         />
@@ -57,6 +58,7 @@ export const Allnews = () => {
                                     {x.source.name}
 
                                     <Meta
+                                        key={index}
                                         title={x.title}
                                         description={(x.description) === null ? "" : (x.description).slice(0, 90)}
                                     />

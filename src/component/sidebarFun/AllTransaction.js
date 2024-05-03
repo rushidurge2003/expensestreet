@@ -5,10 +5,9 @@ import { deleteIncome, getAllIncome, updateIncome, deleteExpense, getAllExpense,
 import dayjs from 'dayjs'
 import {
     Empty, Card, Statistic, Button, Tooltip,
-    Form, Modal, Input, DatePicker, Select, Badge, FloatButton,
-    Flex
+    Form, Modal, Input, DatePicker, Select, Badge, FloatButton
 } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive'
 import { color } from 'chart.js/helpers'
 
@@ -143,12 +142,39 @@ export const AllTransaction = () => {
         dispatch(getAllIncome(localStorage.getItem("username")))
     }
 
+    // Click i button to see transaction information (Mobile View)
+    const infoExpense = (amount, desc, mode, category) => {
+        Modal.info({
+            title: `${amount} ₹`,
+            content: (
+                <div>
+                    <p>Description : {desc}</p>
+                    <p>Payment Mode : {mode}</p>
+                    <p>Category : {category}</p>
+                </div>
+            ),
+            onOk() { },
+        });
+    };
+
+    const infoIncome = (amount, desc) => {
+        Modal.info({
+            title: `${amount} ₹`,
+            content: (
+                <div>
+                    <p>Description : {desc}</p>
+                </div>
+            ),
+            onOk() { },
+        });
+    };
+
     const dataTable = () => {
         return (
             <>
                 <table className="table table-hover">
                     <thead>
-                        <tr>
+                        <tr align="center">
                             <th style={{ display: isMobile ? "none" : "" }}>#</th>
                             <th >Type</th>
                             <th >Date</th>
@@ -164,35 +190,44 @@ export const AllTransaction = () => {
                             allDataTransaction.map((d, index) => {
                                 if (d.type === "expense") {
                                     return (
-                                        <tr key={index}>
+                                        <tr key={index} align="center">
                                             <td style={{ display: isMobile ? "none" : "" }}>{index + 1}</td>
-                                            <td><Badge.Ribbon text="Income" color='red'></Badge.Ribbon></td>
+                                            <td><Badge.Ribbon text="Expense" color='red'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
                                             <td>{d.amount}</td>
                                             <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
                                             <td style={{ display: isMobile ? "none" : "" }}>{d.payment_mode}</td>
                                             <td style={{ display: isMobile ? "none" : "" }}>{d.category}</td>
-                                            <td className='d-flex justify-content-evenly'>
-                                                <Tooltip title="Edit">
-                                                    <Button type="primary" shape="circle" icon={<EditOutlined />}
-                                                        onClick={() => {
-                                                            showModalExpense(d.amount, d.date, d.description, d.payment_mode, d.category)
-                                                            setExpId(d.id)
-                                                        }}
-                                                    />
-                                                </Tooltip>
-                                                <Tooltip title="Delete">
-                                                    <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
-                                                        onClick={() => { DeleteExp(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.payment_mode, d.category, d.type) }}
-                                                    />
-                                                </Tooltip>
+                                            <td align='center'>
+                                                <tr>
+                                                    <td style={{ paddingRight: isMobile ? 0 : 20 }}>
+                                                        <Tooltip title="Edit">
+                                                            <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                                onClick={() => {
+                                                                    showModalExpense(d.amount, d.date, d.description, d.payment_mode, d.category)
+                                                                    setExpId(d.id)
+                                                                }}
+                                                            />
+                                                        </Tooltip>
+                                                    </td>
+                                                    <td>
+                                                        <Tooltip title="Delete">
+                                                            <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
+                                                                onClick={() => { DeleteExp(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.payment_mode, d.category, d.type) }}
+                                                            />
+                                                        </Tooltip>
+                                                    </td>
+                                                </tr>
+                                            </td>
+                                            <td style={{ display: isMobile ? "" : "none" }}>
+                                                <Button shape='circle' icon={<InfoCircleOutlined />} onClick={() => infoExpense(d.amount, d.description, d.payment_mode, d.category)} />
                                             </td>
                                         </tr>
                                     )
                                 }
                                 if (d.type === "income") {
                                     return (
-                                        <tr>
+                                        <tr align="center">
                                             <td style={{ display: isMobile ? "none" : "" }}>{index + 1}</td>
                                             <td><Badge.Ribbon text="Income" color='green'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
@@ -200,20 +235,29 @@ export const AllTransaction = () => {
                                             <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
                                             <td style={{ display: isMobile ? "none" : "" }}>-</td>
                                             <td style={{ display: isMobile ? "none" : "" }}>-</td>
-                                            <td className='d-flex justify-content-evenly'>
-                                                <Tooltip title="Edit">
-                                                    <Button type="primary" shape="circle" icon={<EditOutlined />}
-                                                        onClick={() => {
-                                                            showModalIncome(d.amount, d.date, d.description)
-                                                            setIncId(d.id)
-                                                        }}
-                                                    />
-                                                </Tooltip>
-                                                <Tooltip title="Delete">
-                                                    <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
-                                                        onClick={() => { DeleteInc(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.type) }}
-                                                    />
-                                                </Tooltip>
+                                            <td align='center'>
+                                                <tr>
+                                                    <td style={{ paddingRight: isMobile ? 0 : 20 }}>
+                                                        <Tooltip title="Edit">
+                                                            <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                                onClick={() => {
+                                                                    showModalIncome(d.amount, d.date, d.description)
+                                                                    setIncId(d.id)
+                                                                }}
+                                                            />
+                                                        </Tooltip>
+                                                    </td>
+                                                    <td>
+                                                        <Tooltip title="Delete">
+                                                            <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
+                                                                onClick={() => { DeleteInc(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.type) }}
+                                                            />
+                                                        </Tooltip>
+                                                    </td>
+                                                </tr>
+                                            </td>
+                                            <td style={{ display: isMobile ? "" : "none" }}>
+                                                <Button shape='circle' icon={<InfoCircleOutlined />} onClick={() => infoIncome(d.amount, d.description)} />
                                             </td>
                                         </tr>
                                     )

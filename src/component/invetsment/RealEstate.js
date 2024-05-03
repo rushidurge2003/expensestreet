@@ -8,8 +8,11 @@ import {
 } from 'antd';
 import { EditOutlined, DeleteOutlined, ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
 import { getRealEstateInvest, addRealEstateInvest, updateRealEstateInvest, deleteRealEstateInvest } from '../../slice/InvestmentSlice';
+import { useMediaQuery } from 'react-responsive';
 
 export const RealEstate = () => {
+
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
     const date = new Date()
 
@@ -145,25 +148,31 @@ export const RealEstate = () => {
                         {
                             state?.map((x, index) => {
                                 return (
-                                    <tr key={index}>
+                                    <tr key={index} align="center">
                                         <td>{index + 1}</td>
                                         <td>{(x.rdate).slice(0, 10)}</td>
                                         <td>{x.rname}</td>
                                         <td>{x.amount}</td>
-                                        <td className='d-flex justify-content-evenly'>
-                                            <Tooltip title="Edit">
-                                                <Button type="primary" shape="circle" icon={<EditOutlined />}
-                                                    onClick={() => {
-                                                        showUpdateModal(x.rdate, x.rname, x.amount)
-                                                        setId(x.rid)
-                                                    }}
-                                                />
-                                            </Tooltip>
-                                            <Tooltip title="Delete">
-                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
-                                                    onClick={() => { deleteRealEstateData(x.rid) }}
-                                                />
-                                            </Tooltip>
+                                        <td>
+                                            <tr>
+                                                <td style={{ paddingRight: isMobile ? 10 : 0 }}>
+                                                    <Tooltip title="Edit">
+                                                        <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                            onClick={() => {
+                                                                showUpdateModal(x.rdate, x.rname, x.amount)
+                                                                setId(x.rid)
+                                                            }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                                <td style={{ marginLeft: isMobile ? 10 : 0 }}>
+                                                    <Tooltip title="Delete">
+                                                        <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                            onClick={() => { deleteRealEstateData(x.rid) }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                            </tr>
                                         </td>
                                     </tr>
                                 )
@@ -184,14 +193,14 @@ export const RealEstate = () => {
     return (
         <>
             <div className='d-flex justify-content-between'>
-                <div className='d-flex justify-content-between' style={{ marginTop: 50 }}>
+                <div className='d-flex justify-content-between' style={{ marginTop: isMobile ? 10 : 50 }}>
                     <Button icon={<ArrowLeftOutlined />} onClick={() => { dispatch(backDisplayInevstment()) }} />
                     <div style={{ marginLeft: 10 }}><h5>Real Estate</h5></div>
                 </div>
-                <div>
+                <div style={{ display: isMobile ? "none" : "" }}>
                     {displayRealEstateInvest()}
                 </div>
-                <div style={{ marginTop: 30 }}>
+                <div style={{ marginTop: isMobile ? 10 : 30 }}>
                     <Button onClick={showModal} icon={<PlusOutlined />} />
                 </div>
             </div>

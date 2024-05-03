@@ -1,15 +1,18 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Badge, Avatar, Drawer, Modal, Popconfirm, message } from 'antd'
-import { UserOutlined, LogoutOutlined, MessageFilled, CalculatorOutlined } from '@ant-design/icons';
+import { Button, Badge, Avatar, Drawer, Modal, Popconfirm, message, Spin } from 'antd'
+import { UserOutlined, LogoutOutlined, MessageFilled, CalculatorOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from '../slice/ProfileDetailSlice';
 import { getNotification, getNotificationCount } from '../slice/NotificationSlice';
+import axios from 'axios';
+const { confirm } = Modal;
 
 export const Navbar = () => {
 
     const [nData, setNData] = useState([])
+    const [spinning, setSpinning] = useState(false)
 
     const dispatch = useDispatch()
     const state = useSelector((state) => state.NotificationSliceReducer.notificationData.data)
@@ -66,7 +69,7 @@ export const Navbar = () => {
         window.location.replace("https://expensestreet.netlify.app")
     }
 
-    const confirm = (e) => {
+    const confirmtologout = (e) => {
         message.success('Logout');
         logOut()
     };
@@ -78,8 +81,36 @@ export const Navbar = () => {
 
     notiData?.sort((a, b) => (new Date(b.notificationId) - new Date(a.notificationId)))
 
+    // Delete account confirmation
+    const showDeleteConfirm = async () => {
+        confirm({
+            title: 'Are you sure you want to delete this account?',
+            icon: <ExclamationCircleFilled />,
+            content: 'Some descriptions',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                deleteAccount()
+            },
+            onCancel() {
+
+            },
+        });
+    };
+
+    const deleteAccount = async () => {
+        onClose()
+        setSpinning(true)
+        await axios.get(`https://expbackend.onrender.com/deleteAccount/`+localStorage.getItem("username"))
+        setSpinning(false)
+        message.success("Account delete successfully !")
+        logOut()
+    }
+
     return (
         <>
+            <Spin spinning={spinning} fullscreen />
             <nav className="navbar bg-body-tertiary" style={{ boxShadow: "0px 15px 10px -15px #111", position: "fixed", width: "100%", zIndex: 1000, backgroundColor: "white" }}>
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/" style={{ color: "black" }}>
@@ -93,7 +124,7 @@ export const Navbar = () => {
                         <Popconfirm
                             title="Logout"
                             description="Are you sure to logout?"
-                            onConfirm={confirm}
+                            onConfirm={confirmtologout}
                             onCancel={cancel}
                             okText="Yes"
                             cancelText="Cancel"
@@ -106,6 +137,7 @@ export const Navbar = () => {
                             <b className='text-center'><p>{localStorage.getItem("username")}</p></b>
                             <h6><Link style={{ color: "black", textDecoration: "none" }} to="/profile" onClick={() => { dispatch(getUserDetails(localStorage.getItem("username"))); onClose() }}>Profile</Link><br /></h6>
                             <h6><Link style={{ color: "black", textDecoration: "none" }} to="/feedback" onClick={onClose}>Feedback</Link></h6>
+                            <h6 style={{ color: "red", cursor: "pointer" }} onClick={showDeleteConfirm}>Delete Account</h6>
                         </Drawer>
 
                         <Drawer title={"Messages"} onClose={onNotiClose} open={notiOpen}>

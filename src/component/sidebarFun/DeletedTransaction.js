@@ -75,26 +75,32 @@ export const DeletedTransaction = () => {
                                     return (
                                         <tr key={index}>
                                             <td style={{ display: isMobile ? "none" : "" }}>{index + 1}</td>
-                                            <td><Badge.Ribbon text="Income" color='red'></Badge.Ribbon></td>
+                                            <td><Badge.Ribbon text="Expense" color='red'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
                                             <td>{d.amount}</td>
                                             <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
                                             <td style={{ display: isMobile ? "none" : "" }}>{d.payment_mode}</td>
                                             <td style={{ display: isMobile ? "none" : "" }}>{d.category}</td>
-                                            <td className='d-flex justify-content-evenly'>
-                                                <Tooltip title="Restore">
-                                                    <Button type="primary" shape="circle" icon={<ReloadOutlined />}
-                                                        onClick={() => {
-                                                            RestoreExpense(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.payment_mode, d.category)
-                                                            DeleteTrans(d.delid)
-                                                        }}
-                                                    />
-                                                </Tooltip>
-                                                <Tooltip title="Delete">
-                                                    <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
-                                                        onClick={() => { DeleteTrans(d.delid) }}
-                                                    />
-                                                </Tooltip>
+                                            <td>
+                                                <tr>
+                                                    <td>
+                                                        <Tooltip title="Restore">
+                                                            <Button type="primary" shape="circle" icon={<ReloadOutlined />}
+                                                                onClick={() => {
+                                                                    RestoreExpense(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.payment_mode, d.category)
+                                                                    DeleteTrans(d.delid)
+                                                                }}
+                                                            />
+                                                        </Tooltip>
+                                                    </td>
+                                                    <td>
+                                                        <Tooltip title="Delete">
+                                                            <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
+                                                                onClick={() => { DeleteTrans(d.delid) }}
+                                                            />
+                                                        </Tooltip>
+                                                    </td>
+                                                </tr>
                                             </td>
                                         </tr>
                                     )
@@ -109,20 +115,26 @@ export const DeletedTransaction = () => {
                                             <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
                                             <td style={{ display: isMobile ? "none" : "" }}>-</td>
                                             <td style={{ display: isMobile ? "none" : "" }}>-</td>
-                                            <td className='d-flex justify-content-evenly'>
-                                                <Tooltip title="Restore">
-                                                    <Button type="primary" shape="circle" icon={<ReloadOutlined />}
-                                                        onClick={() => {
-                                                            RestoreIncome(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description)
-                                                            DeleteTrans(d.delid)
-                                                        }}
-                                                    />
-                                                </Tooltip>
-                                                <Tooltip title="Delete">
-                                                    <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
-                                                        onClick={() => { DeleteTrans(d.delid) }}
-                                                    />
-                                                </Tooltip>
+                                            <td>
+                                                <tr>
+                                                    <td>
+                                                        <Tooltip title="Restore">
+                                                            <Button type="primary" shape="circle" icon={<ReloadOutlined />}
+                                                                onClick={() => {
+                                                                    RestoreIncome(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description)
+                                                                    DeleteTrans(d.delid)
+                                                                }}
+                                                            />
+                                                        </Tooltip>
+                                                    </td>
+                                                    <td>
+                                                        <Tooltip title="Delete">
+                                                            <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
+                                                                onClick={() => { DeleteTrans(d.delid) }}
+                                                            />
+                                                        </Tooltip>
+                                                    </td>
+                                                </tr>
                                             </td>
                                         </tr>
                                     )

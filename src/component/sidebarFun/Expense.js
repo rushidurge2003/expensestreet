@@ -7,7 +7,7 @@ import {
     Empty, Card, Statistic, Button, Tooltip,
     Form, Modal, Input, Select, DatePicker, message, FloatButton
 } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive'
 
 export const Expense = () => {
@@ -129,6 +129,21 @@ export const Expense = () => {
         dispatch(getAllExpense(localStorage.getItem("username")))
     }
 
+    // Click i button to see transaction information (Mobile View)
+    const infoExpense = (amount, desc, mode, category) => {
+        Modal.info({
+            title: `${amount} ₹`,
+            content: (
+                <div>
+                    <p>Description : {desc}</p>
+                    <p>Payment Mode : {mode}</p>
+                    <p>Category : {category}</p>
+                </div>
+            ),
+            onOk() { },
+        });
+    };
+
     const dataTable = () => {
         return (
             <>
@@ -155,20 +170,31 @@ export const Expense = () => {
                                         <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
                                         <td style={{ display: isMobile ? "none" : "" }}>{d.payment_mode}</td>
                                         <td style={{ display: isMobile ? "none" : "" }}>{d.category}</td>
-                                        <td className='d-flex justify-content-evenly'>
-                                            <Tooltip title="Edit">
-                                                <Button type="primary" shape="circle" icon={<EditOutlined />}
-                                                    onClick={() => {
-                                                        showModalExpense(d.amount, d.date, d.description, d.payment_mode, d.category)
-                                                        setExpId(d.id)
-                                                    }}
-                                                />
-                                            </Tooltip>
-                                            <Tooltip title="Delete">
-                                                <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
-                                                    onClick={() => { DeleteExp(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.payment_mode, d.category, d.type) }}
-                                                />
-                                            </Tooltip>
+                                        <td>
+                                            <tr>
+                                                <td>
+                                                    <Tooltip title="Edit">
+                                                        <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                            onClick={() => {
+                                                                showModalExpense(d.amount, d.date, d.description, d.payment_mode, d.category)
+                                                                setExpId(d.id)
+                                                            }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                                <td>
+                                                    <Tooltip title="Delete">
+                                                        <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
+                                                            onClick={() => { DeleteExp(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.payment_mode, d.category, d.type) }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                            </tr>
+                                        </td>
+                                        <td>
+                                            <td style={{ display: isMobile ? "" : "none" }}>
+                                                <Button shape='circle' icon={<InfoCircleOutlined />} onClick={() => infoExpense(d.amount, d.description, d.payment_mode, d.category)} />
+                                            </td>
                                         </td>
                                     </tr>
                                 )

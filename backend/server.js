@@ -211,7 +211,7 @@ app.post("/feedback", (req, res) => {
     try {
         const { username, email, subject, fback, date } = req.body
         const sql = `INSERT INTO feedback(username,email, subject, fback, date) VALUES("${username}","${email}","${subject}","${fback}","${date}")`
-        conn.query(sql,(err,result)=>{
+        conn.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
                 console.log("\tError in submit feedback");
@@ -1125,6 +1125,28 @@ app.post("/deleteFixedDepositInvest", (req, res) => {
             } else {
                 res.send(result)
                 console.log("\tFixed deposit investment delete successfully");
+            }
+        })
+    } catch (error) {
+
+    }
+})
+
+// Delete Profile/Account
+// Warning - Loose all data
+
+app.get("/deleteAccount/:username", (req, res) => {
+    try {
+        const username = req.params.username;
+        const sql = `Drop Schema ${username};
+            DELETE FROM expensestreet.user WHERE username = "${username}";`;
+        conn.query(sql, (err, result) => {
+            if (err) {
+                res.send(result)
+                console.log("\tError to delete account");
+            } else {
+                res.send(result);
+                console.log(`\t${username} account delete successfully..`);
             }
         })
     } catch (error) {

@@ -8,8 +8,11 @@ import {
 } from 'antd';
 import { EditOutlined, DeleteOutlined, ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
 import { addMutualFundInvest, getMutualFundInvest, updateMutualFundInvest, deleteMutualFundInvest } from '../../slice/InvestmentSlice';
+import { useMediaQuery } from 'react-responsive';
 
 export const MutualFund = () => {
+
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
     const date = new Date()
 
@@ -79,7 +82,7 @@ export const MutualFund = () => {
             setIsUpdateModalOpen(false);
             dispatch(updateMutualFundInvest({
                 "username": localStorage.getItem("username"), "id": id,
-                "date": (mfdate).slice(0,19).replace("T",' '),
+                "date": (mfdate).slice(0, 19).replace("T", ' '),
                 "name": mfName, "amount": amount
             }))
             dispatch(getMutualFundInvest(localStorage.getItem("username")))
@@ -150,20 +153,26 @@ export const MutualFund = () => {
                                         <td>{(x.mfdate).slice(0, 10)}</td>
                                         <td>{x.mfname}</td>
                                         <td>{x.amount}</td>
-                                        <td className='d-flex justify-content-evenly'>
-                                            <Tooltip title="Edit">
-                                                <Button type="primary" shape="circle" icon={<EditOutlined />}
-                                                    onClick={() => {
-                                                        showUpdateModal(x.mfdate, x.mfname, x.amount)
-                                                        setId(x.mfid)
-                                                    }}
-                                                />
-                                            </Tooltip>
-                                            <Tooltip title="Delete">
-                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
-                                                    onClick={() => { deleteMFData(x.mfid) }}
-                                                />
-                                            </Tooltip>
+                                        <td>
+                                            <tr>
+                                                <td style={{ paddingRight: isMobile ? 10 : 0 }}>
+                                                    <Tooltip title="Edit">
+                                                        <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                            onClick={() => {
+                                                                showUpdateModal(x.mfdate, x.mfname, x.amount)
+                                                                setId(x.mfid)
+                                                            }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                                <td style={{ marginLeft: isMobile ? 10 : 0 }}>
+                                                    <Tooltip title="Delete">
+                                                        <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                            onClick={() => { deleteMFData(x.mfid) }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                            </tr>
                                         </td>
                                     </tr>
                                 )
@@ -184,14 +193,14 @@ export const MutualFund = () => {
     return (
         <>
             <div className='d-flex justify-content-between'>
-                <div className='d-flex justify-content-between' style={{ marginTop: 50 }}>
+                <div className='d-flex justify-content-between' style={{ marginTop: isMobile ? 10 : 50 }}>
                     <Button icon={<ArrowLeftOutlined />} onClick={() => { dispatch(backDisplayInevstment()) }} />
                     <div style={{ marginLeft: 10 }}><h5>Mutual Fund</h5></div>
                 </div>
-                <div>
+                <div style={{ display: isMobile ? "none" : "" }}>
                     {displayMutualFundInvest()}
                 </div>
-                <div style={{ marginTop: 30 }}>
+                <div style={{ marginTop: isMobile ? 10 : 30 }}>
                     <Button onClick={showModal} icon={<PlusOutlined />} />
                 </div>
             </div>

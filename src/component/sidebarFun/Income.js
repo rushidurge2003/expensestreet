@@ -7,7 +7,7 @@ import {
     Empty, Card, Statistic, Button, Tooltip,
     Form, Modal, Input, DatePicker, FloatButton
 } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive'
 
 export const Income = () => {
@@ -104,6 +104,19 @@ export const Income = () => {
         dispatch(getAllIncome(localStorage.getItem("username")))
     }
 
+    // Click i button to see transaction information (Mobile View)
+    const infoIncome = (amount, desc) => {
+        Modal.info({
+            title: `${amount} ₹`,
+            content: (
+                <div>
+                    <p>Description : {desc}</p>
+                </div>
+            ),
+            onOk() { },
+        });
+    };
+
     const dataTable = () => {
         return (
             <>
@@ -126,20 +139,29 @@ export const Income = () => {
                                         <td>{(d.date).slice(0, 10)}</td>
                                         <td>{d.amount}</td>
                                         <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
-                                        <td className='d-flex justify-content-evenly'>
-                                            <Tooltip title="Edit">
-                                                <Button type="primary" shape="circle" icon={<EditOutlined />}
-                                                    onClick={() => {
-                                                        showModalIncome(d.amount, d.date, d.description)
-                                                        setIncId(d.id)
-                                                    }}
-                                                />
-                                            </Tooltip>
-                                            <Tooltip title="Delete">
-                                                <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
-                                                    onClick={() => { DeleteInc(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.type) }}
-                                                />
-                                            </Tooltip>
+                                        <td>
+                                            <tr>
+                                                <td>
+                                                    <Tooltip title="Edit">
+                                                        <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                            onClick={() => {
+                                                                showModalIncome(d.amount, d.date, d.description)
+                                                                setIncId(d.id)
+                                                            }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                                <td>
+                                                    <Tooltip title="Delete">
+                                                        <Button type="primary" style={{ marginLeft: isMobile ? 10 : 0 }} danger shape="circle" icon={<DeleteOutlined />}
+                                                            onClick={() => { DeleteInc(d.id, d.amount, (d.date).slice(0, 19).replace("T", " "), d.description, d.type) }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                            </tr>
+                                        </td>
+                                        <td style={{ display: isMobile ? "" : "none" }}>
+                                            <Button shape='circle' icon={<InfoCircleOutlined />} onClick={() => infoIncome(d.amount, d.description)} />
                                         </td>
                                     </tr>
                                 )

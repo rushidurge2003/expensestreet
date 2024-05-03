@@ -6,10 +6,13 @@ import {
     Empty, Card, Statistic, Button, Tooltip,
     Form, Modal, Input, DatePicker, message, Badge, FloatButton
 } from 'antd';
-import { EditOutlined, DeleteOutlined, ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, ArrowLeftOutlined, PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { addStockInvest, getStockInvest, updateStockInvest, deleteStockInvest } from '../../slice/InvestmentSlice';
+import { useMediaQuery } from 'react-responsive';
 
 export const StockMarket = () => {
+
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
     const date = new Date()
 
@@ -84,7 +87,7 @@ export const StockMarket = () => {
             setIsUpdateModalOpen(false);
             dispatch(updateStockInvest({
                 "username": localStorage.getItem("username"), "id": id,
-                "date": (stdate).slice(0,19).replace("T",' '),
+                "date": (stdate).slice(0, 19).replace("T", ' '),
                 "name": stockName, "price": price, "quantity": quantity, "total": price * quantity
             }))
             dispatch(getStockInvest(localStorage.getItem("username")))
@@ -120,7 +123,7 @@ export const StockMarket = () => {
     const displayStockInvest = () => {
         return (
             <>
-                <Card bordered={false}>
+                <Card bordered={true} style={{ width: isMobile ? 150 : "", height: 100 }}>
                     <Statistic
                         title="Stock Investment"
                         value={
@@ -132,7 +135,7 @@ export const StockMarket = () => {
                             color: 'black',
                         }}
                         // prefix={<ArrowUpOutlined />}
-                        suffix="₹"
+                        suffix={isMobile ? "" : "₹"}
                     />
                 </Card>
             </>
@@ -144,6 +147,19 @@ export const StockMarket = () => {
         dispatch(getStockInvest(localStorage.getItem("username")))
         dispatch(getStockInvest(localStorage.getItem("username")))
     }
+    // Click on i button to check other details of stock market
+    const infoStockMarket = (smname, price, quantitiy) => {
+        Modal.info({
+            title: `${smname}`,
+            content: (
+                <div>
+                    <p>Price : {price}</p>
+                    <p>Quantity : {quantitiy}</p>
+                </div>
+            ),
+            onOk() { },
+        });
+    };
 
     const displayStockData = () => {
         return (
@@ -154,8 +170,8 @@ export const StockMarket = () => {
                             <th scope="col">#</th>
                             <th scope="col">Date</th>
                             <th scope="col">Stock Name</th>
-                            <th scope="col">Stock Price</th>
-                            <th scope="col">Stock Quantitiy</th>
+                            <th scope="col" style={{ display: isMobile ? "none" : "" }}>Stock Price</th>
+                            <th scope="col" style={{ display: isMobile ? "none" : "" }}>Stock Quantitiy</th>
                             <th scope="col">Total</th>
                             <th scope='col'>Action</th>
                         </tr>
@@ -168,23 +184,32 @@ export const StockMarket = () => {
                                         <td>{index + 1}</td>
                                         <td>{(x.smdate).slice(0, 10)}</td>
                                         <td>{x.smname}</td>
-                                        <td>{x.price}</td>
-                                        <td>{x.quantity}</td>
+                                        <td style={{ display: isMobile ? "none" : "" }}>{x.price}</td>
+                                        <td style={{ display: isMobile ? "none" : "" }}>{x.quantity}</td>
                                         <td>{x.total}</td>
-                                        <td className='d-flex justify-content-evenly'>
-                                            <Tooltip title="Edit">
-                                                <Button type="primary" shape="circle" icon={<EditOutlined />}
-                                                    onClick={() => {
-                                                        showUpdateModal(x.smdate, x.smname, x.price, x.quantity)
-                                                        setId(x.smid)
-                                                    }}
-                                                />
-                                            </Tooltip>
-                                            <Tooltip title="Delete">
-                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
-                                                    onClick={() => { deleteStockData(x.smid) }}
-                                                />
-                                            </Tooltip>
+                                        <td>
+                                            <tr>
+                                                <td style={{ paddingRight: isMobile ? 10 : 20 }}>
+                                                    <Tooltip title="Edit">
+                                                        <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                            onClick={() => {
+                                                                showUpdateModal(x.smdate, x.smname, x.price, x.quantity)
+                                                                setId(x.smid)
+                                                            }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                                <td>
+                                                    <Tooltip title="Delete">
+                                                        <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                            onClick={() => { deleteStockData(x.smid) }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                            </tr>
+                                        </td>
+                                        <td style={{ display: isMobile ? "" : "none" }}>
+                                            <Button shape='circle' icon={<InfoCircleOutlined />} onClick={() => infoStockMarket(x.smname, x.price, x.quantity)} />
                                         </td>
                                     </tr>
                                 )
@@ -199,14 +224,14 @@ export const StockMarket = () => {
     return (
         <>
             <div className='d-flex justify-content-between'>
-                <div className='d-flex justify-content-between' style={{ marginTop: 50 }}>
+                <div className='d-flex justify-content-between' style={{ marginTop: isMobile ? 10 : 50 }}>
                     <Button icon={<ArrowLeftOutlined />} onClick={() => { dispatch(backDisplayInevstment()) }} />
                     <div style={{ marginLeft: 10 }}><h5>Stock Market</h5></div>
                 </div>
-                <div>
+                <div style={{ display: isMobile ? "none" : "" }}>
                     {displayStockInvest()}
                 </div>
-                <div style={{ marginTop: 30 }}>
+                <div style={{ marginTop: isMobile ? 10 : 30 }}>
                     <Button onClick={showModal} icon={<PlusOutlined />} />
                 </div>
             </div>

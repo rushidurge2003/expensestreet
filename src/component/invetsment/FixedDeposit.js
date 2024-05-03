@@ -8,8 +8,11 @@ import {
 } from 'antd';
 import { EditOutlined, DeleteOutlined, ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
 import { addFixedDepositInvest, getFixedDepositInvest, updateFixedDepositInvest, deleteFixedDepositInvest } from '../../slice/InvestmentSlice';
+import { useMediaQuery } from 'react-responsive';
 
 export const FixedDeposit = () => {
+
+    const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
 
     const date = new Date()
 
@@ -150,20 +153,26 @@ export const FixedDeposit = () => {
                                         <td>{(x.fdate).slice(0, 10)}</td>
                                         <td>{x.bankname}</td>
                                         <td>{x.amount}</td>
-                                        <td className='d-flex justify-content-evenly'>
-                                            <Tooltip title="Edit">
-                                                <Button type="primary" shape="circle" icon={<EditOutlined />}
-                                                    onClick={() => {
-                                                        showUpdateModal(x.fdate, x.bankname, x.amount)
-                                                        setId(x.fid)
-                                                    }}
-                                                />
-                                            </Tooltip>
-                                            <Tooltip title="Delete">
-                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
-                                                    onClick={() => { deleteFixedDepositData(x.fid) }}
-                                                />
-                                            </Tooltip>
+                                        <td>
+                                            <tr>
+                                                <td style={{ paddingRight: isMobile ? 10 : 0 }}>
+                                                    <Tooltip title="Edit">
+                                                        <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                            onClick={() => {
+                                                                showUpdateModal(x.fdate, x.bankname, x.amount)
+                                                                setId(x.fid)
+                                                            }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                                <td>
+                                                    <Tooltip title="Delete">
+                                                        <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                            onClick={() => { deleteFixedDepositData(x.fid) }}
+                                                        />
+                                                    </Tooltip>
+                                                </td>
+                                            </tr>
                                         </td>
                                     </tr>
                                 )
@@ -184,14 +193,14 @@ export const FixedDeposit = () => {
     return (
         <>
             <div className='d-flex justify-content-between'>
-                <div className='d-flex justify-content-between' style={{marginTop:50}}>
+                <div className='d-flex justify-content-between' style={{ marginTop: isMobile ? 10 : 50 }}>
                     <Button icon={<ArrowLeftOutlined />} onClick={() => { dispatch(backDisplayInevstment()) }} />
                     <div style={{ marginLeft: 10 }}><h5>Fixed Deposit</h5></div>
                 </div>
-                <div>
+                <div style={{ display: isMobile ? "none" : "" }}>
                     {displayFixedDepositInvest()}
                 </div>
-                <div style={{marginTop:30}}>
+                <div style={{ marginTop: isMobile ? 10 : 30 }}>
                     <Button onClick={showModal} icon={<PlusOutlined />} />
                 </div>
             </div>
