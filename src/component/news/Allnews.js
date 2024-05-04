@@ -29,7 +29,6 @@ export const Allnews = () => {
             setNewsData(result.data.results)
             setBackPageId(result.data.nextPage)
             setIsLoading(false)
-            console.log("News : ", backPageId);
         };
         setData()
     }, [page])
@@ -121,19 +120,19 @@ export const Allnews = () => {
                     setPage(p);
                     if (p == 2) {
                         dispatch(setPageID({ no: 0, id: backPageId }))
-                        console.log("Page Back ID : ", state);
+                        // console.log("Page Back ID : ", state);
                     }
                     if (p == 3) {
                         dispatch(setPageID({ no: 1, id: backPageId }))
-                        console.log("Page Back ID : ", state);
+                        // console.log("Page Back ID : ", state);
                     }
                     if (p == 4) {
                         dispatch(setPageID({ no: 2, id: backPageId }))
-                        console.log("Page Back ID : ", state);
+                        // console.log("Page Back ID : ", state);
                     }
                     if (p == 5) {
                         dispatch(setPageID({ no: 3, id: backPageId }))
-                        console.log("Page Back ID : ", state);
+                        // console.log("Page Back ID : ", state);
                     }
                 }}
             />

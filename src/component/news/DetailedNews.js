@@ -11,7 +11,6 @@ export const DetailedNews = () => {
     const isMobile = useMediaQuery({ query: '(max-width: 600px)' })
     const dispatch = useDispatch()
     const state = useSelector((state) => state.NewsSliceReducer.setData)
-    console.log("Detailed News", state);
     return (
         <>
             <div style={{ display: "flex", justifyContent: "start", position: "relative", bottom: 35 }}>
