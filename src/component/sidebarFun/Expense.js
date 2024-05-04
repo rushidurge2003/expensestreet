@@ -149,7 +149,7 @@ export const Expense = () => {
             <>
                 <table className="table table-hover">
                     <thead>
-                        <tr>
+                        <tr align="center">
                             <th scope="col">#</th>
                             <th scope="col">Date</th>
                             <th scope="col">Amount</th>
@@ -163,7 +163,7 @@ export const Expense = () => {
                         {
                             data.map((d, index) => {
                                 return (
-                                    <tr key={index}>
+                                    <tr key={index} align="center">
                                         <td>{index + 1}</td>
                                         <td>{(d.date).slice(0, 10)}</td>
                                         <td>{d.amount}</td>
@@ -172,7 +172,7 @@ export const Expense = () => {
                                         <td style={{ display: isMobile ? "none" : "" }}>{d.category}</td>
                                         <td>
                                             <tr>
-                                                <td>
+                                                <td style={{ paddingRight: isMobile ? 0 : 20 }}>
                                                     <Tooltip title="Edit">
                                                         <Button type="primary" shape="circle" icon={<EditOutlined />}
                                                             onClick={() => {
@@ -191,10 +191,8 @@ export const Expense = () => {
                                                 </td>
                                             </tr>
                                         </td>
-                                        <td>
-                                            <td style={{ display: isMobile ? "" : "none" }}>
-                                                <Button shape='circle' icon={<InfoCircleOutlined />} onClick={() => infoExpense(d.amount, d.description, d.payment_mode, d.category)} />
-                                            </td>
+                                        <td style={{ display: isMobile ? "" : "none" }}>
+                                            <Button shape='circle' icon={<InfoCircleOutlined />} onClick={() => infoExpense(d.amount, d.description, d.payment_mode, d.category)} />
                                         </td>
                                     </tr>
                                 )

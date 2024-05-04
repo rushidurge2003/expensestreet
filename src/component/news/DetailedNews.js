@@ -23,17 +23,18 @@ export const DetailedNews = () => {
             <div>
                 <div className='row'>
                     <div className='col-lg-6'>
-                        <img src={(state.urlToImage) === null ? nullNews : state.urlToImage} style={{ width: isMobile ? 300 : 500 }} />
+                        <img src={(state.image_url) === null ? nullNews : state.image_url} style={{ width: isMobile ? 300 : 500 }} />
                     </div>
                     <div className='col-lg-6'>
-                        Date : {(state.publishedAt).slice(0, 10)} <br />
-                        Source : <b>{state.source.name}</b> <br />
-                        Author : <b>{state.author}</b><br /><br /><br />
+                        Date : {(state.pubDate).slice(0, 10)} <br />
+                        Source : <b>{state.source_id}</b> <br />
+                        {/* Author : <b>{state.author}</b><br /><br /><br /> */}
                         <h5>{(state.description) === null ? "" : (state.description).slice(0, 90)}</h5>
                     </div>
                 </div>
                 <div style={{ marginTop: 30 }}>
-                    <h6><strong>{(state.content) === null ? "" : (state.content).slice(0, 200)}</strong><Link target='blank' to={state.url}><Button type="text">Read More</Button></Link><span></span></h6>
+                    {/* <h6><strong>{(state.content) === null ? "" : (state.content).slice(0, 200)}</strong><Link target='blank' to={state.url}><Button type="text">Read More</Button></Link><span></span></h6> */}
+                    <Link target='blank' to={state.source_url}><Button type="primary">Read More</Button></Link>
                 </div>
             </div>
         </>

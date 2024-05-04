@@ -122,7 +122,7 @@ export const Income = () => {
             <>
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr align="center">
                             <th scope="col">#</th>
                             <th scope="col">Date</th>
                             <th scope="col">Amount</th>
@@ -134,14 +134,14 @@ export const Income = () => {
                         {
                             data.map((d, index) => {
                                 return (
-                                    <tr>
+                                    <tr align="center">
                                         <td>{index + 1}</td>
                                         <td>{(d.date).slice(0, 10)}</td>
                                         <td>{d.amount}</td>
                                         <td style={{ display: isMobile ? "none" : "" }}>{d.description}</td>
                                         <td>
                                             <tr>
-                                                <td>
+                                                <td  style={{ paddingRight: isMobile ? 0 : 20 }}>
                                                     <Tooltip title="Edit">
                                                         <Button type="primary" shape="circle" icon={<EditOutlined />}
                                                             onClick={() => {

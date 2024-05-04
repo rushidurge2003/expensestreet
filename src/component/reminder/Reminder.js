@@ -4,7 +4,7 @@ import {
     Form, TimePicker, Modal, Input, Select,
     DatePicker, message, Button, Empty, FloatButton, Tooltip
 } from 'antd'
-import { PlusOutlined, DeleteOutlined, EditOutlined, CheckOutlined } from '@ant-design/icons';
+import { PlusOutlined, DeleteOutlined, EditOutlined, CheckOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux'
 import { addReminder, getReminderData, deleteReminder, statusTrueReminder } from '../../slice/ReminderSlice';
 import success from './images/success.png'
@@ -70,6 +70,23 @@ export const Reminder = () => {
         dispatch(getReminderData(localStorage.getItem("username")))
     }
 
+    // Click i button to see reminder information (Mobile View)
+    const infoReminder = (date, time, desc, type, amount) => {
+        Modal.info({
+            title: `${desc}`,
+            content: (
+                <div>
+                    <p>Date : {date}</p>
+                    <p>Time : {time}</p>
+                    <p>Description : {desc}</p>
+                    <p>Type : {type}</p>
+                    <p>Amount : {amount} ₹</p>
+                </div>
+            ),
+            onOk() { },
+        });
+    };
+
     return (
         <>
             <div style={{ dispatch: "flex" }}>
@@ -87,14 +104,14 @@ export const Reminder = () => {
                     displayData?.length > 0 ?
                         <table className="table table-hover">
                             <thead>
-                                <tr>
-                                    <th scope="col">#</th>
+                                <tr align="center">
+                                    <th style={{ display: isMobile ? "none" : "" }} scope="col">#</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Time</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">Amount</th>
+                                    <th style={{ display: isMobile ? "none" : "" }} scope="col">Time</th>
+                                    <th style={{ display: isMobile ? "none" : "" }} scope="col">Description</th>
+                                    <th style={{ display: isMobile ? "none" : "" }} scope="col">Type</th>
+                                    <th style={{ display: isMobile ? "none" : "" }} scope="col">Amount</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -102,34 +119,45 @@ export const Reminder = () => {
                                 {
                                     displayData?.map((x, index) => {
                                         return (
-                                            <tr>
-                                                <td>{index + 1}</td>
+                                            <tr align="center">
+                                                <td style={{ display: isMobile ? "none" : "" }}>{index + 1}</td>
                                                 <td><img src={x.reminderComplete === "true" ? success : proccessing} title={x.reminderComplete === "true" ? "Complete" : "Not Cpmlete"} width={30} /></td>
                                                 <td>{(x.reminderDateTime).slice(0, 10)}</td>
-                                                <td>{(x.reminderDateTime).slice(11, 16)}</td>
-                                                <td>{x.reminderDesc}</td>
-                                                <td>{x.type}</td>
-                                                <td>{x.amount}</td>
-                                                <td className='d-flex justify-content-evenly'>
-                                                    <Tooltip title="Edit">
-                                                        <Button type="primary" shape="circle" icon={<EditOutlined />}
-                                                            onClick={() => {
-                                                                // showModalIncome(d.amount, d.date, d.description)
-                                                                // setIncId(d.id)
-                                                            }}
-                                                            disabled={x.reminderComplete === "true" ? true : false}
-                                                        />
-                                                    </Tooltip>
-                                                    <Tooltip title="Complete">
-                                                        <Button type="primary" success shape="circle" icon={<CheckOutlined />}
-                                                            onClick={() => { statusTrueRem(x.reminderId) }}
-                                                        />
-                                                    </Tooltip>
-                                                    <Tooltip title="Delete">
-                                                        <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
-                                                            onClick={() => { delteRem(x.reminderId) }}
-                                                        />
-                                                    </Tooltip>
+                                                <td style={{ display: isMobile ? "none" : "" }}>{(x.reminderDateTime).slice(11, 16)}</td>
+                                                <td style={{ display: isMobile ? "none" : "" }}>{x.reminderDesc}</td>
+                                                <td style={{ display: isMobile ? "none" : "" }}>{x.type}</td>
+                                                <td style={{ display: isMobile ? "none" : "" }}>{x.amount}</td>
+                                                <td>
+                                                    <tr align="center">
+                                                        <td>
+                                                            <Tooltip title="Edit">
+                                                                <Button type="primary" shape="circle" icon={<EditOutlined />}
+                                                                    onClick={() => {
+                                                                        // showModalIncome(d.amount, d.date, d.description)
+                                                                        // setIncId(d.id)
+                                                                    }}
+                                                                    disabled={x.reminderComplete === "true" ? true : false}
+                                                                />
+                                                            </Tooltip>
+                                                        </td>
+                                                        <td style={{ paddingLeft: isMobile ? 5 : 10, paddingRight: isMobile ? 5 : 10 }}>
+                                                            <Tooltip title="Complete">
+                                                                <Button type="primary" success shape="circle" icon={<CheckOutlined />}
+                                                                    onClick={() => { statusTrueRem(x.reminderId) }}
+                                                                />
+                                                            </Tooltip>
+                                                        </td>
+                                                        <td>
+                                                            <Tooltip title="Delete">
+                                                                <Button type="primary" danger shape="circle" icon={<DeleteOutlined />}
+                                                                    onClick={() => { delteRem(x.reminderId) }}
+                                                                />
+                                                            </Tooltip>
+                                                        </td>
+                                                    </tr>
+                                                </td>
+                                                <td style={{ display: isMobile ? "" : "none" }}>
+                                                    <Button shape='circle' icon={<InfoCircleOutlined />} onClick={() => infoReminder((x.reminderDateTime).slice(0, 10), (x.reminderDateTime).slice(11, 16), x.reminderDesc, x.type, x.amount)} />
                                                 </td>
                                             </tr>
                                         )

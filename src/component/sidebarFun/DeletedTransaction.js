@@ -57,7 +57,7 @@ export const DeletedTransaction = () => {
             <>
                 <table className="table table-hover">
                     <thead>
-                        <tr>
+                        <tr align="center">
                             <th style={{ display: isMobile ? "none" : "" }} scope="col">#</th>
                             <th scope="col">Type</th>
                             <th scope="col">Date</th>
@@ -73,7 +73,7 @@ export const DeletedTransaction = () => {
                             delData.map((d, index) => {
                                 if (d.type === "expense") {
                                     return (
-                                        <tr key={index}>
+                                        <tr key={index} align="center">
                                             <td style={{ display: isMobile ? "none" : "" }}>{index + 1}</td>
                                             <td><Badge.Ribbon text="Expense" color='red'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
@@ -83,7 +83,7 @@ export const DeletedTransaction = () => {
                                             <td style={{ display: isMobile ? "none" : "" }}>{d.category}</td>
                                             <td>
                                                 <tr>
-                                                    <td>
+                                                    <td style={{ paddingRight: isMobile ? 0 : 20 }}>
                                                         <Tooltip title="Restore">
                                                             <Button type="primary" shape="circle" icon={<ReloadOutlined />}
                                                                 onClick={() => {
@@ -107,7 +107,7 @@ export const DeletedTransaction = () => {
                                 }
                                 if (d.type === "income") {
                                     return (
-                                        <tr>
+                                        <tr align="center">
                                             <td style={{ display: isMobile ? "none" : "" }}>{index + 1}</td>
                                             <td><Badge.Ribbon text="Income" color='green'></Badge.Ribbon></td>
                                             <td>{(d.date).slice(0, 10)}</td>
@@ -117,7 +117,7 @@ export const DeletedTransaction = () => {
                                             <td style={{ display: isMobile ? "none" : "" }}>-</td>
                                             <td>
                                                 <tr>
-                                                    <td>
+                                                    <td style={{ paddingRight: isMobile ? 0 : 20 }}>
                                                         <Tooltip title="Restore">
                                                             <Button type="primary" shape="circle" icon={<ReloadOutlined />}
                                                                 onClick={() => {
