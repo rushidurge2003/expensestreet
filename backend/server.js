@@ -25,16 +25,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Mysql Connection using aiven cloud
-const conn = mysql.createConnection({
-    host: "mysql-e597f39-rushikeshdurge7794-1381.k.aivencloud.com",
-    user: "avnadmin",
-    password: "AVNS_5hdV1CiGT5A6moO2y4V",
-    database: "expensestreet",
-    multipleStatements: true,
-    timezone: "Z"
-})
-
 // Mysql Connection
 // const conn = mysql.createConnection({
 //     host: "mydb.cbsyuiukeu5i.eu-north-1.rds.amazonaws.com",
