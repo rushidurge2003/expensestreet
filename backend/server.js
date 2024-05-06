@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const mysql = require('mysql')
+const mysql2 = require('mysql2')
 const bodyParser = require('body-parser');
 const multer = require("multer")
 var nodemailer = require('nodemailer')
@@ -25,15 +26,28 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Mysql Connection using aiven cloud
+// Mysql Connection using clever cloud
 const conn = mysql.createConnection({
-    host: "mysql-e597f39-rushikeshdurge7794-1381.k.aivencloud.com",
-    user: "avnadmin",
-    password: "AVNS_5hdV1CiGT5A6moO2y4V",
-    database: "expensestreet",
+    host: "b41vr87kmg0hjuw9c0te-mysql.services.clever-cloud.com",
+    user: "upme2ccho41naea3",
+    password: "qTBdoTxsZ5Jn24Yyn3E",
+    port: 20028,
+    database: "b41vr87kmg0hjuw9c0te",
     multipleStatements: true,
-    timezone: "Z"
+    timezone: "Z",
+    ssl : true
 })
+
+// Mysql Connection using aiven cloud
+// const conn = mysql.createConnection({
+//     host: "mysql-e597f39-rushikeshdurge7794-1381.k.aivencloud.com",
+//     user: "avnadmin",
+//     password: "AVNS_5hdV1CiGT5A6moO2y4V",
+//     database: "expensestreet",
+//     multipleStatements: true,
+//     timezone: "Z",
+//     ssl: true
+// })
 
 // Mysql Connection using Amazon RDS
 // const conn = mysql.createConnection({
