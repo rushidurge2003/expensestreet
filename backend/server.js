@@ -29,7 +29,7 @@ const upload = multer({ storage: storage });
 const conn = mysql.createConnection({
     host: "mysql-e597f39-rushikeshdurge7794-1381.k.aivencloud.com",
     user: "avnadmin",
-    password: "AVNS_5hdV1CiGT5A6moO2y4V",
+    // password: "AVNS_5hdV1CiGT5A6moO2y4V",
     database: "expensestreet",
     multipleStatements: true,
     timezone: "Z"
