@@ -32,7 +32,7 @@ const conn = mysql.createConnection({
     user: "upme2ccho41naea3",
     password: "qTBdoTxsZ5Jn24Yyn3E",
     port: 20028,
-    database: "b41vr87kmg0hjuw9c0te",
+    database: "expensestreet",
     multipleStatements: true,
     timezone: "Z",
     ssl : true
