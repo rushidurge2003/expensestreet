@@ -25,7 +25,7 @@ const ProfileDetailSlice = createSlice({
 export const getUserDetails = createAsyncThunk(
     "getUserDetails",
     async (username) => {
-        const result = await axios.get("https://expbackend.onrender.com/userprofile/" + username)
+        const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/userprofile/` + username)
         return result
     }
 )

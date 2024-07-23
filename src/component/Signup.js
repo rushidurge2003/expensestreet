@@ -56,7 +56,7 @@ export const Signup = () => {
             }
             else {
                 setBtnDsbl(true)
-                const result = await axios.get("https://expbackend.onrender.com/userexist/" + username)
+                const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/userexist/` + username)
                 if (result.data.exist) {
                     message.error("Username Already Exist")
                     setUsername("")
@@ -67,8 +67,8 @@ export const Signup = () => {
                     dispatch(signupUser({ "name": name, "email": email, "username": username, "password": password, "contact": contact }))
                     navigate("/login")
                     message.success("Successfully Signup")
-                    await axios.post("https://expbackend.onrender.com/creatDataBase", { "name": name, "email": email, "username": username, "contact": contact })
-                    await axios.post("https://expbackend.onrender.com/sendMail", { "email": email })
+                    await axios.post(`${process.env.REACT_APP_SERVER_URL}/creatDataBase`, { "name": name, "email": email, "username": username, "contact": contact })
+                    await axios.post(`${process.env.REACT_APP_SERVER_URL}/sendMail`, { "email": email })
                     setName("")
                     setUsername("")
                     setPassword("")

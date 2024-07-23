@@ -102,7 +102,7 @@ export const Navbar = () => {
     const deleteAccount = async () => {
         onClose()
         setSpinning(true)
-        await axios.get(`https://expbackend.onrender.com/deleteAccount/`+localStorage.getItem("username"))
+        await axios.get(`${process.env.REACT_APP_SERVER_URL}/deleteAccount/`+localStorage.getItem("username"))
         setSpinning(false)
         message.success("Account delete successfully !")
         logOut()

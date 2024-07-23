@@ -78,28 +78,28 @@ const InvestmentSlice = createSlice({
 export const addStockInvest = createAsyncThunk(
     "addStockInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/addStockInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/addStockInvest`, { ...data })
     }
 )
 
 export const addMutualFundInvest = createAsyncThunk(
     "addMutualFundInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/addMutualFundInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/addMutualFundInvest`, { ...data })
     }
 )
 
 export const addRealEstateInvest = createAsyncThunk(
     "addRealEstateInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/addRealEstateInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/addRealEstateInvest`, { ...data })
     }
 )
 
 export const addFixedDepositInvest = createAsyncThunk(
     "addFixedDepositInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/addFixedDepositInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/addFixedDepositInvest`, { ...data })
     }
 )
 
@@ -108,14 +108,14 @@ export const addFixedDepositInvest = createAsyncThunk(
 export const getStockInvest = createAsyncThunk(
     "getStockInvest",
     async (username) => {
-        const result = await axios.get("https://expbackend.onrender.com/getStockInvest/" + username)
+        const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getStockInvest/` + username)
         return result
     }
 )
 export const getMutualFundInvest = createAsyncThunk(
     "getMutualFundInvest",
     async (username) => {
-        const result = await axios.get("https://expbackend.onrender.com/getMutualFundInvest/" + username)
+        const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getMutualFundInvest/` + username)
         return result
     }
 )
@@ -123,7 +123,7 @@ export const getMutualFundInvest = createAsyncThunk(
 export const getRealEstateInvest = createAsyncThunk(
     "getRealEstateInvest",
     async (username) => {
-        const result = await axios.get("https://expbackend.onrender.com/getRealEstateInvest/" + username)
+        const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getRealEstateInvest/` + username)
         return result
     }
 )
@@ -131,7 +131,7 @@ export const getRealEstateInvest = createAsyncThunk(
 export const getFixedDepositInvest = createAsyncThunk(
     "getFixedDepositInvest",
     async (username) => {
-        const result = await axios.get("https://expbackend.onrender.com/getFixedDepositInvest/" + username)
+        const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getFixedDepositInvest/` + username)
         return result
     }
 )
@@ -142,28 +142,28 @@ export const getFixedDepositInvest = createAsyncThunk(
 export const updateStockInvest = createAsyncThunk(
     "updateStockInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/updateStockInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/updateStockInvest`, { ...data })
     }
 )
 
 export const updateMutualFundInvest = createAsyncThunk(
     "updateMutualFundInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/updateMutualFundInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/updateMutualFundInvest`, { ...data })
     }
 )
 
 export const updateRealEstateInvest = createAsyncThunk(
     "updateRealEstateInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/updateRealEstateInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/updateRealEstateInvest`, { ...data })
     }
 )
 
 export const updateFixedDepositInvest = createAsyncThunk(
     "updateFixedDepositInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/updateFixedDepositInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/updateFixedDepositInvest`, { ...data })
     }
 )
 
@@ -172,7 +172,7 @@ export const updateFixedDepositInvest = createAsyncThunk(
 export const deleteStockInvest = createAsyncThunk(
     "deleteStockInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/deleteStockInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/deleteStockInvest`, { ...data })
     }
 )
 
@@ -180,21 +180,21 @@ export const deleteStockInvest = createAsyncThunk(
 export const deleteMutualFundInvest = createAsyncThunk(
     "deleteMutualFundInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/deleteMutualFundInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/deleteMutualFundInvest`, { ...data })
     }
 )
 
 export const deleteRealEstateInvest = createAsyncThunk(
     "deleteRealEstateInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/deleteRealEstateInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/deleteRealEstateInvest`, { ...data })
     }
 )
 
 export const deleteFixedDepositInvest = createAsyncThunk(
     "deleteFixedDepositInvest",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/deleteFixedDepositInvest", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/deleteFixedDepositInvest`, { ...data })
     }
 )
 

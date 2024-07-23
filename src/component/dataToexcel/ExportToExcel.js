@@ -6,7 +6,7 @@ const ExportToExcel = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    const response = await axios.get("https://expbackend.onrender.com/getAllExpense/rushidurge");
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getAllExpense/rushidurge`);
     setData(response.data);
   };
 

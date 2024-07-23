@@ -44,14 +44,14 @@ const RecordSlice = createSlice({
 export const addExpense = createAsyncThunk(
     "addExpense",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/addExpense", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/addExpense`, { ...data })
     }
 )
 
 export const getAllExpense = createAsyncThunk(
     "getAllExpense",
     async (username) => {
-        const result = await axios.get("https://expbackend.onrender.com/getAllExpense/" + username)
+        const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getAllExpense/` + username)
         return result
     }
 )
@@ -59,28 +59,28 @@ export const getAllExpense = createAsyncThunk(
 export const updateExpense = createAsyncThunk(
     "updateExpense",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/updateExpense", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/updateExpense`, { ...data })
     }
 )
 
 export const deleteExpense = createAsyncThunk(
     "deleteExpense",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/deleteExpense", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/deleteExpense`, { ...data })
     }
 )
 
 export const addIncome = createAsyncThunk(
     "addIncome",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/addIncome", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/addIncome`, { ...data })
     }
 )
 
 export const getAllIncome = createAsyncThunk(
     "getAllIncome",
     async (username) => {
-        const result = await axios.get("https://expbackend.onrender.com/getAllIncome/" + username)
+        const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getAllIncome/` + username)
         return result
     }
 )
@@ -88,14 +88,14 @@ export const getAllIncome = createAsyncThunk(
 export const updateIncome = createAsyncThunk(
     "updateIncome",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/updateIncome", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/updateIncome`, { ...data })
     }
 )
 
 export const deleteIncome = createAsyncThunk(
     "deleteIncome",
     async (data) => {
-        await axios.post("https://expbackend.onrender.com/deleteIncome", { ...data })
+        await axios.post(`${process.env.REACT_APP_SERVER_URL}/deleteIncome`, { ...data })
     }
 )
 
@@ -109,7 +109,7 @@ export const getdeleteTransData = createAsyncThunk(
     "getdeleteTransData",
     async (username) => {
         try {
-            const result = await axios.get("https://expbackend.onrender.com/getdeleteTransData/" + username)
+            const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getdeleteTransData/` + username)
             return result
         } catch (error) {
 
@@ -121,7 +121,7 @@ export const deleteDeletedTrans = createAsyncThunk(
     "deleteDeletedTrans",
     async (data) => {
         try {
-            await axios.post("https://expbackend.onrender.com/deleteDeletedTrans", { ...data })
+            await axios.post(`${process.env.REACT_APP_SERVER_URL}/deleteDeletedTrans`, { ...data })
         } catch (error) {
 
         }
@@ -132,7 +132,7 @@ export const deletRestoreExpense = createAsyncThunk(
     "deletRestoreExpense",
     async (data) => {
         try {
-            await axios.post("https://expbackend.onrender.com/deletRestoreExpense", { ...data })
+            await axios.post(`${process.env.REACT_APP_SERVER_URL}/deletRestoreExpense`, { ...data })
         } catch (error) {
 
         }
@@ -143,7 +143,7 @@ export const deleteRestoreIncome = createAsyncThunk(
     "deleteRestoreIncome",
     async (data) => {
         try {
-            await axios.post("https://expbackend.onrender.com/deleteRestoreIncome", { ...data })
+            await axios.post(`${process.env.REACT_APP_SERVER_URL}/deleteRestoreIncome`, { ...data })
         } catch (error) {
 
         }

@@ -50,7 +50,7 @@ export const getUser = createAsyncThunk(
     "getUser",
     async () => {
         try {
-            const result = await axios.get("https://expbackend.onrender.com/getUser")
+            const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getUser`)
             return result;
         } catch (error) {
             
@@ -62,7 +62,7 @@ export const signupUser = createAsyncThunk(
     "signupUser",
     async (d) => {
         try {
-            const result = await axios.post("https://expbackend.onrender.com/signup", { ...d });
+            const result = await axios.post(`${process.env.REACT_APP_SERVER_URL}/signup`, { ...d });
             return result;
         } catch (error) {
 
@@ -74,7 +74,7 @@ export const userExist = createAsyncThunk(
     "userExist",
     async (username) => {
         try {
-            const result = await axios.get("https://expbackend.onrender.com/userexist/"+username)
+            const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/userexist/`+username)
             return result;
         } catch (error) {
             

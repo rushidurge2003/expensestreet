@@ -35,7 +35,7 @@ export const getNotification = createAsyncThunk(
     "getNotification",
     async (username) => {
         try {
-            const result = await axios.get("https://expbackend.onrender.com/getNotification/" + username)
+            const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getNotification/` + username)
             return result
         } catch (error) {
 
@@ -47,7 +47,7 @@ export const getNotificationCount = createAsyncThunk(
     "getNotificationCount",
     async (username) => {
         try {
-            const result = await axios.get("https://expbackend.onrender.com/getNotificationCount/" + username)
+            const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/getNotificationCount/` + username)
             return result.data[0].notificationCount
         } catch (error) {
 

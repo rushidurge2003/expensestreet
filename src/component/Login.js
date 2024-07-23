@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import usePreventZoom from './usePreventZoom'
+// import usePreventZoom from './usePreventZoom'
 import { Loading } from './loading/Loading'
 import { useMediaQuery } from 'react-responsive'
 
@@ -16,7 +16,6 @@ export const Login = () => {
   const [password, setPassword] = useState("")
   const [viewpassword, setViewPassword] = useState(false)
   const [loading, setLoading] = useState(false)
-
 
   const LoginProceed = async (e) => {
     try {
@@ -35,7 +34,7 @@ export const Login = () => {
         setLoading(true)
         console.log("Username : ", username);
         console.log("Password : ", password);
-        const result = await axios.post("https://expbackend.onrender.com/login", { "username": username, "password": password })
+        const result = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, { "username": username, "password": password })
         console.log("Login Status : ", result)
         setUsername("")
         setPassword("")

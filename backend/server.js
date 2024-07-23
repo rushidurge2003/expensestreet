@@ -27,16 +27,16 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Mysql Connection using clever cloud
-const conn = mysql.createConnection({
-    host: "b41vr87kmg0hjuw9c0te-mysql.services.clever-cloud.com",
-    user: "upme2ccho41naea3",
-    password: "qTBdoTxsZ5Jn24Yyn3E",
-    port: 20028,
-    database: "expensestreet",
-    multipleStatements: true,
-    timezone: "Z",
-    ssl : true
-})
+// const conn = mysql.createConnection({
+//     host: "b41vr87kmg0hjuw9c0te-mysql.services.clever-cloud.com",
+//     user: "upme2ccho41naea3",
+//     password: "qTBdoTxsZ5Jn24Yyn3E",
+//     port: 20028,
+//     database: "expensestreet",
+//     multipleStatements: true,
+//     timezone: "Z",
+//     ssl : true
+// })
 
 // Mysql Connection using aiven cloud
 // const conn = mysql.createConnection({
@@ -60,14 +60,14 @@ const conn = mysql.createConnection({
 // })
 
 // local host connection
-// const conn = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "India@2003",
-//     database: "expensestreet",
-//     multipleStatements: true,
-//     timezone: "Z"
-// })
+const conn = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "India@2003",
+    database: "expensestreet",
+    multipleStatements: true,
+    timezone: "Z"
+})
 
 if (conn) {
     console.log("Database Connected Successfully...!!")
